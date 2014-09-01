@@ -1,0 +1,18 @@
+module Coppertone
+  class Mechanism  # rubocop:disable Style/Documentation
+    class DomainSpecMechanism < Mechanism
+      attr_reader :domain_spec
+
+      def target_name_from_domain_spec(macro_context, request_context)
+        domain =
+          domain_spec.expand(macro_context, request_context) if domain_spec
+        Coppertone::Utils::DomainUtils.macro_expanded_domain(domain)
+      end
+
+      def trim_domain_spec(raw_domain_spec)
+        return nil if raw_domain_spec.blank?
+        raw_domain_spec[1..-1]
+      end
+    end
+  end
+end
