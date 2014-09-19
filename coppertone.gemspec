@@ -9,9 +9,9 @@ Gem::Specification.new do |spec|
   spec.authors       = ['Peter M. Goldstein']
   spec.email         = ['peter.m.goldstein@gmail.com']
   spec.summary       = 'A Sender Policy Framework (SPF) toolkit'
+  spec.description   = 'Coppertone includes tools for parsing SPF DNS records, evaluating the result of SPF checks for received emails, and creating appropriate email headers from SPF results.'
   spec.homepage      = 'https://github.com/petergoldstein/coppertone'
   spec.license       = 'Apache'
-
   spec.files         = `git ls-files -z`.split("\x0")
   spec.executables   = spec.files.grep(/^bin\//) { |f| File.basename(f) }
   spec.test_files    = spec.files.grep(/^(test|spec|features)\//)
@@ -19,7 +19,7 @@ Gem::Specification.new do |spec|
 
   spec.add_runtime_dependency 'i18n'
   spec.add_runtime_dependency 'addressable'
-  spec.add_runtime_dependency 'activesupport'
+  spec.add_runtime_dependency 'activesupport', '>= 3.0'
   spec.add_development_dependency 'bundler'
   spec.add_development_dependency 'rake', '~> 10.0'
   spec.add_development_dependency 'rspec', '>= 3.0'
