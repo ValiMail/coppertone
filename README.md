@@ -1,5 +1,8 @@
 # Coppertone
 
+[![Build Status](https://travis-ci.org/petergoldstein/coppertone.svg?branch=master)](https://travis-ci.org/petergoldstein/coppertone)
+[![Code Climate](https://codeclimate.com/github/petergoldstein/coppertone/badges/gpa.svg)](https://codeclimate.com/github/petergoldstein/coppertone)
+
 A Sender Policy Framework (SPF) toolkit for Ruby.
 
 Coppertone includes tools for parsing SPF DNS records, evaluating the result of SPF checks for received emails, and creating appropriate email headers from the SPF result.  In the future the gem will build on these capabilities to allow deeper analysis of SPF configuration for hosts, senders, and domains.
