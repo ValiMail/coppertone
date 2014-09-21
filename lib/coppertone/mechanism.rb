@@ -16,8 +16,27 @@ module Coppertone
       class_builder.build(type, attributes)
     end
 
-    def self.register(type, klass)
-      class_builder.register(type, klass)
+    def self.register(klass)
+      fail ArgumentError unless klass < self
+      class_builder.register(klass.label, klass)
+    end
+
+    def self.dns_lookup_term?
+      false
+    end
+
+    attr_reader :arguments
+    def initialize(arguments)
+      @arguments = arguments
+    end
+
+    def dns_lookup_term?
+      self.class.dns_lookup_term?
+    end
+
+    def to_s
+      mech_label = self.class.label
+      arguments.blank? ? mech_label : "#{mech_label}#{arguments}"
     end
   end
 end

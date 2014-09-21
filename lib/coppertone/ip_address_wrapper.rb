@@ -7,7 +7,7 @@ module Coppertone
   # of IPs in mechanism evaluation and macro string evaluation.
   #
   # Note: This class should only be used with a single IP address, and
-  # will fail if passed an address with a prefix
+  # will fail if passed an address with a non-trivial network prefix
   class IPAddressWrapper
     attr_reader :string_representation, :ip
     def initialize(s)

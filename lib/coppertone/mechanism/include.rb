@@ -12,7 +12,11 @@ module Coppertone
           RecordFinder.new(request_context.dns_client, target_name).record
         IncludeMatcher.new(record).match?(context_for_include, request_context)
       end
+
+      def self.label
+        'include'
+      end
     end
-    register('include', Coppertone::Mechanism::Include)
+    register(Coppertone::Mechanism::Include)
   end
 end

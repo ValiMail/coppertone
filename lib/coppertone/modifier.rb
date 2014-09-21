@@ -10,8 +10,8 @@ module Coppertone
       class_builder.build(type, attributes)
     end
 
-    def self.register(type, klass)
-      class_builder.register(type, klass)
+    def self.register(klass)
+      class_builder.register(klass.label, klass)
     end
 
     MODIFIER_REGEXP = /\A([a-zA-Z]+[a-zA-Z0-9\-\_\.]*)=(\S*)\z/
@@ -21,6 +21,15 @@ module Coppertone
       type = matches[1]
       attributes = matches[2]
       build(type, attributes) || build('unknown', attributes)
+    end
+
+    attr_reader :arguments
+    def initialize(arguments)
+      @arguments = arguments
+    end
+
+    def to_s
+      "#{label}=#{arguments}"
     end
   end
 end

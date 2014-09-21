@@ -21,6 +21,15 @@ module Coppertone
       Coppertone::Result.from_directive(self, code)
     end
 
+    def all?
+      mechanism.is_a?(Coppertone::Mechanism::All)
+    end
+
+    def to_s
+      mechanism_s = mechanism.to_s
+      qualifier.default? ? mechanism_s : "#{qualifier}#{mechanism_s}"
+    end
+
     DIRECTIVE_REGEXP = /\A([\+\-\~\?]?)([a-zA-Z0-9]*)((:?)\S*)\z/
     def self.matching_term(text)
       return nil if text.include?('=')

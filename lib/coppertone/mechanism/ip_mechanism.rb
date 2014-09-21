@@ -8,6 +8,7 @@ module Coppertone
       end
 
       def initialize(attributes)
+        super(attributes)
         unless attributes.blank?
           attributes = attributes[1..-1] if attributes[0] == ':'
           @ip_network = parse_ip_network(attributes)

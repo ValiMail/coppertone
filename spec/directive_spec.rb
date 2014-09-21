@@ -28,6 +28,19 @@ describe Coppertone::Directive do
     end
   end
 
+  context 'all?' do
+    it 'should be true when the directive is an all' do
+      expect(Coppertone::Directive.matching_term('+all')).to be_all
+      expect(Coppertone::Directive.matching_term('-all')).to be_all
+      expect(Coppertone::Directive.matching_term('~all')).to be_all
+      expect(Coppertone::Directive.matching_term('?all')).to be_all
+    end
+
+    it 'should be false otherwise' do
+      expect(Coppertone::Directive.matching_term('ip4:1.2.3.4')).not_to be_all
+    end
+  end
+
   context '.evaluate' do
     Coppertone::Qualifier.qualifiers.each do |q|
       it "returns a result with the expected code when it matches #{q.text}" do

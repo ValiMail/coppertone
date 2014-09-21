@@ -11,7 +11,11 @@ module Coppertone
         request_context.register_dns_lookup_term
         target_name_from_domain_spec(macro_context, request_context)
       end
+
+      def self.label
+        'redirect'
+      end
     end
-    register('redirect', Coppertone::Modifier::Redirect)
+    register(Coppertone::Modifier::Redirect)
   end
 end

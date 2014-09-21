@@ -5,7 +5,7 @@ require 'uri'
 
 module Coppertone
   # A context used to evaluate MacroStrings.  Responds to all of the
-  # macro letter directives.
+  # macro letter directives except 'p'.
   class MacroContext
     attr_reader :domain, :ip_address_wrapper, :sender_identity, :helo_domain
 

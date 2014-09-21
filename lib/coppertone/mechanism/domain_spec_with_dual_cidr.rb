@@ -10,6 +10,7 @@ module Coppertone
       end
 
       def initialize(attributes)
+        super(attributes)
         return if attributes.blank?
         parse_argument(attributes)
       rescue Coppertone::MacroStringParsingError

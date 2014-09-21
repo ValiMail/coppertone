@@ -11,7 +11,11 @@ module Coppertone
             .find(target_name)
         !matching_name.nil?
       end
+
+      def self.label
+        'ptr'
+      end
     end
-    register('ptr', Coppertone::Mechanism::Ptr)
+    register(Coppertone::Mechanism::Ptr)
   end
 end

@@ -7,7 +7,11 @@ module Coppertone
       def ip_for_match(macro_context)
         macro_context.ip_v6
       end
+
+      def self.label
+        'ip6'
+      end
     end
-    register('ip6', Coppertone::Mechanism::IP6)
+    register(Coppertone::Mechanism::IP6)
   end
 end
