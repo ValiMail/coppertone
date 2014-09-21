@@ -27,6 +27,14 @@ module Coppertone
       @result_code = result_code
     end
 
+    def default?
+      text == DEFAULT_QUALIFIER_TEXT
+    end
+
+    def to_s
+      text
+    end
+
     PASS = new(DEFAULT_QUALIFIER_TEXT, Result::PASS)
     FAIL = new('-'.freeze, Result::FAIL)
     SOFTFAIL = new('~'.freeze, Result::SOFTFAIL)

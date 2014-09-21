@@ -4,6 +4,7 @@ describe Coppertone::Mechanism::All do
   subject { Coppertone::Mechanism::All.instance }
   it 'should always return true regardless of argument' do
     expect(subject.match?(double, double)).to eq(true)
+    expect(subject.to_s).to eq('all')
   end
 
   it 'should not allow creation of new instances' do

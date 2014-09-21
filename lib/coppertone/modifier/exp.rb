@@ -28,7 +28,11 @@ module Coppertone
         return nil if records.size > 1
         MacroString.new(records.first[:text])
       end
+
+      def self.label
+        'exp'
+      end
     end
-    register('exp', Coppertone::Modifier::Exp)
+    register(Coppertone::Modifier::Exp)
   end
 end

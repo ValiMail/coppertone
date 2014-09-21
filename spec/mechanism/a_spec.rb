@@ -8,6 +8,7 @@ describe Coppertone::Mechanism::A do
       expect(mech.domain_spec).to be_nil
       expect(mech.ip_v4_cidr_length).to eq(32)
       expect(mech.ip_v6_cidr_length).to eq(128)
+      expect(mech.to_s).to eq('a')
     end
 
     it 'should not fail if called with a blank argument' do
@@ -16,6 +17,7 @@ describe Coppertone::Mechanism::A do
       expect(mech.domain_spec).to be_nil
       expect(mech.ip_v4_cidr_length).to eq(32)
       expect(mech.ip_v6_cidr_length).to eq(128)
+      expect(mech.to_s).to eq('a')
     end
 
     it 'should fail if called with an invalid macrostring' do
@@ -31,6 +33,7 @@ describe Coppertone::Mechanism::A do
         .to eq(Coppertone::DomainSpec.new('_spf.%{d}.example.com'))
       expect(mech.ip_v4_cidr_length).to eq(32)
       expect(mech.ip_v6_cidr_length).to eq(128)
+      expect(mech.to_s).to eq('a:_spf.%{d}.example.com')
     end
 
     it 'should parse a valid IP v4 CIDR length with a domain spec' do
@@ -38,8 +41,9 @@ describe Coppertone::Mechanism::A do
       expect(mech).not_to be_nil
       expect(mech.domain_spec)
         .to eq(Coppertone::DomainSpec.new('_spf.%{d}.example.com'))
-      expect(mech.ip_v4_cidr_length).to eq('28')
+      expect(mech.ip_v4_cidr_length).to eq(28)
       expect(mech.ip_v6_cidr_length).to eq(128)
+      expect(mech.to_s).to eq('a:_spf.%{d}.example.com/28')
     end
 
     it 'should fail if called with an invalid macrostring and IPv4 CIDR' do
@@ -52,8 +56,9 @@ describe Coppertone::Mechanism::A do
       mech = Coppertone::Mechanism::A.new('/28')
       expect(mech).not_to be_nil
       expect(mech.domain_spec).to be_nil
-      expect(mech.ip_v4_cidr_length).to eq('28')
+      expect(mech.ip_v4_cidr_length).to eq(28)
       expect(mech.ip_v6_cidr_length).to eq(128)
+      expect(mech.to_s).to eq('a/28')
     end
 
     it 'should not parse an invalid IP v4 CIDR length' do
@@ -72,7 +77,8 @@ describe Coppertone::Mechanism::A do
       expect(mech.domain_spec)
         .to eq(Coppertone::DomainSpec.new('_spf.%{d}.example.com'))
       expect(mech.ip_v4_cidr_length).to eq(32)
-      expect(mech.ip_v6_cidr_length).to eq('64')
+      expect(mech.ip_v6_cidr_length).to eq(64)
+      expect(mech.to_s).to eq('a:_spf.%{d}.example.com//64')
     end
 
     it 'should fail if called with an invalid macrostring and IPv6 CIDR' do
@@ -86,7 +92,8 @@ describe Coppertone::Mechanism::A do
       expect(mech).not_to be_nil
       expect(mech.domain_spec).to be_nil
       expect(mech.ip_v4_cidr_length).to eq(32)
-      expect(mech.ip_v6_cidr_length).to eq('64')
+      expect(mech.ip_v6_cidr_length).to eq(64)
+      expect(mech.to_s).to eq('a//64')
     end
 
     it 'should not parse an invalid IP v6 CIDR length' do
@@ -104,8 +111,9 @@ describe Coppertone::Mechanism::A do
       expect(mech).not_to be_nil
       expect(mech.domain_spec)
         .to eq(Coppertone::DomainSpec.new('_spf.%{d}.example.com'))
-      expect(mech.ip_v4_cidr_length).to eq('28')
-      expect(mech.ip_v6_cidr_length).to eq('64')
+      expect(mech.ip_v4_cidr_length).to eq(28)
+      expect(mech.ip_v6_cidr_length).to eq(64)
+      expect(mech.to_s).to eq('a:_spf.%{d}.example.com/28//64')
     end
 
     it 'should not parse a invalid dual CIDR length with a domain spec' do

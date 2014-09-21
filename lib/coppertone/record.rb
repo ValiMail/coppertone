@@ -43,10 +43,6 @@ module Coppertone
     end
 
     def normalize_terms
-      # Discard any redirects if there is a directive with an
-      # all mechanism present
-      # Section 6.1
-      # TODO: PMG
       find_redirect # Checks for duplicate redirect modifiers
       exp # Checks for duplicate exp modifiers
     end
@@ -56,7 +52,7 @@ module Coppertone
     end
 
     def include_all?
-      directives.any? { |d| d.mechanism.is_a?(Coppertone::Mechanism::All) }
+      directives.any?(&:all?)
     end
 
     def modifiers
@@ -68,8 +64,6 @@ module Coppertone
     end
 
     def redirect
-      # Ignore if an 'all' modifier is present
-      return nil if include_all?
       @redirect ||= find_redirect
     end
 
@@ -77,9 +71,16 @@ module Coppertone
       @exp ||= find_modifier(Coppertone::Modifier::Exp)
     end
 
+    KNOWN_MODIFIERS =
+      [Coppertone::Modifier::Exp, Coppertone::Modifier::Redirect]
+    def unknown_modifiers
+      @unknown_modifiers ||=
+        modifiers.select { |m| KNOWN_MODIFIERS.select { |k| m.is_a(k) }.empty? }
+    end
+
     def find_modifier(klass)
       arr = modifiers.select { |m| m.is_a?(klass) }
-      fail RecordParsingError if arr.size > 1
+      fail DuplicateModifierError if arr.size > 1
       arr.first
     end
   end

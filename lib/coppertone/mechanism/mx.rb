@@ -34,7 +34,11 @@ module Coppertone
         return unless limit && count > limit
         fail Coppertone::MXLimitExceededError
       end
+
+      def self.label
+        'mx'
+      end
     end
-    register('mx', Coppertone::Mechanism::MX)
+    register(Coppertone::Mechanism::MX)
   end
 end

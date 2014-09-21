@@ -8,7 +8,11 @@ module Coppertone
         records = request_context.dns_client.fetch_a_records(target_name)
         records.any?
       end
+
+      def self.label
+        'exists'
+      end
     end
-    register('exists', Coppertone::Mechanism::Exists)
+    register(Coppertone::Mechanism::Exists)
   end
 end

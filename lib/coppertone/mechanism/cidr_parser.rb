@@ -7,7 +7,7 @@ module Coppertone
         if length_as_i < 0 || length_as_i > max_val
           fail Coppertone::InvalidMechanismError
         end
-        length_as_i.to_s
+        length_as_i
       end
     end
   end

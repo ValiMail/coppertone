@@ -10,7 +10,11 @@ module Coppertone
           .new(macro_context, request_context)
           .check(target_name, ip_v4_cidr_length, ip_v6_cidr_length)
       end
+
+      def self.label
+        'a'
+      end
     end
-    register('a', Coppertone::Mechanism::A)
+    register(Coppertone::Mechanism::A)
   end
 end

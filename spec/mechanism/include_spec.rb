@@ -16,8 +16,13 @@ describe Coppertone::Mechanism::Include do
 
     it 'should fail if called with an invalid macrostring' do
       expect do
-        Coppertone::Mechanism::Include.new('abc%:def')
+        Coppertone::Mechanism::Include.new(':abc%:def')
       end.to raise_error(Coppertone::InvalidMechanismError)
+    end
+
+    it 'creates a mechanism if called with a valid macrostring' do
+      mech = Coppertone::Mechanism::Include.new(':_spf.example.com')
+      expect(mech.to_s).to eq('include:_spf.example.com')
     end
   end
 

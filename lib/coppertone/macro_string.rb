@@ -11,16 +11,23 @@ module Coppertone
     attr_reader :macro_text
     def initialize(macro_text)
       @macro_text = macro_text
-      parse_macros
+      macros
     end
 
-    def parse_macros
-      # Build an array of expandable macros
-      @macros = MacroParser.new(macro_text).macros
+    def macros
+      @macros ||= MacroParser.new(macro_text).macros
     end
 
     def expand(context, request = nil)
-      @macros.map { |m| m.expand(context, request) }.join('')
+      macros.map { |m| m.expand(context, request) }.join('')
+    end
+
+    def to_s
+      macros.map(&:to_s).join('')
+    end
+
+    def context_dependent?
+      macros.any? { |m| m.is_a?(Coppertone::MacroString::MacroExpand) }
     end
 
     def ==(other)

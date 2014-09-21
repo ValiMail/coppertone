@@ -13,6 +13,15 @@ module Coppertone
         return nil if raw_domain_spec.blank?
         raw_domain_spec[1..-1]
       end
+
+      def self.dns_lookup_term?
+        true
+      end
+
+      def context_dependent?
+        return false unless domain_spec
+        domain_spec.context_dependent?
+      end
     end
   end
 end

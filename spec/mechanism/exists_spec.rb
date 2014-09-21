@@ -19,6 +19,11 @@ describe Coppertone::Mechanism::Exists do
         Coppertone::Mechanism::Exists.new(':abc%:def')
       end.to raise_error(Coppertone::InvalidMechanismError)
     end
+
+    it 'should succeed if called with a valid macrostring' do
+      mech = Coppertone::Mechanism::Exists.new(':%{d}.example.com')
+      expect(mech.to_s).to eq('exists:%{d}.example.com')
+    end
   end
 
   context '#create' do
