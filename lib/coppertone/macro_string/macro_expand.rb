@@ -41,7 +41,7 @@ module Coppertone
       def expand_ptr(context, request)
         ptr =
           Coppertone::Utils::ValidatedDomainFinder
-            .new(context, request).find(context.d)
+            .new(context, request, false).find(context.d)
         return 'unknown' unless ptr
         @macro_letter == 'P' ? ::Addressable::URI.encode_component(ptr) : ptr
       end

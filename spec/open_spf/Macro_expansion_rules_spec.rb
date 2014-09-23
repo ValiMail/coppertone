@@ -82,7 +82,6 @@ describe 'Macro expansion rules' do
   end
 
   it 'p = the validated domain name of <ip>' do
-    pending 'It is currently unclear, based on RFC 7208, why this spec should pass.'
     # If a subdomain of the <domain> is present, it SHOULD be used.
     result = Coppertone::SpfService.authenticate_email('192.168.218.41',
                                                        'test@e6.example.com',
@@ -99,7 +98,6 @@ describe 'Macro expansion rules' do
   end
 
   it 'p = the validated domain name of <ip>' do
-    pending 'It is currently unclear, based on RFC 7208, why this spec should pass.'
     # If a subdomain of the <domain> is present, it SHOULD be used.
     result = Coppertone::SpfService.authenticate_email('CAFE:BABE::3', 'test@e6.example.com', 'msgbas2x.cos.example.com', options)
     expect(%i(fail)).to include(result.code)

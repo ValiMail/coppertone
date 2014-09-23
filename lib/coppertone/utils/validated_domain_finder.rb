@@ -3,9 +3,11 @@ module Coppertone
     # A class used to find validated domains as defined in
     # section 5.5 of the RFC.
     class ValidatedDomainFinder
-      def initialize(macro_context, request_context)
+      attr_reader :subdomain_only
+      def initialize(macro_context, request_context, subdomain_only = true)
         @mc = macro_context
         @request_context = request_context
+        @subdomain_only = subdomain_only
       end
 
       def find(target_name)
@@ -27,8 +29,8 @@ module Coppertone
 
       def ptr_record_matches?(ip_checker,
                               target_name, ptr_name)
-        is_candidate =
-          DomainUtils.subdomain_or_same?(ptr_name, target_name)
+        is_candidate = !subdomain_only ||
+                       DomainUtils.subdomain_or_same?(ptr_name, target_name)
         is_candidate && ip_checker.check(ptr_name)
       rescue Coppertone::DNS::Error
         # If a DNS error occurs when looking up a domain, treat it
