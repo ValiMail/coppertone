@@ -97,4 +97,19 @@ describe Coppertone::Record do
       end.to raise_error(Coppertone::RecordParsingError)
     end
   end
+
+  context '#unknown_modifiers' do
+    it 'should return a non-empty array when there are unknown modifiers' do
+      expect(Coppertone::Record.parse('v=spf1 moose=www.example.com').unknown_modifiers.size).to eq(1)
+      expect(Coppertone::Record.parse('v=spf1 moose=www.example.com squirrel=xxx').unknown_modifiers.size).to eq(2)
+      expect(Coppertone::Record.parse('v=spf1 moose=www.example.com moose=xxx').unknown_modifiers.size).to eq(2)
+    end
+
+    it 'should return an empty array when there are no unknown modifiers' do
+      expect(Coppertone::Record.parse('v=spf1 ~all').unknown_modifiers).to be_empty
+      expect(Coppertone::Record.parse('v=spf1 ip4:1.2.3.4 a:test.example.com -all').unknown_modifiers).to be_empty
+      expect(Coppertone::Record.parse('v=spf1 mx -all exp=explain._spf.%{d}').unknown_modifiers).to be_empty
+      expect(Coppertone::Record.parse('v=spf1 mx -all redirect=explain._spf.%{d}').unknown_modifiers).to be_empty
+    end
+  end
 end

@@ -76,7 +76,7 @@ module Coppertone
       [Coppertone::Modifier::Exp, Coppertone::Modifier::Redirect]
     def unknown_modifiers
       @unknown_modifiers ||=
-        modifiers.select { |m| KNOWN_MODIFIERS.select { |k| m.is_a(k) }.empty? }
+        modifiers.select { |m| KNOWN_MODIFIERS.select { |k| m.is_a?(k) }.empty? }
     end
 
     def find_modifier(klass)

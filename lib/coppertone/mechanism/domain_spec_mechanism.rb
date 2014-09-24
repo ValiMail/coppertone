@@ -19,7 +19,7 @@ module Coppertone
       end
 
       def context_dependent?
-        return false unless domain_spec
+        return true unless domain_spec
         domain_spec.context_dependent?
       end
     end

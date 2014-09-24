@@ -22,6 +22,7 @@ describe Coppertone::IPAddressWrapper do
       expect(ipw.c).to eq(ip_as_s)
       expect(ipw.i).to eq(ip_as_s)
       expect(ipw.v).to eq('in-addr')
+      expect(ipw.to_s).to eq(ip_as_s)
     end
 
     it 'should raise an ArgumentError when passed an IP with a prefix' do
@@ -42,6 +43,7 @@ describe Coppertone::IPAddressWrapper do
           'F.E.8.0.0.0.0.0.0.0.0.0.0.0.0.0.0.2.0.2.B.3.F.F.F.E.1.E.8.3.2.9'
         expect(ipw.i).to eq(dotted)
         expect(ipw.v).to eq('ip6')
+        expect(ipw.to_s).to eq(ip_as_s)
       end
     end
 
@@ -55,6 +57,7 @@ describe Coppertone::IPAddressWrapper do
         expect(ipw.c).to eq(ip_v4_as_s)
         expect(ipw.i).to eq(ip_v4_as_s)
         expect(ipw.v).to eq('in-addr')
+        expect(ipw.to_s).to eq(ip_as_s)
       end
     end
 

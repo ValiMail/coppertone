@@ -38,6 +38,10 @@ module Coppertone
       mech_label = self.class.label
       arguments.blank? ? mech_label : "#{mech_label}#{arguments}"
     end
+
+    def context_dependent?
+      false
+    end
   end
 end
 

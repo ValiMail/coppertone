@@ -71,10 +71,6 @@ describe Coppertone::Mechanism::Exists do
         Coppertone::MacroContext.new(domain, '74.125.239.118', 'bob@gmail.com')
       end
 
-      let(:not_matching_context) do
-        Coppertone::MacroContext.new(domain, '74.125.249.118', 'bob@gmail.com')
-      end
-
       before do
         allow(Coppertone::DNS::ResolvClient)
           .to receive(:new).and_return(dns_client)
@@ -86,7 +82,7 @@ describe Coppertone::Mechanism::Exists do
           .to eq(true)
       end
 
-      it 'should match when the domain record for the target name exists' do
+      it 'should not match when the domain record for the target name does not exist' do
         mech = Coppertone::Mechanism::Exists.create(bad_arg)
         expect(mech.match?(matching_context, Coppertone::RequestContext.new))
           .to eq(false)
