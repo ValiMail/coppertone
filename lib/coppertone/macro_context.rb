@@ -28,25 +28,19 @@ module Coppertone
 
     UNKNOWN_HOSTNAME = 'unknown'
     def r
-      if Coppertone::Utils::DomainUtils.valid?(raw_hostname)
-        raw_hostname
-      else
-        UNKNOWN_HOSTNAME
-      end
+      valid = Coppertone::Utils::DomainUtils.valid?(raw_hostname)
+      valid ? raw_hostname : UNKNOWN_HOSTNAME
     end
 
     def t
       Time.now.to_i
     end
 
+    RESERVED_REGEXP = Regexp.new("[^#{URI::PATTERN::UNRESERVED}]")
     %w(s l o d i p v h c r t).each do |m|
       define_method(m.upcase) do
         unencoded = send(m)
-        if unencoded
-          ::URI.escape(unencoded, Regexp.new("[^#{URI::PATTERN::UNRESERVED}]"))
-        else
-          nil
-        end
+        unencoded ? ::URI.escape(unencoded, RESERVED_REGEXP) : nil
       end
     end
 

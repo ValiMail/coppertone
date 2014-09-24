@@ -203,4 +203,11 @@ describe Coppertone::Mechanism::A do
       end
     end
   end
+
+  context 'dns_lookup_term?' do
+    it 'should be true' do
+      expect(Coppertone::Mechanism::A).to be_dns_lookup_term
+      expect(Coppertone::Mechanism::A.new('//64')).to be_dns_lookup_term
+    end
+  end
 end

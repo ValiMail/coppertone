@@ -40,4 +40,11 @@ describe Coppertone::Mechanism::Ptr do
       end.to raise_error(Coppertone::InvalidMechanismError)
     end
   end
+
+  context 'dns_lookup_term?' do
+    it 'should be true' do
+      expect(Coppertone::Mechanism::Ptr).to be_dns_lookup_term
+      expect(Coppertone::Mechanism::Ptr.new(':example.com')).to be_dns_lookup_term
+    end
+  end
 end

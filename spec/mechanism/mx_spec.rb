@@ -97,4 +97,11 @@ describe Coppertone::Mechanism::MX do
       end.to raise_error(Coppertone::InvalidMechanismError)
     end
   end
+
+  context 'dns_lookup_term?' do
+    it 'should be true' do
+      expect(Coppertone::Mechanism::MX).to be_dns_lookup_term
+      expect(Coppertone::Mechanism::MX.new(':example.com')).to be_dns_lookup_term
+    end
+  end
 end

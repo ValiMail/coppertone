@@ -20,4 +20,11 @@ describe Coppertone::Mechanism::All do
       end.to raise_error(Coppertone::RecordParsingError)
     end
   end
+
+  context 'dns_lookup_term?' do
+    it 'should be false' do
+      expect(Coppertone::Mechanism::All).not_to be_dns_lookup_term
+      expect(Coppertone::Mechanism::All.instance).not_to be_dns_lookup_term
+    end
+  end
 end

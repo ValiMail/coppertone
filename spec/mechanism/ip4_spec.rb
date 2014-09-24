@@ -69,13 +69,13 @@ describe Coppertone::Mechanism::IP4 do
     end
 
     it 'should work if called with an IP4 with a pfxlen' do
-      mech = Coppertone::Mechanism::IP4.create('1.2.3.4/4')
+      mech = Coppertone::Mechanism::IP4.create(':1.2.3.4/4')
       expect(mech.ip_network).to eq(IPAddr.new('1.2.3.4/4'))
     end
 
     it 'should fail if called with an invalid pfxlen' do
       expect do
-        Coppertone::Mechanism::IP4.new('1.2.3.4/127')
+        Coppertone::Mechanism::IP4.new(':1.2.3.4/127')
       end.to raise_error(Coppertone::InvalidMechanismError)
     end
   end
@@ -96,18 +96,25 @@ describe Coppertone::Mechanism::IP4 do
     end
 
     it 'should return true if the client IP is in the network' do
-      mech = Coppertone::Mechanism::IP4.create('4.5.6.0/29')
+      mech = Coppertone::Mechanism::IP4.create(':4.5.6.0/29')
       expect(mech.match?(macro_context, double)).to eq(true)
     end
 
     it 'should return false if the client IP is not in the network' do
-      mech = Coppertone::Mechanism::IP4.create('4.5.6.0/30')
+      mech = Coppertone::Mechanism::IP4.create(':4.5.6.0/30')
       expect(mech.match?(macro_context, double)).to eq(false)
     end
 
     it 'should return false if the client IP is v6 only' do
-      mech = Coppertone::Mechanism::IP4.create('4.5.6.0/29')
+      mech = Coppertone::Mechanism::IP4.create(':4.5.6.0/29')
       expect(mech.match?(ip_v6_macro_context, double)).to eq(false)
+    end
+  end
+
+  context 'dns_lookup_term?' do
+    it 'should be false' do
+      expect(Coppertone::Mechanism::IP4).not_to be_dns_lookup_term
+      expect(Coppertone::Mechanism::IP4.create(':4.5.6.7')).not_to be_dns_lookup_term
     end
   end
 end

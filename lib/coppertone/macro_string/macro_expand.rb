@@ -58,7 +58,7 @@ module Coppertone
       end
 
       def to_s
-        @body
+        "%{#{@body}}"
       end
 
       def ==(other)

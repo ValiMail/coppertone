@@ -45,4 +45,11 @@ describe Coppertone::Mechanism::Include do
       end.to raise_error(Coppertone::InvalidMechanismError)
     end
   end
+
+  context 'dns_lookup_term?' do
+    it 'should be true' do
+      expect(Coppertone::Mechanism::Include).to be_dns_lookup_term
+      expect(Coppertone::Mechanism::Include.new(':example.com')).to be_dns_lookup_term
+    end
+  end
 end

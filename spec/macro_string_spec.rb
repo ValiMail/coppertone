@@ -17,4 +17,24 @@ describe Coppertone::MacroString do
         .to eql(false)
     end
   end
+
+  context '#context_dependent?' do
+    it 'should return true when the macro string contains a macro' do
+      strs = ['abc.%{dr-}.%%.test.com', '%{l}.test.com', '%{d}', 'test.%{d}']
+      strs.each do |s|
+        macro_string = Coppertone::MacroString.new(s)
+        expect(macro_string).to be_context_dependent
+        expect(macro_string.to_s).to eq(s)
+      end
+    end
+
+    it 'should return false when the macro string does not contain a macro' do
+      strs = ['abc.%%.test.com', 'test.example.com', '%_', 'test']
+      strs.each do |s|
+        macro_string = Coppertone::MacroString.new(s)
+        expect(macro_string).not_to be_context_dependent
+        expect(macro_string.to_s).to eq(s)
+      end
+    end
+  end
 end

@@ -93,4 +93,11 @@ describe Coppertone::Mechanism::Exists do
       end
     end
   end
+
+  context 'dns_lookup_term?' do
+    it 'should be true' do
+      expect(Coppertone::Mechanism::Exists).to be_dns_lookup_term
+      expect(Coppertone::Mechanism::Exists.new(':example.com')).to be_dns_lookup_term
+    end
+  end
 end

@@ -48,10 +48,6 @@ module Coppertone
       original_ipv4? ? 'in-addr' : 'ip6'
     end
 
-    def p
-      fail NotImplementedError
-    end
-
     def ip_v4
       original_ipv4? ? @ip : nil
     end
