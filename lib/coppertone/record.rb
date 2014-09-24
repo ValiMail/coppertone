@@ -27,7 +27,8 @@ module Coppertone
 
     def validate_and_parse
       text_without_prefix = text[VERSION_STR.length..-1]
-      @term_tokens = text_without_prefix.strip.split(/ /)
+      @term_tokens =
+        text_without_prefix.strip.split(/ /).select { |s| !s.blank? }
       parse_terms
     end
 
