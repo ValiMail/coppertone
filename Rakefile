@@ -85,7 +85,7 @@ def write_result(f, host, mailfrom, helo, indent)
 end
 
 def write_expects(f, results, explanation, indent)
-  results_array = "%i(#{results.join(' ')})"
+  results_array = "[#{results.map { |r| ':' + r } .join(',')}]"
   code_expect = "expect(#{results_array}).to include(result.code)"
   puts_prefixed_string(f, code_expect, indent)
   return unless explanation

@@ -10,47 +10,47 @@ describe 'Include mechanism semantics and syntax' do
 
   it 'recursive check_host() result of fail causes include to not match.' do
     result = Coppertone::SpfService.authenticate_email('1.2.3.4', 'foo@e1.example.com', 'mail.example.com', options)
-    expect(%i(softfail)).to include(result.code)
+    expect([:softfail]).to include(result.code)
   end
 
   it 'recursive check_host() result of softfail causes include to not match.' do
     result = Coppertone::SpfService.authenticate_email('1.2.3.4', 'foo@e2.example.com', 'mail.example.com', options)
-    expect(%i(pass)).to include(result.code)
+    expect([:pass]).to include(result.code)
   end
 
   it 'recursive check_host() result of neutral causes include to not match.' do
     result = Coppertone::SpfService.authenticate_email('1.2.3.4', 'foo@e3.example.com', 'mail.example.com', options)
-    expect(%i(fail)).to include(result.code)
+    expect([:fail]).to include(result.code)
   end
 
   it 'recursive check_host() result of temperror causes include to temperror' do
     result = Coppertone::SpfService.authenticate_email('1.2.3.4', 'foo@e4.example.com', 'mail.example.com', options)
-    expect(%i(temperror)).to include(result.code)
+    expect([:temperror]).to include(result.code)
   end
 
   it 'recursive check_host() result of permerror causes include to permerror' do
     result = Coppertone::SpfService.authenticate_email('1.2.3.4', 'foo@e5.example.com', 'mail.example.com', options)
-    expect(%i(permerror)).to include(result.code)
+    expect([:permerror]).to include(result.code)
   end
 
   it 'include          = "include"  ":" domain-spec' do
     result = Coppertone::SpfService.authenticate_email('1.2.3.4', 'foo@e6.example.com', 'mail.example.com', options)
-    expect(%i(permerror)).to include(result.code)
+    expect([:permerror]).to include(result.code)
   end
 
   it 'include          = "include"  ":" domain-spec' do
     result = Coppertone::SpfService.authenticate_email('1.2.3.4', 'foo@e9.example.com', 'mail.example.com', options)
-    expect(%i(permerror)).to include(result.code)
+    expect([:permerror]).to include(result.code)
   end
 
   it 'recursive check_host() result of none causes include to permerror' do
     result = Coppertone::SpfService.authenticate_email('1.2.3.4', 'foo@e7.example.com', 'mail.example.com', options)
-    expect(%i(permerror)).to include(result.code)
+    expect([:permerror]).to include(result.code)
   end
 
   it 'domain-spec cannot be empty.' do
     result = Coppertone::SpfService.authenticate_email('1.2.3.4', 'foo@e8.example.com', 'mail.example.com', options)
-    expect(%i(permerror)).to include(result.code)
+    expect([:permerror]).to include(result.code)
   end
 
 end

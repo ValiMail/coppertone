@@ -22,6 +22,13 @@ module Coppertone
         fail Coppertone::InvalidMechanismError
       end
 
+      # Hack for JRuby - remove when JRuby moves to 2.0.x
+      if RUBY_VERSION < '2.0'
+        IP_PARSE_ERROR = ArgumentError
+      else
+        IP_PARSE_ERROR = IPAddr::Error
+      end
+
       def parse_ip_network(ip_as_s)
         validate_no_leading_zeroes_in_cidr(ip_as_s)
         addr, cidr_length, dual = ip_as_s.split('/')
@@ -29,7 +36,7 @@ module Coppertone
         network = IPAddr.new(addr)
         network = network.mask(cidr_length.to_i) unless cidr_length.blank?
         network
-      rescue IPAddr::Error
+      rescue IP_PARSE_ERROR
         nil
       end
 

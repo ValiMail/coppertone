@@ -16,12 +16,19 @@ module Coppertone
       @string_representation = s
     end
 
+    # Hack for JRuby - remove when JRuby moves to 2.0.x
+    if RUBY_VERSION < '2.0'
+      IP_PARSE_ERROR = ArgumentError
+    else
+      IP_PARSE_ERROR = IPAddr::InvalidAddressError
+    end
+
     def self.parse(s)
       return nil unless s
       return nil if s.index('/')
       ip_addr = IPAddr.new(s)
       normalize_ip(ip_addr)
-    rescue IPAddr::InvalidAddressError
+    rescue IP_PARSE_ERROR
       nil
     end
 
