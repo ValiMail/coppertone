@@ -10,110 +10,110 @@ describe 'MX mechanism syntax' do
 
   it 'MX                = "mx"      [ ":" domain-spec ] [ dual-cidr-length ] dual-cidr-length = [ ip4-cidr-length ] [ "/" ip6-cidr-length ] ' do
     result = Coppertone::SpfService.authenticate_email('1.2.3.4', 'foo@e6.example.com', 'mail.example.com', options)
-    expect(%i(fail)).to include(result.code)
+    expect([:fail]).to include(result.code)
   end
 
   it 'MX                = "mx"      [ ":" domain-spec ] [ dual-cidr-length ] dual-cidr-length = [ ip4-cidr-length ] [ "/" ip6-cidr-length ] ' do
     result = Coppertone::SpfService.authenticate_email('1.2.3.4', 'foo@e6a.example.com', 'mail.example.com', options)
-    expect(%i(permerror)).to include(result.code)
+    expect([:permerror]).to include(result.code)
   end
 
   it 'MX                = "mx"      [ ":" domain-spec ] [ dual-cidr-length ] dual-cidr-length = [ ip4-cidr-length ] [ "/" ip6-cidr-length ] ' do
     result = Coppertone::SpfService.authenticate_email('1.2.3.4', 'foo@e7.example.com', 'mail.example.com', options)
-    expect(%i(permerror)).to include(result.code)
+    expect([:permerror]).to include(result.code)
   end
 
   it 'MX matches any returned IP.' do
     result = Coppertone::SpfService.authenticate_email('1.2.3.4', 'foo@e10.example.com', 'mail.example.com', options)
-    expect(%i(pass)).to include(result.code)
+    expect([:pass]).to include(result.code)
   end
 
   it 'MX matches any returned IP.' do
     result = Coppertone::SpfService.authenticate_email('1.2.3.4', 'foo@e10.example.com', 'mail.example.com', options)
-    expect(%i(pass)).to include(result.code)
+    expect([:pass]).to include(result.code)
   end
 
   it 'domain-spec must pass basic syntax checks' do
     # A \':\' may appear in domain-spec, but not in top-label.
     result = Coppertone::SpfService.authenticate_email('1.2.3.4', 'foo@e9.example.com', 'mail.example.com', options)
-    expect(%i(permerror)).to include(result.code)
+    expect([:permerror]).to include(result.code)
   end
 
   it 'If no ips are returned, MX mechanism does not match, even with /0.' do
     result = Coppertone::SpfService.authenticate_email('1.2.3.4', 'foo@e1.example.com', 'mail.example.com', options)
-    expect(%i(fail)).to include(result.code)
+    expect([:fail]).to include(result.code)
   end
 
   it 'Matches if any A records for any MX records are present in DNS.' do
     result = Coppertone::SpfService.authenticate_email('1.2.3.4', 'foo@e2.example.com', 'mail.example.com', options)
-    expect(%i(pass)).to include(result.code)
+    expect([:pass]).to include(result.code)
   end
 
   it 'cidr4 doesnt apply to IP6 connections.' do
     # The IP6 CIDR starts with a double slash.
     result = Coppertone::SpfService.authenticate_email('1234::1', 'foo@e2.example.com', 'mail.example.com', options)
-    expect(%i(fail)).to include(result.code)
+    expect([:fail]).to include(result.code)
   end
 
   it 'Would match if any AAAA records for MX records are present in DNS, but not for an IP4 connection.' do
     result = Coppertone::SpfService.authenticate_email('1.2.3.4', 'foo@e2a.example.com', 'mail.example.com', options)
-    expect(%i(fail)).to include(result.code)
+    expect([:fail]).to include(result.code)
   end
 
   it 'Would match if any AAAA records for MX records are present in DNS, but not for an IP4 connection.' do
     result = Coppertone::SpfService.authenticate_email('::FFFF:1.2.3.4', 'foo@e2a.example.com', 'mail.example.com', options)
-    expect(%i(fail)).to include(result.code)
+    expect([:fail]).to include(result.code)
   end
 
   it 'Matches if any AAAA records for any MX records are present in DNS.' do
     result = Coppertone::SpfService.authenticate_email('1234::1', 'foo@e2a.example.com', 'mail.example.com', options)
-    expect(%i(pass)).to include(result.code)
+    expect([:pass]).to include(result.code)
   end
 
   it 'No match if no AAAA records for any MX records are present in DNS.' do
     result = Coppertone::SpfService.authenticate_email('1234::1', 'foo@e2b.example.com', 'mail.example.com', options)
-    expect(%i(fail)).to include(result.code)
+    expect([:fail]).to include(result.code)
   end
 
   it 'Null not allowed in top-label.' do
     result = Coppertone::SpfService.authenticate_email('1.2.3.5', 'foo@e3.example.com', 'mail.example.com', options)
-    expect(%i(permerror)).to include(result.code)
+    expect([:permerror]).to include(result.code)
   end
 
   it 'Top-label may not be all numeric' do
     result = Coppertone::SpfService.authenticate_email('1.2.3.4', 'foo@e5.example.com', 'mail.example.com', options)
-    expect(%i(permerror)).to include(result.code)
+    expect([:permerror]).to include(result.code)
   end
 
   it 'Domain-spec may contain any visible char except %' do
     result = Coppertone::SpfService.authenticate_email('1.2.3.4', 'foo@e11.example.com', 'mail.example.com', options)
-    expect(%i(pass)).to include(result.code)
+    expect([:pass]).to include(result.code)
   end
 
   it 'Domain-spec may contain any visible char except %' do
     result = Coppertone::SpfService.authenticate_email('::FFFF:1.2.3.4', 'foo@e11.example.com', 'mail.example.com', options)
-    expect(%i(pass)).to include(result.code)
+    expect([:pass]).to include(result.code)
   end
 
   it 'Toplabel may not begin with -' do
     result = Coppertone::SpfService.authenticate_email('1.2.3.4', 'foo@e12.example.com', 'mail.example.com', options)
-    expect(%i(permerror)).to include(result.code)
+    expect([:permerror]).to include(result.code)
   end
 
   it 'test null MX' do
     # Some implementations have had trouble with null MX
     result = Coppertone::SpfService.authenticate_email('1.2.3.4', '', 'mail.example.com', options)
-    expect(%i(neutral)).to include(result.code)
+    expect([:neutral]).to include(result.code)
   end
 
   it 'If the target name has no MX records, check_host() MUST NOT pretend the target is its single MX, and MUST NOT default to an A lookup on the target-name directly.' do
     result = Coppertone::SpfService.authenticate_email('1.2.3.4', 'foo@e4.example.com', 'mail.example.com', options)
-    expect(%i(neutral)).to include(result.code)
+    expect([:neutral]).to include(result.code)
   end
 
   it 'domain-spec cannot be empty.' do
     result = Coppertone::SpfService.authenticate_email('1.2.3.4', 'foo@e13.example.com', 'mail.example.com', options)
-    expect(%i(permerror)).to include(result.code)
+    expect([:permerror]).to include(result.code)
   end
 
 end

@@ -10,63 +10,63 @@ describe 'Processing limits' do
 
   it 'SPF implementations MUST limit the number of mechanisms and modifiers that do DNS lookups to at most 10 per SPF check.' do
     result = Coppertone::SpfService.authenticate_email('1.2.3.4', 'foo@e1.example.com', 'mail.example.com', options)
-    expect(%i(permerror)).to include(result.code)
+    expect([:permerror]).to include(result.code)
   end
 
   it 'SPF implementations MUST limit the number of mechanisms and modifiers that do DNS lookups to at most 10 per SPF check.' do
     result = Coppertone::SpfService.authenticate_email('1.2.3.4', 'foo@e2.example.com', 'mail.example.com', options)
-    expect(%i(permerror)).to include(result.code)
+    expect([:permerror]).to include(result.code)
   end
 
   it 'there MUST be a limit of no more than 10 MX looked up and checked.' do
     # The required result for this test was the subject of much controversy with RFC4408.  For RFC7208 the ambiguity was resolved in favor of producing a permerror result.
     result = Coppertone::SpfService.authenticate_email('1.2.3.5', 'foo@e4.example.com', 'mail.example.com', options)
-    expect(%i(permerror)).to include(result.code)
+    expect([:permerror]).to include(result.code)
   end
 
   it 'there MUST be a limit of no more than 10 PTR looked up and checked.' do
     # The result of this test cannot be permerror not only because the RFC does not specify it, but because the sender has no control over the PTR records of spammers. The preferred result reflects evaluating the 10 allowed PTR records in the order returned by the test data. If testing with live DNS, the PTR order may be random, and a pass result would still be compliant.  The SPF result is effectively randomized.
     result = Coppertone::SpfService.authenticate_email('1.2.3.5', 'foo@e5.example.com', 'mail.example.com', options)
-    expect(%i(neutral pass)).to include(result.code)
+    expect([:neutral, :pass]).to include(result.code)
   end
 
   it 'unlike MX, PTR, there is no RR limit for A' do
     # There seems to be a tendency for developers to want to limit A RRs in addition to MX and PTR.  These are IPs, not usable for 3rd party DoS attacks, and hence need no low limit.
     result = Coppertone::SpfService.authenticate_email('1.2.3.12', 'foo@e10.example.com', 'mail.example.com', options)
-    expect(%i(pass)).to include(result.code)
+    expect([:pass]).to include(result.code)
   end
 
   it 'SPF implementations MUST limit the number of mechanisms and modifiers that do DNS lookups to at most 10 per SPF check.' do
     result = Coppertone::SpfService.authenticate_email('1.2.3.4', 'foo@e6.example.com', 'mail.example.com', options)
-    expect(%i(pass)).to include(result.code)
+    expect([:pass]).to include(result.code)
   end
 
   it 'SPF implementations MUST limit the number of mechanisms and modifiers that do DNS lookups to at most 10 per SPF check.' do
     # We do not check whether an implementation counts mechanisms before or after evaluation.  The RFC is not clear on this.
     result = Coppertone::SpfService.authenticate_email('1.2.3.4', 'foo@e7.example.com', 'mail.example.com', options)
-    expect(%i(permerror)).to include(result.code)
+    expect([:permerror]).to include(result.code)
   end
 
   it 'SPF implementations MUST limit the number of mechanisms and modifiers that do DNS lookups to at most 10 per SPF check.' do
     # The part of the RFC that talks about MAY parse the entire record first (4.6) is specific to syntax errors.  In RFC7208, processing limits are part of syntax checking (4.6).
     result = Coppertone::SpfService.authenticate_email('1.2.3.4', 'foo@e8.example.com', 'mail.example.com', options)
-    expect(%i(pass)).to include(result.code)
+    expect([:pass]).to include(result.code)
   end
 
   it 'SPF implementations MUST limit the number of mechanisms and modifiers that do DNS lookups to at most 10 per SPF check.' do
     result = Coppertone::SpfService.authenticate_email('1.2.3.4', 'foo@e9.example.com', 'mail.example.com', options)
-    expect(%i(permerror)).to include(result.code)
+    expect([:permerror]).to include(result.code)
   end
 
   it 'SPF implementations SHOULD limit "void lookups" to two.  An  implementation MAY choose to make such a limit configurable. In this case, a default of two is RECOMMENDED.' do
     # This is a new check in RFC7208, but it\'s been implemented in Mail::SPF for years with no issues.
     result = Coppertone::SpfService.authenticate_email('1.2.3.4', 'foo@e12.example.com', 'mail.example.com', options)
-    expect(%i(neutral)).to include(result.code)
+    expect([:neutral]).to include(result.code)
   end
 
   it 'SPF implementations SHOULD limit "void lookups" to two.  An implementation MAY choose to make such a limit configurable. In this case, a default of two is RECOMMENDED.' do
     result = Coppertone::SpfService.authenticate_email('1.2.3.4', 'foo@e11.example.com', 'mail.example.com', options)
-    expect(%i(permerror)).to include(result.code)
+    expect([:permerror]).to include(result.code)
   end
 
 end

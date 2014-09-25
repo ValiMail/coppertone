@@ -10,33 +10,33 @@ describe 'PTR mechanism syntax' do
 
   it 'PTR              = "ptr"    [ ":" domain-spec ]' do
     result = Coppertone::SpfService.authenticate_email('1.2.3.4', 'foo@e1.example.com', 'mail.example.com', options)
-    expect(%i(permerror)).to include(result.code)
+    expect([:permerror]).to include(result.code)
   end
 
   it 'Check all validated domain names to see if they end in the <target-name> domain.' do
     result = Coppertone::SpfService.authenticate_email('1.2.3.4', 'foo@e2.example.com', 'mail.example.com', options)
-    expect(%i(pass)).to include(result.code)
+    expect([:pass]).to include(result.code)
   end
 
   it 'Check all validated domain names to see if they end in the <target-name> domain.' do
     result = Coppertone::SpfService.authenticate_email('1.2.3.4', 'foo@e3.example.com', 'mail.example.com', options)
-    expect(%i(pass)).to include(result.code)
+    expect([:pass]).to include(result.code)
   end
 
   it 'Check all validated domain names to see if they end in the <target-name> domain.' do
     # This PTR record does not validate
     result = Coppertone::SpfService.authenticate_email('1.2.3.4', 'foo@e4.example.com', 'mail.example.com', options)
-    expect(%i(fail)).to include(result.code)
+    expect([:fail]).to include(result.code)
   end
 
   it 'Check all validated domain names to see if they end in the <target-name> domain.' do
     result = Coppertone::SpfService.authenticate_email('CAFE:BABE::1', 'foo@e3.example.com', 'mail.example.com', options)
-    expect(%i(pass)).to include(result.code)
+    expect([:pass]).to include(result.code)
   end
 
   it 'domain-spec cannot be empty.' do
     result = Coppertone::SpfService.authenticate_email('1.2.3.4', 'foo@e5.example.com', 'mail.example.com', options)
-    expect(%i(permerror)).to include(result.code)
+    expect([:permerror]).to include(result.code)
   end
 
 end

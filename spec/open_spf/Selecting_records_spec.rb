@@ -10,52 +10,52 @@ describe 'Selecting records' do
 
   it 'Version must be terminated by space or end of record.  TXT pieces are joined without intervening spaces.' do
     result = Coppertone::SpfService.authenticate_email('1.2.3.4', 'foo@example2.com', 'mail.example1.com', options)
-    expect(%i(none)).to include(result.code)
+    expect([:none]).to include(result.code)
   end
 
   it 'Empty SPF record.' do
     result = Coppertone::SpfService.authenticate_email('1.2.3.4', 'foo@example1.com', 'mail1.example1.com', options)
-    expect(%i(neutral)).to include(result.code)
+    expect([:neutral]).to include(result.code)
   end
 
   it 'nospace2' do
     result = Coppertone::SpfService.authenticate_email('1.2.3.4', 'foo@example3.com', 'mail.example1.com', options)
-    expect(%i(pass)).to include(result.code)
+    expect([:pass]).to include(result.code)
   end
 
   it 'SPF records no longer used.' do
     result = Coppertone::SpfService.authenticate_email('1.2.3.4', 'foo@example4.com', 'mail.example1.com', options)
-    expect(%i(fail)).to include(result.code)
+    expect([:fail]).to include(result.code)
   end
 
   it 'Implementations should give permerror/unknown because of the conflicting TXT records.' do
     result = Coppertone::SpfService.authenticate_email('1.2.3.4', 'foo@example5.com', 'mail.example1.com', options)
-    expect(%i(permerror)).to include(result.code)
+    expect([:permerror]).to include(result.code)
   end
 
   it 'Multiple records is a permerror, v=spf1 is case insensitive' do
     result = Coppertone::SpfService.authenticate_email('1.2.3.4', 'foo@example6.com', 'mail.example1.com', options)
-    expect(%i(permerror)).to include(result.code)
+    expect([:permerror]).to include(result.code)
   end
 
   it 'Multiple records is a permerror, even when they are identical. However, this situation cannot be reliably reproduced with live DNS since cache and resolvers are allowed to combine identical records.' do
     result = Coppertone::SpfService.authenticate_email('1.2.3.4', 'foo@example7.com', 'mail.example1.com', options)
-    expect(%i(permerror fail)).to include(result.code)
+    expect([:permerror, :fail]).to include(result.code)
   end
 
   it 'Ignoring SPF-type records will give pass because there is a (single) TXT record.' do
     result = Coppertone::SpfService.authenticate_email('1.2.3.4', 'foo@example8.com', 'mail.example1.com', options)
-    expect(%i(pass)).to include(result.code)
+    expect([:pass]).to include(result.code)
   end
 
   it 'nospf' do
     result = Coppertone::SpfService.authenticate_email('1.2.3.4', 'foo@mail.example1.com', 'mail.example1.com', options)
-    expect(%i(none)).to include(result.code)
+    expect([:none]).to include(result.code)
   end
 
   it 'v=spf1 is case insensitive' do
     result = Coppertone::SpfService.authenticate_email('1.2.3.4', 'foo@example9.com', 'mail.example1.com', options)
-    expect(%i(softfail)).to include(result.code)
+    expect([:softfail]).to include(result.code)
   end
 
 end

@@ -11,7 +11,7 @@ describe 'Test cases from implementation bugs' do
   it 'Bytes vs str bug from pyspf.' do
     # Pyspf failed with strict=2 only.  Other implementations may ignore the strict parameter.
     result = Coppertone::SpfService.authenticate_email('2001:db8:ff0:100::2', 'test@example.org', 'example.org', options)
-    expect(%i(pass)).to include(result.code)
+    expect([:pass]).to include(result.code)
   end
 
 end

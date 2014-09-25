@@ -10,37 +10,37 @@ describe 'EXISTS mechanism syntax' do
 
   it 'domain-spec cannot be empty.' do
     result = Coppertone::SpfService.authenticate_email('1.2.3.4', 'foo@e1.example.com', 'mail.example.com', options)
-    expect(%i(permerror)).to include(result.code)
+    expect([:permerror]).to include(result.code)
   end
 
   it 'exists           = "exists"   ":" domain-spec' do
     result = Coppertone::SpfService.authenticate_email('1.2.3.4', 'foo@e2.example.com', 'mail.example.com', options)
-    expect(%i(permerror)).to include(result.code)
+    expect([:permerror]).to include(result.code)
   end
 
   it 'exists           = "exists"   ":" domain-spec' do
     result = Coppertone::SpfService.authenticate_email('1.2.3.4', 'foo@e3.example.com', 'mail.example.com', options)
-    expect(%i(permerror)).to include(result.code)
+    expect([:permerror]).to include(result.code)
   end
 
   it 'mechanism matches if any DNS A RR exists' do
     result = Coppertone::SpfService.authenticate_email('1.2.3.4', 'foo@e4.example.com', 'mail.example.com', options)
-    expect(%i(pass)).to include(result.code)
+    expect([:pass]).to include(result.code)
   end
 
   it 'The lookup type is A even when the connection is ip6' do
     result = Coppertone::SpfService.authenticate_email('CAFE:BABE::3', 'foo@e4.example.com', 'mail.example.com', options)
-    expect(%i(pass)).to include(result.code)
+    expect([:pass]).to include(result.code)
   end
 
   it 'The lookup type is A even when the connection is ip6' do
     result = Coppertone::SpfService.authenticate_email('CAFE:BABE::3', 'foo@e5.example.com', 'mail.example.com', options)
-    expect(%i(fail)).to include(result.code)
+    expect([:fail]).to include(result.code)
   end
 
   it 'Result for DNS error clarified in RFC7208: MTAs or other processors  SHOULD impose a limit on the maximum amount of elapsed time to evaluate  check_host().  Such a limit SHOULD allow at least 20 seconds.  If such  a limit is exceeded, the result of authorization SHOULD be "temperror".' do
     result = Coppertone::SpfService.authenticate_email('CAFE:BABE::3', 'foo@e6.example.com', 'mail.example.com', options)
-    expect(%i(temperror)).to include(result.code)
+    expect([:temperror]).to include(result.code)
   end
 
 end
