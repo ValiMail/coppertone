@@ -11,7 +11,7 @@ module Coppertone
 
     delegate :s, :l, :o, to: :sender_identity
     alias_method :d, :domain
-    delegate :i, :p, :v, :c, to: :ip_address_wrapper
+    delegate :i, :v, :c, to: :ip_address_wrapper
     delegate :ip_v4, :ip_v6, :original_ipv4?, :original_ipv6?,
              to: :ip_address_wrapper
     alias_method :h, :helo_domain
@@ -37,7 +37,7 @@ module Coppertone
     end
 
     RESERVED_REGEXP = Regexp.new("[^#{URI::PATTERN::UNRESERVED}]")
-    %w(s l o d i p v h c r t).each do |m|
+    %w(s l o d i v h c r t).each do |m|
       define_method(m.upcase) do
         unencoded = send(m)
         unencoded ? ::URI.escape(unencoded, RESERVED_REGEXP) : nil

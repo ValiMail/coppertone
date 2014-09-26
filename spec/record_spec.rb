@@ -16,18 +16,24 @@ describe Coppertone::Record do
     end
   end
 
-  context 'parsing' do
-    it 'should return nil for nil' do
-      expect(Coppertone::Record.parse(nil)).to be_nil
+  context 'creation' do
+    it 'should raise an error for nil' do
+      expect do
+        Coppertone::Record.new(nil)
+      end.to raise_error(Coppertone::RecordParsingError)
     end
 
-    it 'should return a nil for text without the prefix' do
-      expect(Coppertone::Record.parse('not a record')).to be_nil
-      expect(Coppertone::Record.parse('v=spf ~all')).to be_nil
+    it 'should raise an error for text without the prefix' do
+      expect do
+        Coppertone::Record.new('not a record')
+      end.to raise_error(Coppertone::RecordParsingError)
+      expect do
+        Coppertone::Record.new('v=spf ~all')
+      end.to raise_error(Coppertone::RecordParsingError)
     end
 
     it 'parse simple mechanism records' do
-      record = Coppertone::Record.parse('v=spf1 ~all')
+      record = Coppertone::Record.new('v=spf1 ~all')
       expect(record).not_to be_nil
       expect(record.directives.size).to eq(1)
       directive = record.directives.first
@@ -37,7 +43,7 @@ describe Coppertone::Record do
     end
 
     it 'be case insensitive when parsing the version string' do
-      record = Coppertone::Record.parse('V=sPf1 ~all')
+      record = Coppertone::Record.new('V=sPf1 ~all')
       expect(record).not_to be_nil
       expect(record.directives.size).to eq(1)
       directive = record.directives.first
@@ -47,7 +53,7 @@ describe Coppertone::Record do
     end
 
     it 'should parse more complex records' do
-      record = Coppertone::Record.parse('v=spf1 mx -all exp=explain._spf.%{d}')
+      record = Coppertone::Record.new('v=spf1 mx -all exp=explain._spf.%{d}')
       expect(record).not_to be_nil
       expect(record.directives.size).to eq(2)
       directive = record.directives.first
@@ -74,42 +80,42 @@ describe Coppertone::Record do
       ]
       bad_records.each do |rec|
         expect do
-          Coppertone::Record.parse(rec)
+          Coppertone::Record.new(rec)
         end.to raise_error(Coppertone::RecordParsingError)
       end
     end
 
     it 'should fail when mechanisms are separated by ctrl characters' do
       expect do
-        Coppertone::Record.parse("v=spf1 a:ctrl.example.com\x0dptr -all")
+        Coppertone::Record.new("v=spf1 a:ctrl.example.com\x0dptr -all")
       end.to raise_error(Coppertone::RecordParsingError)
     end
 
     it 'should fail when it contains spurious terms' do
       expect do
-        Coppertone::Record.parse('v=spf1 ip4:1.2.3.4 -all moo')
+        Coppertone::Record.new('v=spf1 ip4:1.2.3.4 -all moo')
       end.to raise_error(Coppertone::RecordParsingError)
     end
 
     it 'should fail the domain-spec is not syntactically valid' do
       expect do
-        Coppertone::Record.parse('v=spf1 a:foo-bar')
+        Coppertone::Record.new('v=spf1 a:foo-bar')
       end.to raise_error(Coppertone::RecordParsingError)
     end
   end
 
   context '#unknown_modifiers' do
     it 'should return a non-empty array when there are unknown modifiers' do
-      expect(Coppertone::Record.parse('v=spf1 moose=www.example.com').unknown_modifiers.size).to eq(1)
-      expect(Coppertone::Record.parse('v=spf1 moose=www.example.com squirrel=xxx').unknown_modifiers.size).to eq(2)
-      expect(Coppertone::Record.parse('v=spf1 moose=www.example.com moose=xxx').unknown_modifiers.size).to eq(2)
+      expect(Coppertone::Record.new('v=spf1 moose=www.example.com').unknown_modifiers.size).to eq(1)
+      expect(Coppertone::Record.new('v=spf1 moose=www.example.com squirrel=xxx').unknown_modifiers.size).to eq(2)
+      expect(Coppertone::Record.new('v=spf1 moose=www.example.com moose=xxx').unknown_modifiers.size).to eq(2)
     end
 
     it 'should return an empty array when there are no unknown modifiers' do
-      expect(Coppertone::Record.parse('v=spf1 ~all').unknown_modifiers).to be_empty
-      expect(Coppertone::Record.parse('v=spf1 ip4:1.2.3.4 a:test.example.com -all').unknown_modifiers).to be_empty
-      expect(Coppertone::Record.parse('v=spf1 mx -all exp=explain._spf.%{d}').unknown_modifiers).to be_empty
-      expect(Coppertone::Record.parse('v=spf1 mx -all redirect=explain._spf.%{d}').unknown_modifiers).to be_empty
+      expect(Coppertone::Record.new('v=spf1 ~all').unknown_modifiers).to be_empty
+      expect(Coppertone::Record.new('v=spf1 ip4:1.2.3.4 a:test.example.com -all').unknown_modifiers).to be_empty
+      expect(Coppertone::Record.new('v=spf1 mx -all exp=explain._spf.%{d}').unknown_modifiers).to be_empty
+      expect(Coppertone::Record.new('v=spf1 mx -all redirect=explain._spf.%{d}').unknown_modifiers).to be_empty
     end
   end
 end

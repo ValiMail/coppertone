@@ -39,6 +39,7 @@ module Coppertone
       end
 
       def expand_ptr(context, request)
+        context.send(@macro_letter) if context.respond_to?(@macro_letter)
         ptr =
           Coppertone::Utils::ValidatedDomainFinder
             .new(context, request, false).find(context.d)

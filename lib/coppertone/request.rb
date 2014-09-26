@@ -17,7 +17,7 @@ module Coppertone
       check_spf_for_mailfrom
       return mailfrom_result if mailfrom_result && !mailfrom_result.none?
 
-      no_matching_record? ? Result.none : Result.new(:neutral)
+      no_matching_record? ? Result.none : Result.neutral
     end
 
     def no_matching_record?

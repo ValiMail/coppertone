@@ -21,8 +21,8 @@ module Coppertone
       @mechanism = mechanism
     end
 
-    def self.from_directive(directive, code)
-      new(code, directive.mechanism)
+    def self.from_directive(directive)
+      new(directive.qualifier.result_code, directive.mechanism)
     end
 
     def self.permerror(message)
@@ -39,6 +39,10 @@ module Coppertone
 
     def self.none
       Result.new(:none)
+    end
+
+    def self.neutral
+      Result.new(:neutral)
     end
 
     %w(none pass fail softfail neutral temperror permerror).each do |t|

@@ -12,13 +12,11 @@ module Coppertone
     end
 
     def evaluate(context, options)
-      code =
-        if mechanism.match?(context, options)
-          qualifier.result_code
-        else
-          Result::NONE
-        end
-      Coppertone::Result.from_directive(self, code)
+      if mechanism.match?(context, options)
+        Coppertone::Result.from_directive(self)
+      else
+        Result.none
+      end
     end
 
     def all?
