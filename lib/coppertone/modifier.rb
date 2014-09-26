@@ -29,7 +29,7 @@ module Coppertone
     end
 
     def to_s
-      "#{label}=#{arguments}"
+      "#{self.class.label}=#{arguments}"
     end
   end
 end
