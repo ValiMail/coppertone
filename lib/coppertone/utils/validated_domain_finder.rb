@@ -32,7 +32,7 @@ module Coppertone
         is_candidate = !subdomain_only ||
                        DomainUtils.subdomain_or_same?(ptr_name, target_name)
         is_candidate && ip_checker.check(ptr_name)
-      rescue Coppertone::DNS::Error
+      rescue DNSAdapter::Error
         # If a DNS error occurs when looking up a domain, treat it
         # as a non match
         false

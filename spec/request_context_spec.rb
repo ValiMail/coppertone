@@ -4,7 +4,7 @@ describe Coppertone::RequestContext do
   it 'should have reasonable values by default' do
     ctx = Coppertone::RequestContext.new
     expect(ctx.dns_client).to_not be_nil
-    expect(ctx.dns_client.class).to eq(Coppertone::DNS::ResolvClient)
+    expect(ctx.dns_client.class).to eq(DNSAdapter::ResolvClient)
     expect(ctx.message_locale).to eq('en')
     expect(ctx.dns_lookups_per_mx_mechanism_limit).to eq(10)
     expect(ctx.dns_lookups_per_ptr_mechanism_limit).to eq(10)

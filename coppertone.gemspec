@@ -17,6 +17,7 @@ Gem::Specification.new do |spec|
   spec.test_files    = spec.files.grep(/^(test|spec|features)\//)
   spec.require_paths = ['lib']
 
+  spec.add_runtime_dependency 'dns_adapter'
   spec.add_runtime_dependency 'i18n'
   spec.add_runtime_dependency 'addressable'
   spec.add_runtime_dependency 'activesupport', '>= 3.0'

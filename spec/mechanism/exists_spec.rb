@@ -72,7 +72,7 @@ describe Coppertone::Mechanism::Exists do
       end
 
       before do
-        allow(Coppertone::DNS::ResolvClient)
+        allow(DNSAdapter::ResolvClient)
           .to receive(:new).and_return(dns_client)
       end
 

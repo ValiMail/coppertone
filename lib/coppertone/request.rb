@@ -35,6 +35,8 @@ module Coppertone
     def check_spf_for_context(macro_context, identity)
       record = spf_record(macro_context)
       @result = spf_request(macro_context, record, identity) if record
+    rescue DNSAdapter::Error => e
+      Result.temperror(e.message)
     rescue Coppertone::TemperrorError => e
       Result.temperror(e.message)
     rescue Coppertone::PermerrorError => e

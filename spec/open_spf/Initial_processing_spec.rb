@@ -7,7 +7,7 @@ describe 'Initial processing' do
     { 'example.com' => ['TIMEOUT'], 'example.net' => [{ 'TXT' => 'v=spf1 -all exp=exp.example.net' }], 'a.example.net' => [{ 'TXT' => 'v=spf1 -all exp=exp.example.net' }], 'exp.example.net' => [{ 'TXT' => '%{l}' }], 'a12345678901234567890123456789012345678901234567890123456789012.example.com' => [{ 'TXT' => 'v=spf1 -all' }], 'hosed.example.com' => [{ 'TXT' => 'v=spf1 a:ï»¿garbage.example.net -all' }], 'hosed2.example.com' => [{ 'TXT' => "v=spf1 \u0080a:example.net -all" }], 'hosed3.example.com' => [{ 'TXT' => "v=spf1 a:example.net \u0096all" }], 'nothosed.example.com' => [{ 'TXT' => 'v=spf1 a:example.net -all' }, { 'TXT' => "\u0096" }], 'ctrl.example.com' => [{ 'TXT' => "v=spf1 a:ctrl.example.com\rptr -all" }, { 'A' => '192.0.2.3' }], 'fine.example.com' => [{ 'TXT' => 'v=spf1 a  -all' }] }
   end
 
-  let(:dns_client) { Coppertone::DNS::MockClient.new(zonefile) }
+  let(:dns_client) { DNSAdapter::MockClient.new(zonefile) }
   let(:options) { { dns_client: dns_client } }
 
   it 'DNS labels limited to 63 chars.' do

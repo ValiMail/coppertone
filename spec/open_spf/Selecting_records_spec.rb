@@ -5,7 +5,7 @@ describe 'Selecting records' do
     { 'example3.com' => [{ 'TXT' => 'v=spf10' }, { 'TXT' => 'v=spf1 mx' }, { 'MX' => [0, 'mail.example1.com'] }], 'example1.com' => [{ 'TXT' => 'v=spf1' }], 'example2.com' => [{ 'TXT' => ['v=spf1', 'mx'] }], 'mail.example1.com' => [{ 'A' => '1.2.3.4' }], 'example4.com' => [{ 'SPF' => 'v=spf1 +all' }, { 'TXT' => 'v=spf1 -all' }], 'example5.com' => [{ 'SPF' => 'v=spf1 +all' }, { 'TXT' => 'v=spf1 -all' }, { 'TXT' => 'v=spf1 +all' }], 'example6.com' => [{ 'TXT' => 'v=spf1 -all' }, { 'TXT' => 'V=sPf1 +all' }], 'example7.com' => [{ 'TXT' => 'v=spf1 -all' }, { 'TXT' => 'v=spf1 -all' }], 'example8.com' => [{ 'SPF' => 'V=spf1 -all' }, { 'SPF' => 'v=spf1 -all' }, { 'TXT' => 'v=spf1 +all' }], 'example9.com' => [{ 'TXT' => 'v=SpF1 ~all' }] }
   end
 
-  let(:dns_client) { Coppertone::DNS::MockClient.new(zonefile) }
+  let(:dns_client) { DNSAdapter::MockClient.new(zonefile) }
   let(:options) { { dns_client: dns_client } }
 
   it 'Version must be terminated by space or end of record.  TXT pieces are joined without intervening spaces.' do

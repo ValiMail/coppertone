@@ -5,7 +5,7 @@ describe 'IP4 mechanism syntax' do
     { 'mail.example.com' => [{ 'A' => '1.2.3.4' }], 'e1.example.com' => [{ 'TXT' => 'v=spf1 ip4:1.1.1.1/0 -all' }], 'e2.example.com' => [{ 'TXT' => 'v=spf1 ip4:1.2.3.4/32 -all' }], 'e3.example.com' => [{ 'TXT' => 'v=spf1 ip4:1.2.3.4/33 -all' }], 'e4.example.com' => [{ 'TXT' => 'v=spf1 ip4:1.2.3.4/032 -all' }], 'e5.example.com' => [{ 'TXT' => 'v=spf1 ip4' }], 'e6.example.com' => [{ 'TXT' => 'v=spf1 ip4:1.2.3.4//32' }], 'e7.example.com' => [{ 'TXT' => 'v=spf1 -ip4:1.2.3.4 ip6:::FFFF:1.2.3.4' }], 'e8.example.com' => [{ 'TXT' => 'v=spf1 ip4:1.2.3.4:8080' }], 'e9.example.com' => [{ 'TXT' => 'v=spf1 ip4:1.2.3' }] }
   end
 
-  let(:dns_client) { Coppertone::DNS::MockClient.new(zonefile) }
+  let(:dns_client) { DNSAdapter::MockClient.new(zonefile) }
   let(:options) { { dns_client: dns_client } }
 
   it 'ip4-cidr-length  = "/" 1*DIGIT' do
