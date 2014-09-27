@@ -5,7 +5,7 @@ describe 'ALL mechanism syntax' do
     { 'mail.example.com' => [{ 'A' => '1.2.3.4' }], 'e1.example.com' => [{ 'TXT' => 'v=spf1 -all.' }], 'e2.example.com' => [{ 'TXT' => 'v=spf1 -all:foobar' }], 'e3.example.com' => [{ 'TXT' => 'v=spf1 -all/8' }], 'e4.example.com' => [{ 'TXT' => 'v=spf1 ?all' }], 'e5.example.com' => [{ 'TXT' => 'v=spf1 all -all' }] }
   end
 
-  let(:dns_client) { Coppertone::DNS::MockClient.new(zonefile) }
+  let(:dns_client) { DNSAdapter::MockClient.new(zonefile) }
   let(:options) { { dns_client: dns_client } }
 
   it 'all              = "all" ' do

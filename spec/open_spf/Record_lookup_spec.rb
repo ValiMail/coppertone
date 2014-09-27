@@ -5,7 +5,7 @@ describe 'Record lookup' do
     { 'both.example.net' => [{ 'TXT' => 'v=spf1 -all' }, { 'SPF' => 'v=spf1 -all' }], 'txtonly.example.net' => [{ 'TXT' => 'v=spf1 -all' }], 'spfonly.example.net' => [{ 'SPF' => 'v=spf1 -all' }, { 'TXT' => 'NONE' }], 'spftimeout.example.net' => [{ 'TXT' => 'v=spf1 -all' }, 'TIMEOUT'], 'txttimeout.example.net' => [{ 'SPF' => 'v=spf1 -all' }, { 'TXT' => 'NONE' }, 'TIMEOUT'], 'nospftxttimeout.example.net' => [{ 'SPF' => 'v=spf3 !a:yahoo.com -all' }, { 'TXT' => 'NONE' }, 'TIMEOUT'], 'alltimeout.example.net' => ['TIMEOUT'] }
   end
 
-  let(:dns_client) { Coppertone::DNS::MockClient.new(zonefile) }
+  let(:dns_client) { DNSAdapter::MockClient.new(zonefile) }
   let(:options) { { dns_client: dns_client } }
 
   it 'both' do

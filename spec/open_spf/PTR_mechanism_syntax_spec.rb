@@ -5,7 +5,7 @@ describe 'PTR mechanism syntax' do
     { 'mail.example.com' => [{ 'A' => '1.2.3.4' }], 'e1.example.com' => [{ 'TXT' => 'v=spf1 ptr/0 -all' }], 'e2.example.com' => [{ 'TXT' => 'v=spf1 ptr:example.com -all' }], '4.3.2.1.in-addr.arpa' => [{ 'PTR' => 'e3.example.com' }, { 'PTR' => 'e4.example.com' }, { 'PTR' => 'mail.example.com' }], '1.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.E.B.A.B.E.F.A.C.ip6.arpa' => [{ 'PTR' => 'e3.example.com' }], 'e3.example.com' => [{ 'TXT' => 'v=spf1 ptr -all' }, { 'A' => '1.2.3.4' }, { 'AAAA' => 'CAFE:BABE::1' }], 'e4.example.com' => [{ 'TXT' => 'v=spf1 ptr -all' }], 'e5.example.com' => [{ 'TXT' => 'v=spf1 ptr:' }] }
   end
 
-  let(:dns_client) { Coppertone::DNS::MockClient.new(zonefile) }
+  let(:dns_client) { DNSAdapter::MockClient.new(zonefile) }
   let(:options) { { dns_client: dns_client } }
 
   it 'PTR              = "ptr"    [ ":" domain-spec ]' do

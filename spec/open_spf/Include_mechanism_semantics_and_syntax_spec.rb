@@ -5,7 +5,7 @@ describe 'Include mechanism semantics and syntax' do
     { 'mail.example.com' => [{ 'A' => '1.2.3.4' }], 'ip5.example.com' => [{ 'TXT' => 'v=spf1 ip4:1.2.3.5 -all' }], 'ip6.example.com' => [{ 'TXT' => 'v=spf1 ip4:1.2.3.6 ~all' }], 'ip7.example.com' => [{ 'TXT' => 'v=spf1 ip4:1.2.3.7 ?all' }], 'ip8.example.com' => ['TIMEOUT'], 'erehwon.example.com' => [{ 'TXT' => 'v=spfl am not an SPF record' }], 'e1.example.com' => [{ 'TXT' => 'v=spf1 include:ip5.example.com ~all' }], 'e2.example.com' => [{ 'TXT' => 'v=spf1 include:ip6.example.com all' }], 'e3.example.com' => [{ 'TXT' => 'v=spf1 include:ip7.example.com -all' }], 'e4.example.com' => [{ 'TXT' => 'v=spf1 include:ip8.example.com -all' }], 'e5.example.com' => [{ 'TXT' => 'v=spf1 include:e6.example.com -all' }], 'e6.example.com' => [{ 'TXT' => 'v=spf1 include +all' }], 'e7.example.com' => [{ 'TXT' => 'v=spf1 include:erehwon.example.com -all' }], 'e8.example.com' => [{ 'TXT' => 'v=spf1 include: -all' }], 'e9.example.com' => [{ 'TXT' => 'v=spf1 include:ip5.example.com/24 -all' }] }
   end
 
-  let(:dns_client) { Coppertone::DNS::MockClient.new(zonefile) }
+  let(:dns_client) { DNSAdapter::MockClient.new(zonefile) }
   let(:options) { { dns_client: dns_client } }
 
   it 'recursive check_host() result of fail causes include to not match.' do

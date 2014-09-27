@@ -1,5 +1,4 @@
 require 'active_support/core_ext/module/delegation'
-require 'coppertone/dns/resolv_client'
 
 module Coppertone
   # A container for information that should span the lifetime of
@@ -41,7 +40,7 @@ module Coppertone
         elsif Coppertone.config.dns_client_class
           Coppertone.config.dns_client_class.new
         else
-          Coppertone::DNS::ResolvClient.new
+          DNSAdapter::ResolvClient.new
         end
     end
 

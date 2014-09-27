@@ -17,7 +17,7 @@ module Coppertone
         expanded = macro_string.expand(macro_context, request_context)
         return nil unless ASCII_REGEXP.match(expanded)
         expanded
-      rescue Coppertone::Error
+      rescue DNSAdapter::Error
         nil
       end
 

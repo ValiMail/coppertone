@@ -5,7 +5,7 @@ describe 'IP6 mechanism syntax' do
     { 'mail.example.com' => [{ 'A' => '1.2.3.4' }], 'e1.example.com' => [{ 'TXT' => 'v=spf1 -all ip6' }], 'e2.example.com' => [{ 'TXT' => 'v=spf1 ip6:::1.1.1.1/0' }], 'e3.example.com' => [{ 'TXT' => 'v=spf1 ip6:::1.1.1.1/129' }], 'e4.example.com' => [{ 'TXT' => 'v=spf1 ip6:::1.1.1.1//33' }], 'e5.example.com' => [{ 'TXT' => 'v=spf1 ip6:CAFE:BABE:8000::/33' }], 'e6.example.com' => [{ 'TXT' => 'v=spf1 ip6::CAFE::BABE' }] }
   end
 
-  let(:dns_client) { Coppertone::DNS::MockClient.new(zonefile) }
+  let(:dns_client) { DNSAdapter::MockClient.new(zonefile) }
   let(:options) { { dns_client: dns_client } }
 
   it 'IP6              = "ip6"      ":" ip6-network   [ ip6-cidr-length ]' do

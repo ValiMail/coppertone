@@ -27,12 +27,12 @@ module Coppertone
   end
 end
 
+require 'dns_adapter'
 require 'coppertone/version'
 require 'coppertone/utils'
 require 'coppertone/error'
 require 'coppertone/request_count_limiter'
 require 'coppertone/sender_identity'
-require 'coppertone/dns'
 require 'coppertone/ip_address_wrapper'
 require 'coppertone/macro_context'
 require 'coppertone/null_macro_context'

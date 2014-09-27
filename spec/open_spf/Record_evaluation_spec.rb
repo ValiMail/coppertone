@@ -5,7 +5,7 @@ describe 'Record evaluation' do
     { 'mail.example.com' => [{ 'A' => '1.2.3.4' }], 't1.example.com' => [{ 'TXT' => 'v=spf1 ip4:1.2.3.4 -all moo' }], 't2.example.com' => [{ 'TXT' => 'v=spf1 moo.cow-far_out=man:dog/cat ip4:1.2.3.4 -all' }], 't3.example.com' => [{ 'TXT' => 'v=spf1 moo.cow/far_out=man:dog/cat ip4:1.2.3.4 -all' }], 't4.example.com' => [{ 'TXT' => 'v=spf1 moo.cow:far_out=man:dog/cat ip4:1.2.3.4 -all' }], 't5.example.com' => [{ 'TXT' => 'v=spf1 redirect=t5.example.com ~all' }], 't6.example.com' => [{ 'TXT' => 'v=spf1 ip4:1.2.3.4 redirect=t2.example.com' }], 't7.example.com' => [{ 'TXT' => 'v=spf1 ip4:1.2.3.4' }], 't8.example.com' => [{ 'TXT' => 'v=spf1 ip4:1.2.3.4 redirect:t2.example.com' }], 't9.example.com' => [{ 'TXT' => 'v=spf1 a:foo-bar -all' }], 't10.example.com' => [{ 'TXT' => 'v=spf1 a:mail.example...com -all' }], 't11.example.com' => [{ 'TXT' => 'v=spf1 a:a123456789012345678901234567890123456789012345678901234567890123.example.com -all' }], 't12.example.com' => [{ 'TXT' => 'v=spf1 a:%{H}.bar -all' }] }
   end
 
-  let(:dns_client) { Coppertone::DNS::MockClient.new(zonefile) }
+  let(:dns_client) { DNSAdapter::MockClient.new(zonefile) }
   let(:options) { { dns_client: dns_client } }
 
   it 'Any syntax errors anywhere in the record MUST be detected.' do

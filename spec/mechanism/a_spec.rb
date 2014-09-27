@@ -186,7 +186,7 @@ describe Coppertone::Mechanism::A do
       end
 
       before do
-        allow(Coppertone::DNS::ResolvClient)
+        allow(DNSAdapter::ResolvClient)
           .to receive(:new).and_return(gmail_dns_client)
       end
 

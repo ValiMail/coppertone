@@ -48,7 +48,7 @@ def write_zonedata(f, zonedata, indent = 1)
   puts_prefixed_string(f, zonedata, indent + 1)
   puts_prefixed_string(f, 'end', indent)
   empty_line(f)
-  dns_line = 'let(:dns_client) { Coppertone::DNS::MockClient.new(zonefile) }'
+  dns_line = 'let(:dns_client) { DNSAdapter::MockClient.new(zonefile) }'
   puts_prefixed_string(f, dns_line, indent)
   puts_prefixed_string(f, 'let(:options) { { dns_client: dns_client } }',
                        indent)
