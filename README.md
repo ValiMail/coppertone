@@ -17,13 +17,15 @@ One of the challenges of writing a gem that is intended to implement a specifica
 3. Coppertone defaults to using the DNS term and lookup limits defined in [RFC 7208](http://tools.ietf.org/html/rfc7208#section-4.6.4), but makes these limits configurable.
 4. Coppertone does not do TLD validation on domains encountered in SPF processing.  Domains are syntactically validated, but the TLD value is not checked against the public access list.
 
+To ensure compliance with [RFC 7208](http://tools.ietf.org/html/rfc7208), Coppertone includes the latest published version of the [OpenSPF specs](http://www.openspf.org/Test_Suite) in its RSpec test suite.
+
 If you'd like to suggest amending these guidelines, please open an issue for discussion.  Suggestions driven by real world behavior - divergences implemented by major mail server vendors or MTAs will be prioritized.
 
 ## Requirements
 
-Coppertone supports MRI 2.0 and up - earlier MRI rubies are not supported.  JRuby and Rubinius support is planned, but these VMs are not currently supported.
+Coppertone supports MRI 2.0 and up - earlier MRI rubies are not supported.  JRuby 1.7.16+ and Rubinius 2.2+ are also supported.
 
-Coppertone does not require Rails.
+Coppertone does not require Rails, although it does depend on ActiveSupport.
 
 ## Installation
 
@@ -43,7 +45,17 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+To use Coppertone as a simple SPF checker (as you might, for example, if you were bundling it in a receiving SMTP server), you may use the `Coppertone::SpfService#authenticate_email` method.
+
+For example, were you authenticating an email sent by an SMTP server with IP address 1.2.3.4, advertising a HELO domain of 'mailserver123.example.org' and sent from 'somerandomperson@example.org', you'd invoke the method as follows:
+
+    result = Coppertone::SpfService#authenticate_email('1.2.3.4',
+                                                       'somerandomperson@example.org',
+                                                       'mailserver123.example.org')
+
+which would yield an instance of Coppertone::Result with the appropriate result code, and any explanation message.  If the email was validated, then this result will also include the validating mechanism and the validated identity ('helo' or 'mailfrom').
+
+For more sophisticated use of Coppertone, please consult the code and corresponding documentation directly.
 
 ## Contributing
 
