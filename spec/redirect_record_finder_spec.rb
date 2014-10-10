@@ -1,4 +1,4 @@
 require 'spec_helper'
 
-describe Coppertone::RecordFinder do
+describe Coppertone::RedirectRecordFinder do
 end
