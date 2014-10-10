@@ -6,12 +6,16 @@ describe Coppertone::Mechanism::Ptr do
       mech = Coppertone::Mechanism::Ptr.new(nil)
       expect(mech).not_to be_nil
       expect(mech.domain_spec).to be_nil
+      expect(mech).not_to be_includes_ptr
+      expect(mech).to be_context_dependent
     end
 
     it 'should not fail if called with a blank argument' do
       mech = Coppertone::Mechanism::Ptr.new('')
       expect(mech).not_to be_nil
       expect(mech.domain_spec).to be_nil
+      expect(mech).not_to be_includes_ptr
+      expect(mech).to be_context_dependent
     end
 
     it 'should fail if called with an invalid macrostring' do

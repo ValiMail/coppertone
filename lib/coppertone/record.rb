@@ -38,6 +38,15 @@ module Coppertone
       include_all?
     end
 
+    def includes
+      @includes ||=
+        begin
+          directives.select do |d|
+            d.mechanism.is_a?(Coppertone::Mechanism::Include)
+          end
+        end
+    end
+
     def modifiers
       @modifiers ||= @terms.select { |t| t.is_a?(Coppertone::Modifier) }
     end
@@ -52,6 +61,23 @@ module Coppertone
 
     def exp
       @exp ||= find_modifier(Coppertone::Modifier::Exp)
+    end
+
+    def context_dependent_result?(request_context)
+      return true if directives.exist?(&:context_dependent)
+      return true if context_dependent_redirect_result?(request_context)
+      return false if includes.blank?
+      includes.exists? { |i| i.context_dependent_result?(request_context) }
+    end
+
+    def context_dependent_redirect_result?(request_context)
+      return false unless redirect
+      redirect.context_dependent? ||
+        redirect.context_dependent_result?(request_context)
+    end
+
+    def context_dependent_message?
+      exp && exp.context_dependent?
     end
 
     KNOWN_MODS =

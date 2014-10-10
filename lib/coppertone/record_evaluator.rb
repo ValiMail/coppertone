@@ -50,14 +50,12 @@ module Coppertone
 
     def evaluate_none_result(result, macro_context, request_context)
       return result unless follow_redirect?
-      redirect_target = record.redirect.evaluate(macro_context, request_context)
-      if redirect_target
-        redirect_record =
-          RecordFinder.new(request_context.dns_client, redirect_target).record
-      end
-      fail InvalidRedirectError unless redirect_record
-      rc = macro_context.with_domain(redirect_target)
-      RecordEvaluator.new(redirect_record).evaluate(rc, request_context)
+      finder =
+        Coppertone::RedirectRecordFinder.new(record.redirect, macro_context,
+                                             request_context)
+      fail InvalidRedirectError unless finder.target && finder.record
+      rc = macro_context.with_domain(finder.target)
+      RecordEvaluator.new(finder.record).evaluate(rc, request_context)
     end
   end
 end

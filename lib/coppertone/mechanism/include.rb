@@ -21,6 +21,15 @@ module Coppertone
         RecordFinder.new(request_context.dns_client, target_name).record
       end
 
+      def context_dependent_result?(request_context,
+                                    macro_context =
+                                      Coppertone::NullMacroContext.new)
+        target_name =
+          target_name_from_domain_spec(macro_context, request_context)
+        included_record(request_context, target_name)
+          .context_dependent_result?(request_context)
+      end
+
       def self.label
         'include'
       end

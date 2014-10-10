@@ -12,6 +12,17 @@ module Coppertone
         target_name_from_domain_spec(macro_context, request_context)
       end
 
+      def included_record(macro_context, request_context)
+        RedirectRecordFinder.new(self, macro_context, request_context).record
+      end
+
+      def context_dependent_result?(request_context,
+                                    macro_context =
+                                      Coppertone::NullMacroContext.new)
+        included_record(macro_context, request_context)
+          .context_dependent_result?(request_context)
+      end
+
       def self.label
         'redirect'
       end

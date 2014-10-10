@@ -20,9 +20,34 @@ describe Coppertone::Mechanism::Exists do
       end.to raise_error(Coppertone::InvalidMechanismError)
     end
 
-    it 'should succeed if called with a valid macrostring' do
-      mech = Coppertone::Mechanism::Exists.new(':%{d}.example.com')
-      expect(mech.to_s).to eq('exists:%{d}.example.com')
+    it 'should parse a context independent domain spec' do
+      mech = Coppertone::Mechanism::Exists.new(':_spf.example.com')
+      expect(mech).not_to be_nil
+      expect(mech.domain_spec)
+        .to eq(Coppertone::DomainSpec.new('_spf.example.com'))
+      expect(mech.to_s).to eq('exists:_spf.example.com')
+      expect(mech).not_to be_includes_ptr
+      expect(mech).not_to be_context_dependent
+    end
+
+    it 'should parse a context dependent domain spec' do
+      mech = Coppertone::Mechanism::Exists.new(':_spf.%{d}.example.com')
+      expect(mech).not_to be_nil
+      expect(mech.domain_spec)
+        .to eq(Coppertone::DomainSpec.new('_spf.%{d}.example.com'))
+      expect(mech.to_s).to eq('exists:_spf.%{d}.example.com')
+      expect(mech).not_to be_includes_ptr
+      expect(mech).to be_context_dependent
+    end
+
+    it 'should parse a domain spec with a ptr' do
+      mech = Coppertone::Mechanism::Exists.new(':_spf.%{p}.example.com')
+      expect(mech).not_to be_nil
+      expect(mech.domain_spec)
+        .to eq(Coppertone::DomainSpec.new('_spf.%{p}.example.com'))
+      expect(mech.to_s).to eq('exists:_spf.%{p}.example.com')
+      expect(mech).to be_includes_ptr
+      expect(mech).to be_context_dependent
     end
   end
 

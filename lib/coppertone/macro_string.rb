@@ -30,6 +30,13 @@ module Coppertone
       macros.any? { |m| m.is_a?(Coppertone::MacroString::MacroExpand) }
     end
 
+    def includes_ptr?
+      expanded_macros = macros.select do |m|
+        m.is_a?(Coppertone::MacroString::MacroExpand)
+      end
+      expanded_macros.any?(&:ptr_macro?)
+    end
+
     def ==(other)
       return false unless other.instance_of? self.class
       macro_text == other.macro_text

@@ -22,6 +22,11 @@ module Coppertone
         return true unless domain_spec
         domain_spec.context_dependent?
       end
+
+      def includes_ptr?
+        return false unless domain_spec
+        domain_spec.includes_ptr?
+      end
     end
   end
 end

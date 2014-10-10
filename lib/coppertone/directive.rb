@@ -19,6 +19,10 @@ module Coppertone
       end
     end
 
+    def context_dependent?
+      mechanism.context_dependent?
+    end
+
     def all?
       mechanism.is_a?(Coppertone::Mechanism::All)
     end

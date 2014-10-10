@@ -42,6 +42,10 @@ module Coppertone
     def context_dependent?
       false
     end
+
+    def includes_ptr?
+      false
+    end
   end
 end
 

@@ -24,18 +24,24 @@ describe Coppertone::Mechanism::IP4 do
       mech = Coppertone::Mechanism::IP4.new(':fe80::202:b3ff:fe1e:8329')
       expect(mech.ip_network).to eq(IPAddr.new('fe80::202:b3ff:fe1e:8329'))
       expect(mech.to_s).to eq('ip4:fe80::202:b3ff:fe1e:8329')
+      expect(mech).not_to be_includes_ptr
+      expect(mech).not_to be_context_dependent
     end
 
     it 'should work if called with an IP4' do
       mech = Coppertone::Mechanism::IP4.new(':1.2.3.4')
       expect(mech.ip_network).to eq(IPAddr.new('1.2.3.4'))
       expect(mech.to_s).to eq('ip4:1.2.3.4')
+      expect(mech).not_to be_includes_ptr
+      expect(mech).not_to be_context_dependent
     end
 
     it 'should work if called with an IP4 with a pfxlen' do
       mech = Coppertone::Mechanism::IP4.new(':1.2.3.4/4')
       expect(mech.ip_network).to eq(IPAddr.new('1.2.3.4/4'))
       expect(mech.to_s).to eq('ip4:1.2.3.4/4')
+      expect(mech).not_to be_includes_ptr
+      expect(mech).not_to be_context_dependent
     end
   end
 

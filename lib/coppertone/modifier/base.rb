@@ -16,6 +16,14 @@ module Coppertone
         Coppertone::Utils::DomainUtils.macro_expanded_domain(domain)
       end
 
+      def context_dependent?
+        domain_spec.context_dependent?
+      end
+
+      def includes_ptr?
+        domain_spec.includes_ptr?
+      end
+
       def ==(other)
         return false unless other.instance_of? self.class
         domain_spec == other.domain_spec

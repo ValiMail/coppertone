@@ -9,6 +9,8 @@ describe Coppertone::Mechanism::A do
       expect(mech.ip_v4_cidr_length).to eq(32)
       expect(mech.ip_v6_cidr_length).to eq(128)
       expect(mech.to_s).to eq('a')
+      expect(mech).not_to be_includes_ptr
+      expect(mech).to be_context_dependent
     end
 
     it 'should not fail if called with a blank argument' do
@@ -18,6 +20,8 @@ describe Coppertone::Mechanism::A do
       expect(mech.ip_v4_cidr_length).to eq(32)
       expect(mech.ip_v6_cidr_length).to eq(128)
       expect(mech.to_s).to eq('a')
+      expect(mech).not_to be_includes_ptr
+      expect(mech).to be_context_dependent
     end
 
     it 'should fail if called with an invalid macrostring' do
@@ -26,7 +30,19 @@ describe Coppertone::Mechanism::A do
       end.to raise_error(Coppertone::InvalidMechanismError)
     end
 
-    it 'should parse a domain spec' do
+    it 'should parse a context independent domain spec' do
+      mech = Coppertone::Mechanism::A.new(':_spf.example.com')
+      expect(mech).not_to be_nil
+      expect(mech.domain_spec)
+        .to eq(Coppertone::DomainSpec.new('_spf.example.com'))
+      expect(mech.ip_v4_cidr_length).to eq(32)
+      expect(mech.ip_v6_cidr_length).to eq(128)
+      expect(mech.to_s).to eq('a:_spf.example.com')
+      expect(mech).not_to be_includes_ptr
+      expect(mech).not_to be_context_dependent
+    end
+
+    it 'should parse a context dependent domain spec' do
       mech = Coppertone::Mechanism::A.new(':_spf.%{d}.example.com')
       expect(mech).not_to be_nil
       expect(mech.domain_spec)
@@ -34,6 +50,20 @@ describe Coppertone::Mechanism::A do
       expect(mech.ip_v4_cidr_length).to eq(32)
       expect(mech.ip_v6_cidr_length).to eq(128)
       expect(mech.to_s).to eq('a:_spf.%{d}.example.com')
+      expect(mech).not_to be_includes_ptr
+      expect(mech).to be_context_dependent
+    end
+
+    it 'should parse a domain spec with a ptr' do
+      mech = Coppertone::Mechanism::A.new(':_spf.%{p}.example.com')
+      expect(mech).not_to be_nil
+      expect(mech.domain_spec)
+        .to eq(Coppertone::DomainSpec.new('_spf.%{p}.example.com'))
+      expect(mech.ip_v4_cidr_length).to eq(32)
+      expect(mech.ip_v6_cidr_length).to eq(128)
+      expect(mech.to_s).to eq('a:_spf.%{p}.example.com')
+      expect(mech).to be_includes_ptr
+      expect(mech).to be_context_dependent
     end
 
     it 'should parse a valid IP v4 CIDR length with a domain spec' do

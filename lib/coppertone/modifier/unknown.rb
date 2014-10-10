@@ -12,6 +12,14 @@ module Coppertone
         raise Coppertone::InvalidModifierError
       end
 
+      def context_dependent?
+        false
+      end
+
+      def includes_ptr?
+        false
+      end
+
       def self.label
         'unknown'
       end

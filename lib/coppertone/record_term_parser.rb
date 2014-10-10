@@ -1,4 +1,5 @@
 module Coppertone
+  # Parses a record into terms
   class RecordTermParser
     VERSION_STR =  'v=spf1'
     RECORD_REGEXP = /\A#{VERSION_STR}(\s|\z)/i
