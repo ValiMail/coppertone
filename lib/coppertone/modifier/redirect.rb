@@ -23,6 +23,11 @@ module Coppertone
           .context_dependent_result?(request_context)
       end
 
+      def target_domain
+        fail NeedsContextError if context_dependent?
+        arguments
+      end
+
       def self.label
         'redirect'
       end

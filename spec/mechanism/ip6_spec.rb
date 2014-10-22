@@ -23,18 +23,21 @@ describe Coppertone::Mechanism::IP6 do
     it 'should not fail if called with an IP v4' do
       mech = Coppertone::Mechanism::IP6.new(':1.2.3.4')
       expect(mech.ip_network).to eq(IPAddr.new('1.2.3.4'))
+      expect(mech).not_to be_dns_lookup_term
     end
 
     it 'should work if called with an IP6' do
       mech = Coppertone::Mechanism::IP6.new(':fe80::202:b3ff:fe1e:8329')
       expect(mech.ip_network)
         .to eq(IPAddr.new('fe80::202:b3ff:fe1e:8329'))
+      expect(mech).not_to be_dns_lookup_term
     end
 
     it 'should work if called with an IP6 with a pfxlen' do
       mech = Coppertone::Mechanism::IP6.new(':fe80::202:b3ff:fe1e:8329/64')
       expect(mech.ip_network)
         .to eq(IPAddr.new('fe80::202:b3ff:fe1e:8329/64'))
+      expect(mech).not_to be_dns_lookup_term
     end
 
     it 'should fail if called with an invalid pfxlen' do

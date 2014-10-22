@@ -7,6 +7,7 @@ describe Coppertone::Mechanism::All do
     expect(subject.to_s).to eq('all')
     expect(subject).not_to be_includes_ptr
     expect(subject).not_to be_context_dependent
+    expect(subject).not_to be_dns_lookup_term
   end
 
   it 'should not allow creation of new instances' do

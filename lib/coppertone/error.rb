@@ -45,4 +45,8 @@ module Coppertone
   class TermLimitExceededError < PermerrorError; end
   class VoidLimitExceededError < PermerrorError; end
   class MXLimitExceededError < PermerrorError; end
+
+  # Raised when context is required to evaluate a value, but
+  # context is not available
+  class NeedsContextError < Coppertone::Error; end
 end
