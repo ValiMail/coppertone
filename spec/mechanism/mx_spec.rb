@@ -11,6 +11,7 @@ describe Coppertone::Mechanism::MX do
       expect(mech.to_s).to eq('mx')
       expect(mech).not_to be_includes_ptr
       expect(mech).to be_context_dependent
+      expect(mech).to be_dns_lookup_term
     end
 
     it 'should not fail if called with a blank argument' do
@@ -22,6 +23,7 @@ describe Coppertone::Mechanism::MX do
       expect(mech.to_s).to eq('mx')
       expect(mech).not_to be_includes_ptr
       expect(mech).to be_context_dependent
+      expect(mech).to be_dns_lookup_term
     end
 
     it 'should fail if called with an invalid macrostring' do
@@ -39,6 +41,7 @@ describe Coppertone::Mechanism::MX do
       expect(mech.to_s).to eq('mx/24')
       expect(mech).not_to be_includes_ptr
       expect(mech).to be_context_dependent
+      expect(mech).to be_dns_lookup_term
     end
 
     it 'should process the domain spec if it includes a IP v6 CIDR' do
@@ -61,6 +64,7 @@ describe Coppertone::Mechanism::MX do
       expect(mech.to_s).to eq('mx/28//96')
       expect(mech).not_to be_includes_ptr
       expect(mech).to be_context_dependent
+      expect(mech).to be_dns_lookup_term
     end
 
     it 'should not fail if called with a fixed domain spec without explicit CIDRs' do
@@ -83,6 +87,7 @@ describe Coppertone::Mechanism::MX do
       expect(mech.ip_v4_cidr_length).to eq(28)
       expect(mech.ip_v6_cidr_length).to eq(96)
       expect(mech.to_s).to eq('mx:mx.example.com/28//96')
+      expect(mech).to be_dns_lookup_term
     end
 
     it 'should not fail if called with a context-dependent domain spec without explicit CIDRs' do
@@ -95,6 +100,7 @@ describe Coppertone::Mechanism::MX do
       expect(mech.to_s).to eq('mx:%{d}.example.com')
       expect(mech).not_to be_includes_ptr
       expect(mech).to be_context_dependent
+      expect(mech).to be_dns_lookup_term
     end
 
     it 'should not fail if called with a fixed domain spec with explicit CIDRs' do
@@ -107,6 +113,7 @@ describe Coppertone::Mechanism::MX do
       expect(mech.to_s).to eq('mx:%{d}.example.com/28//96')
       expect(mech).not_to be_includes_ptr
       expect(mech).to be_context_dependent
+      expect(mech).to be_dns_lookup_term
     end
 
     it 'should not fail if called with a context-dependent domain spec without explicit CIDRs with PTR' do
@@ -119,6 +126,7 @@ describe Coppertone::Mechanism::MX do
       expect(mech.to_s).to eq('mx:%{p}.example.com')
       expect(mech).to be_includes_ptr
       expect(mech).to be_context_dependent
+      expect(mech).to be_dns_lookup_term
     end
 
     it 'should not fail if called with a fixed domain spec with explicit CIDRs with PTR' do
@@ -131,6 +139,7 @@ describe Coppertone::Mechanism::MX do
       expect(mech.to_s).to eq('mx:%{p}.example.com/28//96')
       expect(mech).to be_includes_ptr
       expect(mech).to be_context_dependent
+      expect(mech).to be_dns_lookup_term
     end
   end
 

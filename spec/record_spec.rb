@@ -118,4 +118,12 @@ describe Coppertone::Record do
       expect(Coppertone::Record.new('v=spf1 mx -all redirect=explain._spf.%{d}').unknown_modifiers).to be_empty
     end
   end
+
+  context '#dns_lookup_term_count' do
+    it 'should calculate correctly' do
+      expect(Coppertone::Record.new('v=spf1 -all exp=explain._spf.%{d}').dns_lookup_term_count).to eq(0)
+      expect(Coppertone::Record.new('v=spf1 a:example.test.com -exists:some.domain.com ~all').dns_lookup_term_count).to eq(2)
+      expect(Coppertone::Record.new('v=spf1 ip4:1.2.3.4 -exists:some.domain.com ~all').dns_lookup_term_count).to eq(1)
+    end
+  end
 end

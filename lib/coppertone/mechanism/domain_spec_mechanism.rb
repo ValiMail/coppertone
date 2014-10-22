@@ -27,6 +27,11 @@ module Coppertone
         return false unless domain_spec
         domain_spec.includes_ptr?
       end
+
+      def target_domain
+        fail Coppertone::NeedsContextError if context_dependent?
+        domain_spec.to_s
+      end
     end
   end
 end

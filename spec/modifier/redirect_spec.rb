@@ -11,6 +11,7 @@ describe Coppertone::Modifier::Redirect do
         .to eq('redirect=test.example.com')
       expect(modifier).not_to be_includes_ptr
       expect(modifier).not_to be_context_dependent
+      expect(modifier.target_domain).to eq('test.example.com')
     end
 
     it 'should work with a context independent domain spec' do
@@ -22,6 +23,9 @@ describe Coppertone::Modifier::Redirect do
         .to eq('redirect=%{d}.example.com')
       expect(modifier).not_to be_includes_ptr
       expect(modifier).to be_context_dependent
+      expect do
+        modifier.target_domain
+      end.to raise_error Coppertone::NeedsContextError
     end
 
     it 'should work with a context independent domain spec with a PTR' do
@@ -33,6 +37,9 @@ describe Coppertone::Modifier::Redirect do
         .to eq('redirect=%{p}.example.com')
       expect(modifier).to be_includes_ptr
       expect(modifier).to be_context_dependent
+      expect do
+        modifier.target_domain
+      end.to raise_error Coppertone::NeedsContextError
     end
   end
 

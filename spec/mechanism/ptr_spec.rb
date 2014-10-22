@@ -8,6 +8,7 @@ describe Coppertone::Mechanism::Ptr do
       expect(mech.domain_spec).to be_nil
       expect(mech).not_to be_includes_ptr
       expect(mech).to be_context_dependent
+      expect(mech).to be_dns_lookup_term
     end
 
     it 'should not fail if called with a blank argument' do
@@ -16,6 +17,7 @@ describe Coppertone::Mechanism::Ptr do
       expect(mech.domain_spec).to be_nil
       expect(mech).not_to be_includes_ptr
       expect(mech).to be_context_dependent
+      expect(mech).to be_dns_lookup_term
     end
 
     it 'should fail if called with an invalid macrostring' do

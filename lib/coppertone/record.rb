@@ -38,6 +38,14 @@ module Coppertone
       include_all?
     end
 
+    def dns_lookup_term_count
+      @dns_lookup_term_count ||=
+        begin
+          base = redirect.nil? ? 0 : 1
+          base + directives.select(&:dns_lookup_term?).size
+        end
+    end
+
     def includes
       @includes ||=
         begin

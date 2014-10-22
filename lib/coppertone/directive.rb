@@ -23,6 +23,15 @@ module Coppertone
       mechanism.context_dependent?
     end
 
+    def dns_lookup_term?
+      mechanism.dns_lookup_term?
+    end
+
+    def target_domain
+      fail NeedsContextError unless dns_lookup_term?
+      mechanism.target_domain
+    end
+
     def all?
       mechanism.is_a?(Coppertone::Mechanism::All)
     end

@@ -28,6 +28,8 @@ describe Coppertone::Mechanism::Include do
       expect(mech.to_s).to eq('include:_spf.example.com')
       expect(mech).not_to be_includes_ptr
       expect(mech).not_to be_context_dependent
+      expect(mech).to be_dns_lookup_term
+      expect(mech.target_domain).to eq('_spf.example.com')
     end
 
     it 'should parse a context dependent domain spec' do
@@ -38,6 +40,10 @@ describe Coppertone::Mechanism::Include do
       expect(mech.to_s).to eq('include:_spf.%{d}.example.com')
       expect(mech).not_to be_includes_ptr
       expect(mech).to be_context_dependent
+      expect(mech).to be_dns_lookup_term
+      expect do
+        mech.target_domain
+      end.to raise_error Coppertone::NeedsContextError
     end
 
     it 'should parse a domain spec with a ptr' do
@@ -48,6 +54,10 @@ describe Coppertone::Mechanism::Include do
       expect(mech.to_s).to eq('include:_spf.%{p}.example.com')
       expect(mech).to be_includes_ptr
       expect(mech).to be_context_dependent
+      expect(mech).to be_dns_lookup_term
+      expect do
+        mech.target_domain
+      end.to raise_error Coppertone::NeedsContextError
     end
   end
 
