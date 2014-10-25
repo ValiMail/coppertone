@@ -20,7 +20,11 @@ module Coppertone
       return nil unless matches
       type = matches[1]
       attributes = matches[2]
-      build(type, attributes) || build('unknown', attributes)
+      build(type, attributes) || build_unknown(type, attributes)
+    end
+
+    def self.build_unknown(type, attributes)
+      Coppertone::Modifier::Unknown.new(type, attributes)
     end
 
     attr_reader :arguments
@@ -28,8 +32,12 @@ module Coppertone
       @arguments = arguments
     end
 
+    def label
+      self.class.label
+    end
+
     def to_s
-      "#{self.class.label}=#{arguments}"
+      "#{label}=#{arguments}"
     end
   end
 end

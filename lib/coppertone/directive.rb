@@ -1,11 +1,15 @@
 require 'coppertone/mechanism'
 require 'coppertone/qualifier'
+require 'active_support/core_ext/module/delegation'
 
 module Coppertone
   # Instances of this class represent directive terms, as defined by the
   # SPF specification (see section 4.6.1).
   class Directive
     attr_reader :qualifier, :mechanism
+    delegate :context_dependent?, :dns_lookup_term?,
+             :includes_ptr?, to: :mechanism
+
     def initialize(qualifier, mechanism)
       @qualifier = qualifier
       @mechanism = mechanism
@@ -17,14 +21,6 @@ module Coppertone
       else
         Result.none
       end
-    end
-
-    def context_dependent?
-      mechanism.context_dependent?
-    end
-
-    def dns_lookup_term?
-      mechanism.dns_lookup_term?
     end
 
     def target_domain

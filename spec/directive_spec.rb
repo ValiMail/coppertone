@@ -51,4 +51,37 @@ describe Coppertone::Directive do
       end
     end
   end
+
+  context '#target_domain' do
+    it 'yields the target domain when the mechanism is not context dependent' do
+      d = Coppertone::Term.build_from_token('include:_spf.example.org')
+      expect(d.target_domain).to eq('_spf.example.org')
+    end
+
+    it 'raises an error when the mechanism is context dependent' do
+      d = Coppertone::Term.build_from_token('include:_spf.%{h}.example.org')
+      expect do
+        d.target_domain
+      end.to raise_error Coppertone::NeedsContextError
+    end
+
+    it 'raises an error when the mechanism does not support a target domain' do
+      d = Coppertone::Term.build_from_token('ip4:1.2.3.4')
+      expect do
+        d.target_domain
+      end.to raise_error Coppertone::NeedsContextError
+    end
+  end
+
+  context '#to_s' do
+    it 'should hide a default qualifier' do
+      d = Coppertone::Term.build_from_token('~include:_spf.%{h}.example.org')
+      expect(d.to_s).to eq('~include:_spf.%{h}.example.org')
+    end
+
+    it 'should hide a default qualifier' do
+      d = Coppertone::Term.build_from_token('+include:_spf.%{h}.example.org')
+      expect(d.to_s).to eq('include:_spf.%{h}.example.org')
+    end
+  end
 end

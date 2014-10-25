@@ -29,15 +29,6 @@ module Coppertone
       all_directive ? true : false
     end
 
-    def default_result
-      return Result.neutral unless all_directive
-      Result.from_directive(all_directive)
-    end
-
-    def safe_to_include?
-      include_all?
-    end
-
     def dns_lookup_term_count
       @dns_lookup_term_count ||=
         begin
@@ -59,32 +50,20 @@ module Coppertone
       @modifiers ||= @terms.select { |t| t.is_a?(Coppertone::Modifier) }
     end
 
-    def find_redirect
-      find_modifier(Coppertone::Modifier::Redirect)
-    end
-
     def redirect
       @redirect ||= find_redirect
+    end
+
+    def context_dependent_evaluation?
+      return true if directives.exist?(&:context_dependent)
+      redirect && redirect.context_dependent?
     end
 
     def exp
       @exp ||= find_modifier(Coppertone::Modifier::Exp)
     end
 
-    def context_dependent_result?(request_context)
-      return true if directives.exist?(&:context_dependent)
-      return true if context_dependent_redirect_result?(request_context)
-      return false if includes.blank?
-      includes.exists? { |i| i.context_dependent_result?(request_context) }
-    end
-
-    def context_dependent_redirect_result?(request_context)
-      return false unless redirect
-      redirect.context_dependent? ||
-        redirect.context_dependent_result?(request_context)
-    end
-
-    def context_dependent_message?
+    def context_dependent_explanation?
       exp && exp.context_dependent?
     end
 
@@ -99,6 +78,10 @@ module Coppertone
       arr = modifiers.select { |m| m.is_a?(klass) }
       fail DuplicateModifierError if arr.size > 1
       arr.first
+    end
+
+    def find_redirect
+      find_modifier(Coppertone::Modifier::Redirect)
     end
 
     def self.version_str

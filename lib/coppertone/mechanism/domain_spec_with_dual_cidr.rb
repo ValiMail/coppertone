@@ -25,14 +25,6 @@ module Coppertone
         @ip_v6_cidr_length ||= 128
       end
 
-      def cidr_length(macro_context)
-        if macro_context.original_ip_v6?
-          ip_v6_cidr_length
-        else
-          ip_v4_cidr_length
-        end
-      end
-
       def match?(macro_context, request_context)
         request_context.register_dns_lookup_term
         target_name = generate_target_name(macro_context, request_context)
@@ -47,6 +39,7 @@ module Coppertone
       def parse_argument(attributes)
         fail InvalidMechanismError if attributes.blank?
         cidr_matches = CIDR_REGEXP.match(attributes)
+        fail InvalidMechanismError unless cidr_matches
         macro_string, raw_ip_v4_cidr_length, raw_ip_v6_cidr_length =
           clean_matches(attributes, cidr_matches)
         process_matches(macro_string, raw_ip_v4_cidr_length,
@@ -65,14 +58,10 @@ module Coppertone
       end
 
       def clean_matches(attributes, cidr_matches)
-        if cidr_matches
-          raw_ip_v4_cidr_length = cidr_matches[2] unless cidr_matches[2].blank?
-          raw_ip_v6_cidr_length = cidr_matches[4] unless cidr_matches[4].blank?
-          term = cidr_matches[0]
-          domain_spec_end = term.blank? ? -1 : (-1 - term.length)
-        else
-          domain_spec_end = -1
-        end
+        raw_ip_v4_cidr_length = cidr_matches[2] unless cidr_matches[2].blank?
+        raw_ip_v6_cidr_length = cidr_matches[4] unless cidr_matches[4].blank?
+        term = cidr_matches[0]
+        domain_spec_end = term.blank? ? -1 : (-1 - term.length)
         macro_string = parse_domain_spec(attributes, domain_spec_end)
         [macro_string, raw_ip_v4_cidr_length, raw_ip_v6_cidr_length]
       end
@@ -109,6 +98,11 @@ module Coppertone
         domain_spec == other.domain_spec &&
         ip_v4_cidr_length == other.ip_v4_cidr_length &&
         ip_v6_cidr_length == other.ip_v6_cidr_length
+      end
+      alias_method :eql?, :==
+
+      def hash
+        domain_spec.hash ^ ip_v4_cidr_length.hash ^ ip_v6_cidr_length.hash
       end
     end
   end

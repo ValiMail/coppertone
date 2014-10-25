@@ -32,6 +32,16 @@ module Coppertone
         fail Coppertone::NeedsContextError if context_dependent?
         domain_spec.to_s
       end
+
+      def ==(other)
+        return false unless other.instance_of? self.class
+        domain_spec == other.domain_spec
+      end
+      alias_method :eql?, :==
+
+      def hash
+        domain_spec.hash
+      end
     end
   end
 end

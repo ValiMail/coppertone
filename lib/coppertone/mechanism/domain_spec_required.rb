@@ -28,11 +28,6 @@ module Coppertone
       def handle_invalid_domain(_macro_context, _options)
         fail RecordParsingError
       end
-
-      def ==(other)
-        return false unless other.instance_of? self.class
-        domain_spec == other.domain_spec
-      end
     end
   end
 end

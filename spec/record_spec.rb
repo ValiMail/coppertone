@@ -40,6 +40,7 @@ describe Coppertone::Record do
       expect(directive.qualifier).to eq(Coppertone::Qualifier::SOFTFAIL)
       expect(directive.mechanism).to eq(Coppertone::Mechanism::All.instance)
       expect(record.modifiers).to be_empty
+      expect(record.to_s).to eq('v=spf1 ~all')
     end
 
     it 'be case insensitive when parsing the version string' do
@@ -50,6 +51,7 @@ describe Coppertone::Record do
       expect(directive.qualifier).to eq(Coppertone::Qualifier::SOFTFAIL)
       expect(directive.mechanism).to eq(Coppertone::Mechanism::All.instance)
       expect(record.modifiers).to be_empty
+      expect(record.to_s).to eq('v=spf1 ~all')
     end
 
     it 'should parse more complex records' do
@@ -71,6 +73,7 @@ describe Coppertone::Record do
       expect(record.redirect).to be_nil
       expect(record.exp)
         .to eq(Coppertone::Modifier::Exp.new('explain._spf.%{d}'))
+      expect(record.to_s).to eq('v=spf1 mx -all exp=explain._spf.%{d}')
     end
 
     it 'should fail on more records with duplicate modifiers' do
@@ -124,6 +127,21 @@ describe Coppertone::Record do
       expect(Coppertone::Record.new('v=spf1 -all exp=explain._spf.%{d}').dns_lookup_term_count).to eq(0)
       expect(Coppertone::Record.new('v=spf1 a:example.test.com -exists:some.domain.com ~all').dns_lookup_term_count).to eq(2)
       expect(Coppertone::Record.new('v=spf1 ip4:1.2.3.4 -exists:some.domain.com ~all').dns_lookup_term_count).to eq(1)
+    end
+  end
+
+  context '#includes' do
+    it 'should yield an empty array when there are no include' do
+      expect(Coppertone::Record.new('v=spf1 mx -all exp=explain._spf.%{d}').includes).to be_empty
+      expect(Coppertone::Record.new('v=spf1 ip4:1.2.3.4 ~all').includes).to be_empty
+    end
+
+    it 'should yield a set of the includes, in order' do
+      r = Coppertone::Record
+        .new('v=spf1 include:_spf.domain1.com ip4:1.2.3.4 include:_spf.domain2.com ~all exp=explain._spf.%{d}')
+      includes = r.includes
+      expect(includes.map(&:mechanism).all? {|i| i.is_a?(Coppertone::Mechanism::Include)}).to be_truthy
+      expect(includes.map(&:target_domain)).to eq(%w(_spf.domain1.com _spf.domain2.com))
     end
   end
 end

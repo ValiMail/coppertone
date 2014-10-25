@@ -1,12 +1,10 @@
 module Coppertone
   class Modifier  # rubocop:disable Style/Documentation
     class Unknown < Modifier
-      def self.create(attributes)
-        new(attributes)
-      end
-
-      def initialize(attributes)
+      attr_reader :label
+      def initialize(label, attributes)
         super(attributes)
+        @label = label
         @macro_string = Coppertone::MacroString.new(attributes)
       rescue Coppertone::MacroStringParsingError
         raise Coppertone::InvalidModifierError
@@ -19,11 +17,6 @@ module Coppertone
       def includes_ptr?
         false
       end
-
-      def self.label
-        'unknown'
-      end
     end
-    register(Coppertone::Modifier::Unknown)
   end
 end

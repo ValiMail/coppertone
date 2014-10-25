@@ -16,13 +16,6 @@ module Coppertone
         RedirectRecordFinder.new(self, macro_context, request_context).record
       end
 
-      def context_dependent_result?(request_context,
-                                    macro_context =
-                                      Coppertone::NullMacroContext.new)
-        included_record(macro_context, request_context)
-          .context_dependent_result?(request_context)
-      end
-
       def target_domain
         fail NeedsContextError if context_dependent?
         arguments

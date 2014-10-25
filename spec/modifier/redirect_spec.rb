@@ -49,4 +49,19 @@ describe Coppertone::Modifier::Redirect do
         .to eq('redirect=test.example.com')
     end
   end
+
+  context '#included_record' do
+    it 'should delegate to included_record' do
+      modifier = Coppertone::Modifier::Redirect.new('test.example.com')
+      record = double(:record)
+      finder = double(:finder)
+      expect(finder).to receive(:record).and_return(record)
+      macro_ctx = double(:macro_ctx)
+      request_ctx = double(:request_ctx)
+      expect(Coppertone::RedirectRecordFinder).to receive(:new)
+        .with(modifier, macro_ctx, request_ctx).and_return(finder)
+      expect(modifier.included_record(macro_ctx, request_ctx))
+        .to eq(record)
+    end
+  end
 end

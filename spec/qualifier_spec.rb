@@ -11,6 +11,7 @@ describe Coppertone::Qualifier do
       it "should map from #{k} to the correct value" do
         expect(Coppertone::Qualifier.find_by_text(k)).to eq(v)
         expect(v.text).to eq(k)
+        expect(v.to_s).to eq(k)
       end
     end
   end
@@ -19,6 +20,15 @@ describe Coppertone::Qualifier do
     it 'should yield the correct default qualifier' do
       expect(Coppertone::Qualifier.default_qualifier)
         .to eq(Coppertone::Qualifier::PASS)
+    end
+  end
+
+  context '#default?' do
+    it 'should produce the right values for default?' do
+      expect(Coppertone::Qualifier::PASS).to be_default
+      expect(Coppertone::Qualifier::FAIL).not_to be_default
+      expect(Coppertone::Qualifier::SOFTFAIL).not_to be_default
+      expect(Coppertone::Qualifier::NEUTRAL).not_to be_default
     end
   end
 
