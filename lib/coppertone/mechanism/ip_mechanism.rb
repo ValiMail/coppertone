@@ -2,7 +2,7 @@ module Coppertone
   class Mechanism  # rubocop:disable Style/Documentation
     # Implements the ip4 mechanism.
     class IPMechanism < Mechanism
-      attr_reader :ip_network
+      attr_reader :netblock
       def self.create(attributes)
         new(attributes)
       end
@@ -11,9 +11,9 @@ module Coppertone
         super(attributes)
         unless attributes.blank?
           attributes = attributes[1..-1] if attributes[0] == ':'
-          @ip_network = parse_ip_network(attributes)
+          @netblock = parse_netblock(attributes)
         end
-        fail Coppertone::InvalidMechanismError if @ip_network.nil?
+        fail Coppertone::InvalidMechanismError if @netblock.nil?
       end
 
       LEADING_ZEROES_IN_CIDR_REGEXP = /\/0\d/
@@ -29,7 +29,7 @@ module Coppertone
         IP_PARSE_ERROR = IPAddr::Error
       end
 
-      def parse_ip_network(ip_as_s)
+      def parse_netblock(ip_as_s)
         validate_no_leading_zeroes_in_cidr(ip_as_s)
         addr, cidr_length, dual = ip_as_s.split('/')
         return nil if dual
@@ -43,13 +43,13 @@ module Coppertone
       def match?(macro_context, _request_context)
         ip = ip_for_match(macro_context)
         return false unless ip
-        return false unless ip.ipv4? == @ip_network.ipv4?
-        @ip_network.include?(ip)
+        return false unless ip.ipv4? == @netblock.ipv4?
+        @netblock.include?(ip)
       end
 
       def ==(other)
         return false unless other.instance_of? self.class
-        ip_network == other.ip_network
+        netblock == other.netblock
       end
     end
   end
