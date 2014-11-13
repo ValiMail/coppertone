@@ -26,6 +26,11 @@ module Coppertone
         NO_DASH_REGEXP.match(l) || DASH_REGEXP.match(l)
       end
 
+      def self.valid_ldh_domain?(domain)
+        return false unless valid?(domain)
+        to_labels(domain).all? { |l| valid_hostname_label?(l) }
+      end
+
       def self.valid_label?(l)
         (l.length >= 0) && (l.length <= 63)
       end

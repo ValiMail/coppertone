@@ -54,6 +54,22 @@ module Coppertone
       @redirect ||= find_redirect
     end
 
+    def redirect_with_directives?
+      redirect && directives.any?
+    end
+
+    def netblock_mechanisms
+      @netblock_mechanisms ||=
+        directives.select { |d| d.mechanism.is_a?(Coppertone::Mechanism::IPMechanism) }
+    end
+
+    def netblocks_only?
+      return false if redirect
+      directives.reject(&:all?).reject do |d|
+        d.mechanism.is_a?(Coppertone::Mechanism::IPMechanism)
+      end.empty?
+    end
+
     def context_dependent_evaluation?
       return true if directives.exist?(&:context_dependent)
       redirect && redirect.context_dependent?
