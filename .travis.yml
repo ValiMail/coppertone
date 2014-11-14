@@ -5,5 +5,7 @@ rvm:
   - 2.0.0
   - 2.1.2
   - jruby-19mode
-  - rbx
+  - rbx-2.2.10
+allow_failures:
+  - rvm: rbx-2.2.10
 
