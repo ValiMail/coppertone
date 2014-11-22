@@ -10,22 +10,16 @@ module Coppertone
       RECORD_REGEXP.match(text.strip) ? true : false
     end
 
-    attr_reader :terms
+    attr_reader :text, :terms
     def initialize(text)
       fail RecordParsingError unless self.class.record?(text)
       fail RecordParsingError unless ALLOWED_CHARACTERS.match(text)
-      @terms = term_tokens(text).map { |token| parse_token(token) }
+      @text = text
+      @terms = Coppertone::TermsParser.new(terms_segment).terms
     end
 
-    def term_tokens(text)
-      text_without_prefix = text[VERSION_STR.length..-1]
-      text_without_prefix.strip.split(/ /).select { |s| !s.blank? }
-    end
-
-    def parse_token(token)
-      term = Term.build_from_token(token)
-      fail RecordParsingError unless term
-      term
+    def terms_segment
+      text[VERSION_STR.length..-1].strip
     end
   end
 end
