@@ -42,6 +42,11 @@ describe Coppertone::Utils::DomainUtils do
         .to eq('fermion.mit.edu')
     end
 
+    it 'returns the downcased domain for an ASCII domain' do
+      expect(subject.macro_expanded_domain('FERMION.mIt.edu'))
+        .to eq('fermion.mit.edu')
+    end
+
     it 'returns the ASCII domain for an IDNA domain' do
       expect(subject.macro_expanded_domain('清华大学.cn'))
         .to eq('xn--xkry9kk1bz66a.cn')
@@ -55,6 +60,27 @@ describe Coppertone::Utils::DomainUtils do
 
       expect(subject.macro_expanded_domain(domain_candidate))
         .to eq(truncated_domain)
+    end
+  end
+
+  context '#parent_domain' do
+    it 'should handle hostnames correctly' do
+      expect(subject.parent_domain('abc.xyz.example.com')).to eq('xyz.example.com')
+    end
+
+    it 'should handle TLDs correctly' do
+      expect(subject.parent_domain('com')).to eq('.')
+    end
+  end
+
+  context '#normalized_domain' do
+    it 'should handle ASCII hostnames correctly' do
+      expect(subject.normalized_domain('abc.xyz.example.com')).to eq('abc.xyz.example.com')
+      expect(subject.normalized_domain('ABc.xYz.exAMPle.COM')).to eq('abc.xyz.example.com')
+    end
+
+    it 'should handle Unicode domains correctly' do
+      expect(subject.normalized_domain('FERMIon.清华大学.cn')).to eq('fermion.xn--xkry9kk1bz66a.cn')
     end
   end
 end
