@@ -71,7 +71,7 @@ module Coppertone
     end
 
     def context_dependent_evaluation?
-      return true if directives.exist?(&:context_dependent)
+      return true if directives.any?(&:context_dependent?)
       redirect && redirect.context_dependent?
     end
 
