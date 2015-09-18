@@ -1,12 +1,13 @@
+sudo: false
 language: ruby
 env:
   - CODECLIMATE_REPO_TOKEN=c860bbaeb7a143f5ab6078e680fa1e210cfe39ab6a0a7a9f21f43162a30911f0
 rvm:
-  - 2.0.0
-  - 2.1.2
-  - 2.2.1
-  - jruby-19mode
-  - rbx-2.2.10
+  - 2.0
+  - 2.1
+  - 2.2
+  - jruby-9.0.0.0
+  - rbx-2.5.8
 allow_failures:
-  - rvm: rbx-2.2.10
+  - rvm: rbx-2.5.8
 
