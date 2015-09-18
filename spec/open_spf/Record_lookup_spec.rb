@@ -44,5 +44,4 @@ describe 'Record lookup' do
     result = Coppertone::SpfService.authenticate_email('1.2.3.4', 'foo@alltimeout.example.net', 'mail.example.net', options)
     expect([:temperror]).to include(result.code)
   end
-
 end

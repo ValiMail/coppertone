@@ -1,5 +1,6 @@
 module Coppertone
-  class Mechanism  # rubocop:disable Style/Documentation
+  class Mechanism
+    # Parent class for mechanisms that use a required.
     class DomainSpecRequired < DomainSpecMechanism
       def self.create(attributes)
         new(attributes)

@@ -55,5 +55,4 @@ describe 'IP4 mechanism syntax' do
     result = Coppertone::SpfService.authenticate_email('::FFFF:1.2.3.4', 'foo@e7.example.com', 'mail.example.com', options)
     expect([:fail]).to include(result.code)
   end
-
 end

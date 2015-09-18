@@ -1,5 +1,6 @@
 module Coppertone
-  class Mechanism  # rubocop:disable Style/Documentation
+  class Mechanism
+    # Parent class for mechanisms that use a domain spec.
     class DomainSpecMechanism < Mechanism
       attr_reader :domain_spec
 

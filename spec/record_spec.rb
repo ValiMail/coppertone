@@ -138,9 +138,9 @@ describe Coppertone::Record do
 
     it 'should yield a set of the includes, in order' do
       r = Coppertone::Record
-        .new('v=spf1 include:_spf.domain1.com ip4:1.2.3.4 include:_spf.domain2.com ~all exp=explain._spf.%{d}')
+          .new('v=spf1 include:_spf.domain1.com ip4:1.2.3.4 include:_spf.domain2.com ~all exp=explain._spf.%{d}')
       includes = r.includes
-      expect(includes.map(&:mechanism).all? {|i| i.is_a?(Coppertone::Mechanism::Include)}).to be_truthy
+      expect(includes.map(&:mechanism).all? { |i| i.is_a?(Coppertone::Mechanism::Include) }).to be_truthy
       expect(includes.map(&:target_domain)).to eq(%w(_spf.domain1.com _spf.domain2.com))
     end
   end
@@ -148,19 +148,19 @@ describe Coppertone::Record do
   context '#context_dependent_evaluation?' do
     it 'should be false when the record is not context dependent' do
       r = Coppertone::Record
-        .new('v=spf1 include:_spf.domain1.com ip4:1.2.3.4 include:_spf.domain2.com ~all exp=explain._spf.source.com')
+          .new('v=spf1 include:_spf.domain1.com ip4:1.2.3.4 include:_spf.domain2.com ~all exp=explain._spf.source.com')
       expect(r).not_to be_context_dependent_evaluation
     end
 
     it 'should be false when the record has a context dependent redirect' do
       r = Coppertone::Record
-        .new('v=spf1 redirect=explain._spf.%{h}')
+          .new('v=spf1 redirect=explain._spf.%{h}')
       expect(r).to be_context_dependent_evaluation
     end
 
     it 'should be false when the record has a context dependent directive' do
       r = Coppertone::Record
-        .new('v=spf1 include:_spf.domain1.com ip4:1.2.3.4 include:_spf.%{l}.domain2.com ~all exp=explain._spf.static.com')
+          .new('v=spf1 include:_spf.domain1.com ip4:1.2.3.4 include:_spf.%{l}.domain2.com ~all exp=explain._spf.static.com')
       expect(r).to be_context_dependent_evaluation
     end
   end

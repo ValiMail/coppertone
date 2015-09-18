@@ -1,7 +1,8 @@
 require 'coppertone/modifier/base'
 
 module Coppertone
-  class Modifier  # rubocop:disable Style/Documentation
+  class Modifier # rubocop:disable Style/Documentation
+    # Exp modifier - specifying a message to be returned in case of failure
     class Exp < Coppertone::Modifier::Base
       def self.create(attributes)
         new(attributes)

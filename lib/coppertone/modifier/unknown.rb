@@ -1,5 +1,7 @@
 module Coppertone
-  class Modifier  # rubocop:disable Style/Documentation
+  class Modifier
+    # Object representing unknown modifiers - those that aren't explicitly
+    # defined by the SPF spec
     class Unknown < Modifier
       attr_reader :label
       def initialize(label, attributes)

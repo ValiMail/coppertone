@@ -1,5 +1,8 @@
 module Coppertone
-  module Utils  # rubocop:disable Style/Documentation
+  module Utils
+    # Checks the IP address from the request against an A or AAAA record
+    # for a domain.  Takes optional CIDR arguments so the match can
+    # check subnets
     class IPInDomainChecker
       def initialize(macro_context, request_context)
         @macro_context = macro_context
