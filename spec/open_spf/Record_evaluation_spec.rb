@@ -71,5 +71,4 @@ describe 'Record evaluation' do
     result = Coppertone::SpfService.authenticate_email('1.2.3.4', 'foo@t12.example.com', '%%%%%%%%%%%%%%%%%%%%%%', options)
     expect([:fail, :permerror]).to include(result.code)
   end
-
 end

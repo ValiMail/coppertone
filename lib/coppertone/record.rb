@@ -33,7 +33,7 @@ module Coppertone
       @dns_lookup_term_count ||=
         begin
           base = redirect.nil? ? 0 : 1
-          base + directives.select(&:dns_lookup_term?).size
+          base + directives.count(&:dns_lookup_term?)
         end
     end
 
@@ -60,7 +60,9 @@ module Coppertone
 
     def netblock_mechanisms
       @netblock_mechanisms ||=
-        directives.select { |d| d.mechanism.is_a?(Coppertone::Mechanism::IPMechanism) }
+        directives.select do |d|
+          d.mechanism.is_a?(Coppertone::Mechanism::IPMechanism)
+        end
     end
 
     def netblocks_only?

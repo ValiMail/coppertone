@@ -1,5 +1,5 @@
 module Coppertone
-  module Utils  # rubocop:disable Style/Documentation
+  module Utils
     # A class used to find validated domains as defined in
     # section 5.5 of the RFC.
     class ValidatedDomainFinder

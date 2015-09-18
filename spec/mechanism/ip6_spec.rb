@@ -45,7 +45,6 @@ describe Coppertone::Mechanism::IP6 do
         Coppertone::Mechanism::IP6.new(':fe80::202:b3ff:fe1e:8329/384')
       end.to raise_error(Coppertone::InvalidMechanismError)
     end
-
   end
 
   context '#create' do

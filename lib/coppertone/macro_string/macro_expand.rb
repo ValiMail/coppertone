@@ -42,7 +42,7 @@ module Coppertone
         context.send(@macro_letter) if context.respond_to?(@macro_letter)
         ptr =
           Coppertone::Utils::ValidatedDomainFinder
-            .new(context, request, false).find(context.d)
+          .new(context, request, false).find(context.d)
         return 'unknown' unless ptr
         @macro_letter == 'P' ? ::Addressable::URI.encode_component(ptr) : ptr
       end

@@ -1,7 +1,8 @@
 require 'coppertone/modifier/base'
 
 module Coppertone
-  class Modifier  # rubocop:disable Style/Documentation
+  class Modifier # rubocop:disable Style/Documentation
+    # A Redirect modifier found in an SPF record.
     class Redirect < Coppertone::Modifier::Base
       def self.create(attributes)
         new(attributes)

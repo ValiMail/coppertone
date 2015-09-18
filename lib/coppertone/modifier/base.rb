@@ -1,5 +1,6 @@
 module Coppertone
-  class Modifier  # rubocop:disable Style/Documentation
+  class Modifier
+    # Base class including logic common to modifiers
     class Base < Modifier
       attr_reader :domain_spec
       def initialize(attributes)

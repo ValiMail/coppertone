@@ -22,11 +22,11 @@ module Coppertone
         labels = to_labels(domain)
         return '.' if labels.size == 1
         labels.shift
-        return labels.join('.')
+        labels.join('.')
       end
 
       def self.to_ascii_labels(domain)
-        Addressable::IDNA.to_ascii(domain).split('.').map { |d| d.downcase }
+        Addressable::IDNA.to_ascii(domain).split('.').map(&:downcase)
       end
 
       def self.normalized_domain(domain)

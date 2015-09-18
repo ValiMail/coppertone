@@ -21,7 +21,7 @@ module Coppertone
     EXP_ONLY_MACRO_LETTERS = %w(c r t)
     def only_allowed_macros?
       @macros.select { |m| m.is_a?(Coppertone::MacroString::MacroExpand) }
-             .none? { |m| EXP_ONLY_MACRO_LETTERS.include?(m.macro_letter) }
+        .none? { |m| EXP_ONLY_MACRO_LETTERS.include?(m.macro_letter) }
     end
 
     def ends_in_allowed_term?

@@ -1,5 +1,5 @@
 module Coppertone
-  class Mechanism  # rubocop:disable Style/Documentation
+  class Mechanism
     # Implements the ip4 mechanism.
     class IPMechanism < Mechanism
       attr_reader :netblock
@@ -16,7 +16,7 @@ module Coppertone
         fail Coppertone::InvalidMechanismError if @netblock.nil?
       end
 
-      LEADING_ZEROES_IN_CIDR_REGEXP = /\/0\d/
+      LEADING_ZEROES_IN_CIDR_REGEXP = %r{\/0\d}
       def validate_no_leading_zeroes_in_cidr(ip_as_s)
         return unless LEADING_ZEROES_IN_CIDR_REGEXP.match(ip_as_s)
         fail Coppertone::InvalidMechanismError

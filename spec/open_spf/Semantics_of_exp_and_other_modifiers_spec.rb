@@ -165,5 +165,4 @@ describe 'Semantics of exp and other modifiers' do
     result = Coppertone::SpfService.authenticate_email('192.0.2.2', 'bar@e24.example.com', 'e24.example.com', options)
     expect([:pass]).to include(result.code)
   end
-
 end

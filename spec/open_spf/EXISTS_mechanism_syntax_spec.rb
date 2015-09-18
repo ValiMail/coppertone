@@ -42,5 +42,4 @@ describe 'EXISTS mechanism syntax' do
     result = Coppertone::SpfService.authenticate_email('CAFE:BABE::3', 'foo@e6.example.com', 'mail.example.com', options)
     expect([:temperror]).to include(result.code)
   end
-
 end

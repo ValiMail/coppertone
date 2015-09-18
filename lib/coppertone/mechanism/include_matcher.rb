@@ -1,7 +1,7 @@
 require 'coppertone/record_evaluator'
 
 module Coppertone
-  class Mechanism  # rubocop:disable Style/Documentation
+  class Mechanism
     # Implements the include mechanism.
     class IncludeMatcher
       # Evaluates records that are referenced via an include
@@ -26,7 +26,7 @@ module Coppertone
         fail Coppertone::NoneIncludeResultError if record.nil?
         record_result =
           IncludeRecordEvaluator.new(record)
-            .evaluate(macro_context, request_context)
+          .evaluate(macro_context, request_context)
         record_result.pass?
       end
     end

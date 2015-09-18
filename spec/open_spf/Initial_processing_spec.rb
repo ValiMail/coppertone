@@ -80,5 +80,4 @@ describe 'Initial processing' do
     result = Coppertone::SpfService.authenticate_email('1.2.3.4', 'actually@fine.example.com', 'hosed', options)
     expect([:fail]).to include(result.code)
   end
-
 end

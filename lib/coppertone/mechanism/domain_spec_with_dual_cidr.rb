@@ -3,7 +3,9 @@ require 'ipaddr'
 require 'coppertone/mechanism/cidr_parser'
 
 module Coppertone
-  class Mechanism  # rubocop:disable Style/Documentation
+  class Mechanism
+    # Parent class for mechanisms that use a domain spec, and permit
+    # specification of an optional IPv4 CIDR and optional IPv6 CIDR.
     class DomainSpecWithDualCidr < DomainSpecMechanism
       def self.create(attributes)
         new(attributes)
@@ -96,8 +98,8 @@ module Coppertone
       def ==(other)
         return false unless other.instance_of? self.class
         domain_spec == other.domain_spec &&
-        ip_v4_cidr_length == other.ip_v4_cidr_length &&
-        ip_v6_cidr_length == other.ip_v6_cidr_length
+          ip_v4_cidr_length == other.ip_v4_cidr_length &&
+          ip_v6_cidr_length == other.ip_v6_cidr_length
       end
       alias_method :eql?, :==
 

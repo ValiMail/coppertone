@@ -1,7 +1,7 @@
 require 'coppertone/mechanism/ip_mechanism'
 
 module Coppertone
-  class Mechanism  # rubocop:disable Style/Documentation
+  class Mechanism # rubocop:disable Style/Documentation
     # Implements the ip6 mechanism.
     class IP6 < IPMechanism
       def ip_for_match(macro_context)

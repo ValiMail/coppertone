@@ -13,5 +13,4 @@ describe 'Test cases from implementation bugs' do
     result = Coppertone::SpfService.authenticate_email('2001:db8:ff0:100::2', 'test@example.org', 'example.org', options)
     expect([:pass]).to include(result.code)
   end
-
 end

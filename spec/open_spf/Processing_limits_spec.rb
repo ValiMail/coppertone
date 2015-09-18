@@ -68,5 +68,4 @@ describe 'Processing limits' do
     result = Coppertone::SpfService.authenticate_email('1.2.3.4', 'foo@e11.example.com', 'mail.example.com', options)
     expect([:permerror]).to include(result.code)
   end
-
 end

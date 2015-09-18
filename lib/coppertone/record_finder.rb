@@ -22,7 +22,7 @@ module Coppertone
         begin
           if Coppertone::Utils::DomainUtils.valid?(domain)
             dns_client.fetch_txt_records(domain).map { |r| r[:text] }
-              .select { |r| Record.record?(r) }
+            .select { |r| Record.record?(r) }
           else
             []
           end

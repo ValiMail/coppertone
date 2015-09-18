@@ -24,8 +24,8 @@ desc 'Parse OpenSPF tests'
 def spec_file_name(doc, output_path)
   description = doc['description']
   file_name = description.gsub(/[^\w\s_-]+/, '')
-    .gsub(/(^|\b\s)\s+($|\s?\b)/, '\\1\\2')
-    .gsub(/\s+/, '_') + '_spec.rb'
+              .gsub(/(^|\b\s)\s+($|\s?\b)/, '\\1\\2')
+              .gsub(/\s+/, '_') + '_spec.rb'
   File.join(output_path, file_name)
 end
 
@@ -62,7 +62,7 @@ end
 
 def clean_description(description)
   return unless description
-  description.gsub("\n", ' ').gsub("'", '')
+  description.tr("\n", ' ').delete("'")
 end
 
 def as_array(val)

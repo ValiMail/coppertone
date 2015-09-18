@@ -146,5 +146,4 @@ describe 'Macro expansion rules' do
     result = Coppertone::SpfService.authenticate_email('1.2.3.4', 'foo-bar+zip+quux@e12.example.com', 'mail.example.com', options)
     expect([:pass]).to include(result.code)
   end
-
 end

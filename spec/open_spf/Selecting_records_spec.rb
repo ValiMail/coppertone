@@ -57,5 +57,4 @@ describe 'Selecting records' do
     result = Coppertone::SpfService.authenticate_email('1.2.3.4', 'foo@example9.com', 'mail.example1.com', options)
     expect([:softfail]).to include(result.code)
   end
-
 end
