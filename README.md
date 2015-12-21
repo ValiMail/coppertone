@@ -1,8 +1,8 @@
 # Coppertone
 
-[![Build Status](https://travis-ci.org/petergoldstein/coppertone.svg?branch=master)](https://travis-ci.org/petergoldstein/coppertone)
-[![Test Coverage](https://codeclimate.com/github/petergoldstein/coppertone/badges/coverage.svg)](https://codeclimate.com/github/petergoldstein/coppertone)
-[![Code Climate](https://codeclimate.com/github/petergoldstein/coppertone/badges/gpa.svg)](https://codeclimate.com/github/petergoldstein/coppertone)
+[![Build Status](https://travis-ci.org/ValiMail/coppertone.svg?branch=master)](https://travis-ci.org/ValiMail/coppertone)
+[![Test Coverage](https://codeclimate.com/github/ValiMail/coppertone/badges/coverage.svg)](https://codeclimate.com/github/ValiMail/coppertone)
+[![Code Climate](https://codeclimate.com/github/ValiMail/coppertone/badges/gpa.svg)](https://codeclimate.com/github/ValiMail/coppertone)
 
 A Sender Policy Framework (SPF) toolkit for Ruby.
 
