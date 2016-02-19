@@ -26,6 +26,10 @@ describe Coppertone::Utils::DomainUtils do
       expect(subject.valid?('清华大学.cn')).to eq(true)
       expect(subject.valid?('ジェーピーニック.jp')).to eq(true)
     end
+
+    it 'should reject labels containing whitespace' do
+      expect(subject.valid?('mail mike.net')).to eq(false)
+    end
   end
 
   context '#macro_expanded_domain' do
