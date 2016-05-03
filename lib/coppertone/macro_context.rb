@@ -10,11 +10,11 @@ module Coppertone
     attr_reader :domain, :ip_address_wrapper, :sender_identity, :helo_domain
 
     delegate :s, :l, :o, to: :sender_identity
-    alias_method :d, :domain
+    alias d domain
     delegate :i, :v, :c, to: :ip_address_wrapper
     delegate :ip_v4, :ip_v6, :original_ipv4?, :original_ipv6?,
              to: :ip_address_wrapper
-    alias_method :h, :helo_domain
+    alias h helo_domain
 
     attr_reader :hostname
     def initialize(domain, ip_as_s, sender, helo_domain = 'unknown',
@@ -26,7 +26,7 @@ module Coppertone
       @hostname = options[:hostname]
     end
 
-    UNKNOWN_HOSTNAME = 'unknown'
+    UNKNOWN_HOSTNAME = 'unknown'.freeze
     def r
       valid = Coppertone::Utils::DomainUtils.valid?(raw_hostname)
       valid ? raw_hostname : UNKNOWN_HOSTNAME

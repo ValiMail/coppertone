@@ -53,7 +53,7 @@ module Coppertone
       finder =
         Coppertone::RedirectRecordFinder.new(record.redirect, macro_context,
                                              request_context)
-      fail InvalidRedirectError unless finder.target && finder.record
+      raise InvalidRedirectError unless finder.target && finder.record
       rc = macro_context.with_domain(finder.target)
       RecordEvaluator.new(finder.record).evaluate(rc, request_context)
     end

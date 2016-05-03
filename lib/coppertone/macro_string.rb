@@ -41,7 +41,7 @@ module Coppertone
       return false unless other.instance_of? self.class
       macro_text == other.macro_text
     end
-    alias_method :eql?, :==
+    alias eql? ==
 
     def hash
       macro_text.hash

@@ -35,7 +35,7 @@ module Coppertone
       end
 
       def self.macro_for(x)
-        fail Coppertone::MacroStringParsingError unless exists_for?(x)
+        raise Coppertone::MacroStringParsingError unless exists_for?(x)
         case x[1]
         when '%'
           PERCENT_MACRO

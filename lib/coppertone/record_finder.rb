@@ -22,7 +22,7 @@ module Coppertone
         begin
           if Coppertone::Utils::DomainUtils.valid?(domain)
             dns_client.fetch_txt_records(domain).map { |r| r[:text] }
-            .select { |r| Record.record?(r) }
+                      .select { |r| Record.record?(r) }
           else
             []
           end
@@ -30,7 +30,7 @@ module Coppertone
     end
 
     def validate_txt_records
-      fail AmbiguousSpfRecordError if txt_records.size > 1
+      raise AmbiguousSpfRecordError if txt_records.size > 1
     end
   end
 end

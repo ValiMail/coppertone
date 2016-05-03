@@ -36,7 +36,7 @@ module Coppertone
       end
 
       def handle_invalid_domain(_macro_context, _options)
-        fail RecordParsingError
+        raise RecordParsingError
       end
     end
   end

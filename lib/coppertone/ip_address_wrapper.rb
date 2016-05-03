@@ -12,16 +12,16 @@ module Coppertone
     attr_reader :string_representation, :ip
     def initialize(s)
       @ip = self.class.parse(s)
-      fail ArgumentError unless @ip
+      raise ArgumentError unless @ip
       @string_representation = s
     end
 
     # Hack for JRuby - remove when JRuby moves to 2.0.x
-    if RUBY_VERSION < '2.0'
-      IP_PARSE_ERROR = ArgumentError
-    else
-      IP_PARSE_ERROR = IPAddr::InvalidAddressError
-    end
+    IP_PARSE_ERROR = if RUBY_VERSION < '2.0'
+                       ArgumentError
+                     else
+                       IPAddr::InvalidAddressError
+                     end
 
     def self.parse(s)
       return nil unless s
@@ -44,12 +44,12 @@ module Coppertone
         @ip.to_s
       end
     end
-    alias_method :i, :to_dotted_notation
+    alias i to_dotted_notation
 
     def to_human_readable
       @ip.to_s
     end
-    alias_method :c, :to_human_readable
+    alias c to_human_readable
 
     def v
       original_ipv4? ? 'in-addr' : 'ip6'

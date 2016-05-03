@@ -17,7 +17,7 @@ module Coppertone
 
     def check_if_limit_exceeded
       return if limit.nil?
-      fail Coppertone::LimitExceededError, exception_message if exceeded?
+      raise Coppertone::LimitExceededError, exception_message if exceeded?
     end
 
     def exception_message
