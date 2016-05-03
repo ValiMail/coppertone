@@ -8,18 +8,18 @@ module Coppertone
     # 7.2, as well as against the set of delimiters, transformers, and
     # grammer defined in section 7.1.
     class MacroExpand
-      MACRO_LETTER_CHAR_SET = '[slodiphcrtvSLODIPHCRTV]'
-      PTR_MACRO_CHAR_SET = %w(p P)
-      DELIMITER_CHAR_SET = '[\.\-\+\,\/\_\=]'
+      MACRO_LETTER_CHAR_SET = '[slodiphcrtvSLODIPHCRTV]'.freeze
+      PTR_MACRO_CHAR_SET = %w(p P).freeze
+      DELIMITER_CHAR_SET = '[\.\-\+\,\/\_\=]'.freeze
       VALID_BODY_REGEXP =
         /\A(#{MACRO_LETTER_CHAR_SET})(\d*)(r?)(#{DELIMITER_CHAR_SET}*)\z/
 
       attr_reader :macro_letter, :digit_transformers, :reverse,
                   :delimiter_regexp
-      alias_method :reverse?, :reverse
+      alias reverse? reverse
       def initialize(s)
         matches = VALID_BODY_REGEXP.match(s)
-        fail Coppertone::MacroStringParsingError if matches.nil?
+        raise Coppertone::MacroStringParsingError if matches.nil?
         @macro_letter = matches[1]
         initialize_digit_transformers(matches[2])
         @reverse = (matches[3] == 'r')
@@ -29,9 +29,9 @@ module Coppertone
 
       def initialize_digit_transformers(raw_value)
         return unless raw_value
-        @digit_transformers = raw_value.to_i if raw_value.length > 0
+        @digit_transformers = raw_value.to_i unless raw_value.empty?
         return unless @digit_transformers
-        fail Coppertone::MacroStringParsingError if @digit_transformers == 0
+        raise Coppertone::MacroStringParsingError if @digit_transformers == 0
       end
 
       def ptr_macro?
@@ -69,7 +69,7 @@ module Coppertone
 
       private
 
-      DEFAULT_DELIMITER = '.'
+      DEFAULT_DELIMITER = '.'.freeze
       def initialize_delimiter(raw_delimiter)
         delimiter_chars =
           if raw_delimiter && raw_delimiter.length >= 1

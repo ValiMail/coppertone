@@ -84,11 +84,11 @@ describe Coppertone::Mechanism::Exists do
         dc = double(:dns_client)
         allow(dc).to receive(:fetch_a_records)
           .with(mech_domain).and_return([
-            {
-              type: 'A',
-              address: '74.125.234.117'
-            }
-          ])
+                                          {
+                                            type: 'A',
+                                            address: '74.125.234.117'
+                                          }
+                                        ])
         allow(dc).to receive(:fetch_a_records)
           .with(bad_domain).and_return([])
         dc

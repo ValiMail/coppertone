@@ -13,21 +13,21 @@ module Coppertone
           attributes = attributes[1..-1] if attributes[0] == ':'
           @netblock = parse_netblock(attributes)
         end
-        fail Coppertone::InvalidMechanismError if @netblock.nil?
+        raise Coppertone::InvalidMechanismError if @netblock.nil?
       end
 
       LEADING_ZEROES_IN_CIDR_REGEXP = %r{\/0\d}
       def validate_no_leading_zeroes_in_cidr(ip_as_s)
         return unless LEADING_ZEROES_IN_CIDR_REGEXP.match(ip_as_s)
-        fail Coppertone::InvalidMechanismError
+        raise Coppertone::InvalidMechanismError
       end
 
       # Hack for JRuby - remove when JRuby moves to 2.0.x
-      if RUBY_VERSION < '2.0'
-        IP_PARSE_ERROR = ArgumentError
-      else
-        IP_PARSE_ERROR = IPAddr::Error
-      end
+      IP_PARSE_ERROR = if RUBY_VERSION < '2.0'
+                         ArgumentError
+                       else
+                         IPAddr::Error
+                       end
 
       def parse_netblock(ip_as_s)
         validate_no_leading_zeroes_in_cidr(ip_as_s)

@@ -39,9 +39,9 @@ module Coppertone
 
       CIDR_REGEXP = %r{(/(\d*))?(//(\d*))?\z}
       def parse_argument(attributes)
-        fail InvalidMechanismError if attributes.blank?
+        raise InvalidMechanismError if attributes.blank?
         cidr_matches = CIDR_REGEXP.match(attributes)
-        fail InvalidMechanismError unless cidr_matches
+        raise InvalidMechanismError unless cidr_matches
         macro_string, raw_ip_v4_cidr_length, raw_ip_v6_cidr_length =
           clean_matches(attributes, cidr_matches)
         process_matches(macro_string, raw_ip_v4_cidr_length,
@@ -55,7 +55,7 @@ module Coppertone
         cand = trim_domain_spec(cand)
         # At this point we've ascertained that there is
         # a body to the domain spec
-        fail InvalidMechanismError if cand.blank?
+        raise InvalidMechanismError if cand.blank?
         cand
       end
 
@@ -92,7 +92,7 @@ module Coppertone
       end
 
       def handle_invalid_domain(_macro_context, _options)
-        fail RecordParsingError
+        raise RecordParsingError
       end
 
       def ==(other)
@@ -101,7 +101,7 @@ module Coppertone
           ip_v4_cidr_length == other.ip_v4_cidr_length &&
           ip_v6_cidr_length == other.ip_v6_cidr_length
       end
-      alias_method :eql?, :==
+      alias eql? ==
 
       def hash
         domain_spec.hash ^ ip_v4_cidr_length.hash ^ ip_v6_cidr_length.hash

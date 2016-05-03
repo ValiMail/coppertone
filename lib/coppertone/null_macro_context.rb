@@ -5,11 +5,11 @@ module Coppertone
     RESERVED_REGEXP = Regexp.new("[^#{URI::PATTERN::UNRESERVED}]")
     %w(s l o d i p v h c r t).each do |m|
       define_method(m.upcase) do
-        fail ArgumentError
+        raise ArgumentError
       end
 
       define_method(m) do
-        fail ArgumentError
+        raise ArgumentError
       end
     end
 

@@ -57,7 +57,7 @@ describe Coppertone::Utils::DomainUtils do
     end
 
     it 'truncates overlong domains' do
-      domain_candidate_labels = 50.times.map { "a-#{SecureRandom.hex(2)}" }
+      domain_candidate_labels = Array.new(50) { "a-#{SecureRandom.hex(2)}" }
       domain_candidate = domain_candidate_labels.join('.')
       truncated_labels = domain_candidate_labels.drop(14)
       truncated_domain = truncated_labels.join('.')
@@ -69,7 +69,8 @@ describe Coppertone::Utils::DomainUtils do
 
   context '#parent_domain' do
     it 'should handle hostnames correctly' do
-      expect(subject.parent_domain('abc.xyz.example.com')).to eq('xyz.example.com')
+      expect(subject.parent_domain('abc.xyz.example.com'))
+        .to eq('xyz.example.com')
     end
 
     it 'should handle TLDs correctly' do
@@ -79,12 +80,15 @@ describe Coppertone::Utils::DomainUtils do
 
   context '#normalized_domain' do
     it 'should handle ASCII hostnames correctly' do
-      expect(subject.normalized_domain('abc.xyz.example.com')).to eq('abc.xyz.example.com')
-      expect(subject.normalized_domain('ABc.xYz.exAMPle.COM')).to eq('abc.xyz.example.com')
+      expect(subject.normalized_domain('abc.xyz.example.com'))
+        .to eq('abc.xyz.example.com')
+      expect(subject.normalized_domain('ABc.xYz.exAMPle.COM'))
+        .to eq('abc.xyz.example.com')
     end
 
     it 'should handle Unicode domains correctly' do
-      expect(subject.normalized_domain('FERMIon.清华大学.cn')).to eq('fermion.xn--xkry9kk1bz66a.cn')
+      expect(subject.normalized_domain('FERMIon.清华大学.cn'))
+        .to eq('fermion.xn--xkry9kk1bz66a.cn')
     end
   end
 end

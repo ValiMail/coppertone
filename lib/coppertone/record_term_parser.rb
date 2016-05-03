@@ -1,7 +1,7 @@
 module Coppertone
   # Parses a record into terms
   class RecordTermParser
-    VERSION_STR = 'v=spf1'
+    VERSION_STR = 'v=spf1'.freeze
     RECORD_REGEXP = /\A#{VERSION_STR}(\s|\z)/i
     ALLOWED_CHARACTERS = /\A([\x21-\x7e ]+)\z/
 
@@ -12,8 +12,8 @@ module Coppertone
 
     attr_reader :text, :terms
     def initialize(text)
-      fail RecordParsingError unless self.class.record?(text)
-      fail RecordParsingError unless ALLOWED_CHARACTERS.match(text)
+      raise RecordParsingError unless self.class.record?(text)
+      raise RecordParsingError unless ALLOWED_CHARACTERS.match(text)
       @text = text
       @terms = Coppertone::TermsParser.new(terms_segment).terms
     end

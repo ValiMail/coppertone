@@ -4,7 +4,7 @@ module Coppertone
     # class is a singleton since all All mechanisms behave identically.
     class All < Mechanism
       def self.create(attributes)
-        fail InvalidMechanismError unless attributes.blank?
+        raise InvalidMechanismError unless attributes.blank?
         SINGLETON
       end
 

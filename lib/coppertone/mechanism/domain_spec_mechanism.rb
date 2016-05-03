@@ -30,7 +30,7 @@ module Coppertone
       end
 
       def target_domain
-        fail Coppertone::NeedsContextError if context_dependent?
+        raise Coppertone::NeedsContextError if context_dependent?
         domain_spec.to_s
       end
 
@@ -38,7 +38,7 @@ module Coppertone
         return false unless other.instance_of? self.class
         domain_spec == other.domain_spec
       end
-      alias_method :eql?, :==
+      alias eql? ==
 
       def hash
         domain_spec.hash

@@ -24,7 +24,7 @@ module Coppertone
     end
 
     def target_domain
-      fail NeedsContextError unless dns_lookup_term?
+      raise NeedsContextError unless dns_lookup_term?
       mechanism.target_domain
     end
 

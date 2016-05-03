@@ -9,8 +9,8 @@ module Coppertone
       def match_target_name(macro_context, request_context, target_name)
         record = included_record(request_context, target_name)
         IncludeMatcher.new(record)
-          .match?(context_for_include(macro_context, target_name),
-                  request_context)
+                      .match?(context_for_include(macro_context, target_name),
+                              request_context)
       end
 
       def context_for_include(macro_context, target_name)

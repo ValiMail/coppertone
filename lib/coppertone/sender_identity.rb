@@ -3,7 +3,7 @@ module Coppertone
   # Parses the identity and ensures validity.  Also has accessor methods
   # for the macro letters.
   class SenderIdentity
-    DEFAULT_LOCALPART = 'postmaster'
+    DEFAULT_LOCALPART = 'postmaster'.freeze
     EMAIL_ADDRESS_SPLIT_REGEXP = /^(.*)@(.*?)$/
 
     attr_reader :sender, :localpart, :domain
@@ -12,9 +12,9 @@ module Coppertone
       initialize_localpart_and_domain
     end
 
-    alias_method :s, :sender
-    alias_method :l, :localpart
-    alias_method :o, :domain
+    alias s sender
+    alias l localpart
+    alias o domain
 
     private
 

@@ -16,7 +16,7 @@ module Coppertone
       end
 
       def parse_macro_array
-        while @s && @s.length > 0
+        while @s && !@s.empty?
           if starting_macro?
             parse_interpolated_macro
           else
@@ -30,17 +30,17 @@ module Coppertone
       end
 
       def parse_contextual_interpolated_macro
-        fail MacroStringParsingError unless @s[1] == '{'
+        raise MacroStringParsingError unless @s[1] == '{'
         closing_index = @s.index('}')
-        fail MacroStringParsingError unless closing_index
+        raise MacroStringParsingError unless closing_index
         interpolated_body = @s[2, closing_index - 2]
         @macros << MacroExpand.new(interpolated_body)
         @s = @s[(closing_index + 1)..-1]
       end
 
-      SIMPLE_MACRO_LETTERS = %w(% _ -)
+      SIMPLE_MACRO_LETTERS = %w(% _ -).freeze
       def parse_interpolated_macro
-        fail MacroStringParsingError if @s.length == 1
+        raise MacroStringParsingError if @s.length == 1
         macro_code = @s[0, 2]
         if MacroStaticExpand.exists_for?(macro_code)
           @macros << MacroStaticExpand.macro_for(macro_code)

@@ -86,7 +86,7 @@ module Coppertone
     end
 
     KNOWN_MODS =
-      [Coppertone::Modifier::Exp, Coppertone::Modifier::Redirect]
+      [Coppertone::Modifier::Exp, Coppertone::Modifier::Redirect].freeze
     def unknown_modifiers
       @unknown_modifiers ||=
         modifiers.select { |m| KNOWN_MODS.select { |k| m.is_a?(k) }.empty? }
@@ -94,7 +94,7 @@ module Coppertone
 
     def find_modifier(klass)
       arr = modifiers.select { |m| m.is_a?(klass) }
-      fail DuplicateModifierError if arr.size > 1
+      raise DuplicateModifierError if arr.size > 1
       arr.first
     end
 

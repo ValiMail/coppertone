@@ -199,15 +199,15 @@ describe Coppertone::Mechanism::A do
         dc = double(:dns_client)
         allow(dc).to receive(:fetch_a_records)
           .with(mech_domain).and_return([
-            {
-              type: 'A',
-              address: '74.125.239.117'
-            },
-            {
-              type: 'A',
-              address: '74.125.239.118'
-            }
-          ])
+                                          {
+                                            type: 'A',
+                                            address: '74.125.239.117'
+                                          },
+                                          {
+                                            type: 'A',
+                                            address: '74.125.239.118'
+                                          }
+                                        ])
         dc
       end
 
