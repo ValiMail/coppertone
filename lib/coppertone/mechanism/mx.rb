@@ -1,7 +1,7 @@
 require 'coppertone/mechanism/domain_spec_with_dual_cidr'
 
 module Coppertone
-  class Mechanism # rubocop:disable Style/Documentation
+  class Mechanism
     # Implements the MX mechanism.
     class MX < DomainSpecWithDualCidr
       def match_target_name(macro_context, request_context, target_name)

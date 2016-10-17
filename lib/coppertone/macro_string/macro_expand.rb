@@ -31,7 +31,7 @@ module Coppertone
         return unless raw_value
         @digit_transformers = raw_value.to_i unless raw_value.empty?
         return unless @digit_transformers
-        raise Coppertone::MacroStringParsingError if @digit_transformers == 0
+        raise Coppertone::MacroStringParsingError if @digit_transformers.zero?
       end
 
       def ptr_macro?

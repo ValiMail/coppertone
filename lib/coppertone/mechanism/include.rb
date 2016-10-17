@@ -3,7 +3,7 @@ require 'coppertone/mechanism/include_matcher'
 require 'coppertone/record_finder'
 
 module Coppertone
-  class Mechanism # rubocop:disable Style/Documentation
+  class Mechanism
     # Implements the include mechanism.
     class Include < DomainSpecRequired
       def match_target_name(macro_context, request_context, target_name)

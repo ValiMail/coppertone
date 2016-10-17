@@ -1,5 +1,5 @@
 module Coppertone
-  class Mechanism # rubocop:disable Style/Documentation
+  class Mechanism
     # Implements the All mechanism.  To reduce unnecessary object creation, this
     # class is a singleton since all All mechanisms behave identically.
     class All < Mechanism

@@ -1,7 +1,7 @@
 require 'coppertone/mechanism/domain_spec_optional'
 
 module Coppertone
-  class Mechanism # rubocop:disable Style/Documentation
+  class Mechanism
     # Implements the ptr mechanism.
     class Ptr < DomainSpecOptional
       def match_target_name(macro_context, request_context, target_name)
