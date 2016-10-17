@@ -2,7 +2,7 @@ require 'coppertone/mechanism/domain_spec_with_dual_cidr'
 require 'coppertone/utils/ip_in_domain_checker'
 
 module Coppertone
-  class Mechanism # rubocop:disable Style/Documentation
+  class Mechanism
     # Implements the A mechanism.
     class A < DomainSpecWithDualCidr
       def match_target_name(macro_context, request_context, target_name)

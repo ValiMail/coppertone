@@ -24,18 +24,18 @@ desc 'Parse OpenSPF tests'
 def spec_file_name(doc, output_path)
   description = doc['description']
   file_name = description.gsub(/[^\w\s_-]+/, '')
-              .gsub(/(^|\b\s)\s+($|\s?\b)/, '\\1\\2')
-              .gsub(/\s+/, '_') + '_spec.rb'
+                         .gsub(/(^|\b\s)\s+($|\s?\b)/, '\\1\\2')
+                         .gsub(/\s+/, '_') + '_spec.rb'
   File.join(output_path, file_name)
 end
 
-INDENT_STRING = '  '
+INDENT_STRING = '  '.freeze
 def indented_string(num_indents = 1)
-  num_indents.times.map { INDENT_STRING }.join('')
+  Array.new(num_indents) { INDENT_STRING }.join('')
 end
 
 def puts_prefixed_string(f, s, indent = 0)
-  f.write indented_string(indent) unless indent == 0
+  f.write indented_string(indent) unless indent.zero?
   f.puts s
 end
 

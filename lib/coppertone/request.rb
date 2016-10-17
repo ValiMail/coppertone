@@ -11,12 +11,22 @@ module Coppertone
     end
 
     def authenticate
+      process_helo || process_mailfrom || default_value
+    end
+
+    def process_helo
       check_spf_for_helo
-      return helo_result if helo_result && !helo_result.none?
+      return nil if helo_result && helo_result.none?
+      helo_result
+    end
 
+    def process_mailfrom
       check_spf_for_mailfrom
-      return mailfrom_result if mailfrom_result && !mailfrom_result.none?
+      return nil if mailfrom_result && mailfrom_result.none?
+      mailfrom_result
+    end
 
+    def default_value
       no_matching_record? ? Result.none : Result.neutral
     end
 

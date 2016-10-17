@@ -1,3 +1,3 @@
-module Coppertone # rubocop:disable Style/Documentation
+module Coppertone
   VERSION = '0.0.6'.freeze
 end
