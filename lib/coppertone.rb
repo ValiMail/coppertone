@@ -1,4 +1,5 @@
 require 'active_support/core_ext/object/blank'
+require 'active_support/core_ext/object/try'
 
 # A library for evaluating, creating, and analyzing SPF records
 module Coppertone
