@@ -23,7 +23,7 @@ If you'd like to suggest amending these guidelines, please open an issue for dis
 
 ## Requirements
 
-Coppertone supports MRI 2.0 and up - earlier MRI rubies are not supported.  JRuby 1.7.16+ and Rubinius 2.2+ are also supported.
+Coppertone supports MRI 2.2 and up - earlier MRI rubies are not supported.  JRuby 9.1.5.0+ is also supported.
 
 Coppertone does not require Rails, although it does depend on ActiveSupport.
 
