@@ -11,6 +11,7 @@ module Coppertone
         return false if labels.length <= 1
         return false if domain.length > 253
         return false if labels.any? { |l| !valid_label?(l) }
+        return false unless valid_tld?(labels.last)
         true
       end
 
@@ -33,7 +34,8 @@ module Coppertone
         to_ascii_labels(domain).join('.')
       end
 
-      NO_DASH_REGEXP = /\A[a-zA-Z0-9]*[a-zA-Z]+[a-zA-Z0-9]*\z/
+      NO_DASH_NONNUMERIC_REGEXP = /\A[a-zA-Z0-9]*[a-zA-Z]+[a-zA-Z0-9]*\z/
+      NO_DASH_REGEXP = /\A[a-zA-Z0-9]+\z/
       DASH_REGEXP = /\A[a-zA-Z0-9]+\-[a-zA-Z0-9\-]*[a-zA-Z0-9]+\z/
 
       def self.valid_hostname_label?(l)
@@ -41,9 +43,16 @@ module Coppertone
         NO_DASH_REGEXP.match(l) || DASH_REGEXP.match(l)
       end
 
+      def self.valid_tld?(l)
+        return false unless valid_label?(l)
+        NO_DASH_NONNUMERIC_REGEXP.match(l) || DASH_REGEXP.match(l)
+      end
+
       def self.valid_ldh_domain?(domain)
         return false unless valid?(domain)
-        to_ascii_labels(domain).all? { |l| valid_hostname_label?(l) }
+        labels = to_ascii_labels(domain)
+        return false unless valid_tld?(labels.last)
+        labels.all? { |l| valid_hostname_label?(l) }
       end
 
       def self.valid_label?(l)

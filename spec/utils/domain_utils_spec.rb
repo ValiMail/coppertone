@@ -11,6 +11,11 @@ describe Coppertone::Utils::DomainUtils do
       expect(subject.valid?('abc.bit.ly')).to eq(true)
     end
 
+    it 'should validate domains with numeric labels' do
+      expect(subject.valid?('abc.126.com')).to eq(true)
+      expect(subject.valid?('37.com')).to eq(true)
+    end
+
     it 'should validate domains when they are dot-terminated' do
       expect(subject.valid?('gmail.com.')).to eq(true)
       expect(subject.valid?('fermion.mit.edu.')).to eq(true)
@@ -29,6 +34,15 @@ describe Coppertone::Utils::DomainUtils do
 
     it 'should reject labels containing whitespace' do
       expect(subject.valid?('mail mike.net')).to eq(false)
+    end
+
+    it 'should validate domains with underscores' do
+      expect(subject.valid?('_dmarc.126.com')).to eq(true)
+      expect(subject.valid?('abcd._domainkey.gmail.com')).to eq(true)
+    end
+
+    it 'should reject IP addresses' do
+      expect(subject.valid?('192.38.7.14')).to eq(false)
     end
   end
 
@@ -89,6 +103,48 @@ describe Coppertone::Utils::DomainUtils do
     it 'should handle Unicode domains correctly' do
       expect(subject.normalized_domain('FERMIon.清华大学.cn'))
         .to eq('fermion.xn--xkry9kk1bz66a.cn')
+    end
+  end
+
+  context '#valid_ldh_domain?' do
+    it 'should validate standard domains' do
+      expect(subject.valid_ldh_domain?('gmail.com')).to eq(true)
+      expect(subject.valid_ldh_domain?('fermion.mit.edu')).to eq(true)
+      expect(subject.valid_ldh_domain?('abc.bit.ly')).to eq(true)
+    end
+
+    it 'should validate domains with numeric labels' do
+      expect(subject.valid_ldh_domain?('abc.126.com')).to eq(true)
+      expect(subject.valid_ldh_domain?('37.com')).to eq(true)
+    end
+
+    it 'should validate domains when they are dot-terminated' do
+      expect(subject.valid_ldh_domain?('gmail.com.')).to eq(true)
+      expect(subject.valid_ldh_domain?('fermion.mit.edu.')).to eq(true)
+      expect(subject.valid_ldh_domain?('abc.bit.ly.')).to eq(true)
+    end
+
+    it 'should reject domains with less than two labels' do
+      expect(subject.valid_ldh_domain?('')).to eq(false)
+      expect(subject.valid_ldh_domain?('one')).to eq(false)
+    end
+
+    it 'should handle IDNA domains' do
+      expect(subject.valid_ldh_domain?('清华大学.cn')).to eq(true)
+      expect(subject.valid_ldh_domain?('ジェーピーニック.jp')).to eq(true)
+    end
+
+    it 'should reject labels containing whitespace' do
+      expect(subject.valid_ldh_domain?('mail mike.net')).to eq(false)
+    end
+
+    it 'should reject domains with underscores' do
+      expect(subject.valid_ldh_domain?('_dmarc.126.com')).to eq(false)
+      expect(subject.valid_ldh_domain?('abcd._domainkey.gmail.com')).to eq(false)
+    end
+
+    it 'should reject IP addresses' do
+      expect(subject.valid_ldh_domain?('192.38.7.14')).to eq(false)
     end
   end
 end

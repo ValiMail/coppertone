@@ -37,7 +37,7 @@ module Coppertone
       ends_with = ends_with[0..-2] if ends_with[-1] == '.'
       _, match, tail = ends_with.rpartition('.')
       return false if match.blank?
-      hostname = Coppertone::Utils::DomainUtils.valid_hostname_label?(tail)
+      hostname = Coppertone::Utils::DomainUtils.valid_tld?(tail)
       return false unless hostname
       true
     end
