@@ -12,8 +12,10 @@ module Coppertone
       end
 
       def target_name_from_domain_spec(macro_context, request_context)
-        domain =
-          domain_spec.expand(macro_context, request_context) if domain_spec
+        if domain_spec
+          domain =
+            domain_spec.expand(macro_context, request_context)
+        end
         Coppertone::Utils::DomainUtils.macro_expanded_domain(domain)
       end
 
