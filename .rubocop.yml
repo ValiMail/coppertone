@@ -4,6 +4,9 @@ AllCops:
 Metrics/AbcSize:
   Exclude:
     - 'Rakefile'
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/**/*'
 Metrics/LineLength:
   Enabled: false
 Metrics/MethodLength:
