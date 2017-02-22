@@ -23,6 +23,7 @@ describe Coppertone::Mechanism::IP6 do
     it 'should not fail if called with an IP v4' do
       mech = Coppertone::Mechanism::IP6.new(':1.2.3.4')
       expect(mech.netblock).to eq(IPAddr.new('1.2.3.4'))
+      expect(mech.cidr_length).to eq(32)
       expect(mech).not_to be_dns_lookup_term
     end
 
@@ -30,6 +31,7 @@ describe Coppertone::Mechanism::IP6 do
       mech = Coppertone::Mechanism::IP6.new(':fe80::202:b3ff:fe1e:8329')
       expect(mech.netblock)
         .to eq(IPAddr.new('fe80::202:b3ff:fe1e:8329'))
+      expect(mech.cidr_length).to eq(128)
       expect(mech).not_to be_dns_lookup_term
     end
 
@@ -37,6 +39,7 @@ describe Coppertone::Mechanism::IP6 do
       mech = Coppertone::Mechanism::IP6.new(':fe80::202:b3ff:fe1e:8329/64')
       expect(mech.netblock)
         .to eq(IPAddr.new('fe80::202:b3ff:fe1e:8329/64'))
+      expect(mech.cidr_length).to eq(64)
       expect(mech).not_to be_dns_lookup_term
     end
 
