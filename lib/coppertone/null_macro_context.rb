@@ -3,7 +3,7 @@ module Coppertone
   # do not have contextual dependence.
   class NullMacroContext
     RESERVED_REGEXP = Regexp.new("[^#{URI::PATTERN::UNRESERVED}]")
-    %w(s l o d i p v h c r t).each do |m|
+    %w[s l o d i p v h c r t].each do |m|
       define_method(m.upcase) do
         raise ArgumentError
       end

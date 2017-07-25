@@ -28,7 +28,7 @@ module Coppertone
       # Replaces '%-' in a macro string
       URL_ENCODED_SPACE_MACRO = new('%-'.freeze, '%20'.freeze)
 
-      SIMPLE_INTERPOLATED_MACRO_LETTERS = %w(% _ -).freeze
+      SIMPLE_INTERPOLATED_MACRO_LETTERS = %w[% _ -].freeze
       def self.exists_for?(x)
         return false unless x && (x.length == 2) && (x[0] == '%')
         SIMPLE_INTERPOLATED_MACRO_LETTERS.include?(x[1])

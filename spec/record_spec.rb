@@ -141,7 +141,7 @@ describe Coppertone::Record do
           .new('v=spf1 include:_spf.domain1.com ip4:1.2.3.4 include:_spf.domain2.com ~all exp=explain._spf.%{d}')
       includes = r.includes
       expect(includes.map(&:mechanism).all? { |i| i.is_a?(Coppertone::Mechanism::Include) }).to be_truthy
-      expect(includes.map(&:target_domain)).to eq(%w(_spf.domain1.com _spf.domain2.com))
+      expect(includes.map(&:target_domain)).to eq(%w[_spf.domain1.com _spf.domain2.com])
     end
   end
 

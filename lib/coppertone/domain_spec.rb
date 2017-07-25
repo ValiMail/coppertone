@@ -18,7 +18,7 @@ module Coppertone
       raise Coppertone::DomainSpecParsingError
     end
 
-    EXP_ONLY_MACRO_LETTERS = %w(c r t).freeze
+    EXP_ONLY_MACRO_LETTERS = %w[c r t].freeze
     def only_allowed_macros?
       @macros.select { |m| m.is_a?(Coppertone::MacroString::MacroExpand) }
              .none? { |m| EXP_ONLY_MACRO_LETTERS.include?(m.macro_letter) }

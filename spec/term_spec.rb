@@ -29,7 +29,7 @@ describe Coppertone::Term do
       token = SecureRandom.hex(10)
       expect(Coppertone::Directive)
         .to receive(:matching_term).with(token)
-        .and_raise(Coppertone::Error)
+                                   .and_raise(Coppertone::Error)
       expect do
         Coppertone::Term.build_from_token(token)
       end.to raise_error(Coppertone::Error)

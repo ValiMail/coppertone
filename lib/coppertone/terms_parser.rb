@@ -11,7 +11,7 @@ module Coppertone
     end
 
     def tokens
-      text.split(/ /).select { |s| !s.blank? }
+      text.split(/ /).reject(&:blank?)
     end
 
     def parse_token(token)

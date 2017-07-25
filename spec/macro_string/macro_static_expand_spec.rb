@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Coppertone::MacroString::MacroStaticExpand do
   context '#exists_for?' do
-    %w(%% %_ %-).each do |x|
+    %w[%% %_ %-].each do |x|
       it "should resolve a macro for the key #{x}" do
         expect(Coppertone::MacroString::MacroStaticExpand.exists_for?(x))
           .to eq(true)
@@ -16,7 +16,7 @@ describe Coppertone::MacroString::MacroStaticExpand do
   end
 
   context 'macro_for' do
-    %w(%% %_ %-).each do |x|
+    %w[%% %_ %-].each do |x|
       it "should resolve a macro for the key #{x}" do
         expect(Coppertone::MacroString::MacroStaticExpand.macro_for(x))
           .not_to be_nil

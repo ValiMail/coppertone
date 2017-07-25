@@ -21,3 +21,8 @@ Style/FrozenStringLiteralComment:
 Style/FileName:
   Exclude:
     - 'spec/open_spf/**/*'
+Style/FormatStringToken:
+  Enabled: false
+Style/SymbolArray:
+  Exclude:
+    - 'spec/open_spf/**/*'

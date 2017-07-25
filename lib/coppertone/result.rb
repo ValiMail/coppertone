@@ -45,7 +45,7 @@ module Coppertone
       Result.new(:neutral)
     end
 
-    %w(none pass fail softfail neutral temperror permerror).each do |t|
+    %w[none pass fail softfail neutral temperror permerror].each do |t|
       define_method("#{t}?") do
         self.class.const_get(t.upcase) == send(:code)
       end

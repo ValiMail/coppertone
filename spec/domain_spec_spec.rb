@@ -26,7 +26,7 @@ describe Coppertone::DomainSpec do
   end
 
   it 'raises an error when the macro string contains forbidden macros' do
-    %w(c r t).each do |m|
+    %w[c r t].each do |m|
       expect do
         Coppertone::DomainSpec.new("%{#{m}}")
       end.to raise_error(Coppertone::DomainSpecParsingError)
