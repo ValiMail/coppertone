@@ -9,7 +9,7 @@ module Coppertone
     # grammer defined in section 7.1.
     class MacroExpand
       MACRO_LETTER_CHAR_SET = '[slodiphcrtvSLODIPHCRTV]'.freeze
-      PTR_MACRO_CHAR_SET = %w(p P).freeze
+      PTR_MACRO_CHAR_SET = %w[p P].freeze
       DELIMITER_CHAR_SET = '[\.\-\+\,\/\_\=]'.freeze
       VALID_BODY_REGEXP =
         /\A(#{MACRO_LETTER_CHAR_SET})(\d*)(r?)(#{DELIMITER_CHAR_SET}*)\z/

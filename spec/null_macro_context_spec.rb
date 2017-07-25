@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Coppertone::NullMacroContext do
-  %w(s l o d i p v h c r t).each do |i|
+  %w[s l o d i p v h c r t].each do |i|
     it "should raise an error for #{i}" do
       expect do
         Coppertone::NullMacroContext::NULL_CONTEXT.send(i)

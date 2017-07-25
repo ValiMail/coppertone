@@ -38,7 +38,7 @@ module Coppertone
         @s = @s[(closing_index + 1)..-1]
       end
 
-      SIMPLE_MACRO_LETTERS = %w(% _ -).freeze
+      SIMPLE_MACRO_LETTERS = %w[% _ -].freeze
       def parse_interpolated_macro
         raise MacroStringParsingError if @s.length == 1
         macro_code = @s[0, 2]
