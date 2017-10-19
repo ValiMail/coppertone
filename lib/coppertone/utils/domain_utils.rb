@@ -56,7 +56,7 @@ module Coppertone
       end
 
       def self.valid_label?(l)
-        (l.length >= 0) && (l.length <= 63) && !l.match(/\s/)
+        !l.empty? && (l.length <= 63) && !l.match(/\s/)
       end
 
       def self.macro_expanded_domain(domain)

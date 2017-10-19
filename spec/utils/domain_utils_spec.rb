@@ -27,6 +27,11 @@ describe Coppertone::Utils::DomainUtils do
       expect(subject.valid?('one')).to eq(false)
     end
 
+    it 'should reject domains with empty labels' do
+      expect(subject.valid?('.spf.example.com')).to eq(false)
+      expect(subject.valid?('spf..example.com')).to eq(false)
+    end
+
     it 'should handle IDNA domains' do
       expect(subject.valid?('清华大学.cn')).to eq(true)
       expect(subject.valid?('ジェーピーニック.jp')).to eq(true)
