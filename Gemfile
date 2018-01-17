@@ -4,4 +4,5 @@ source 'https://rubygems.org'
 gemspec
 
 gem 'codeclimate-test-reporter', group: :test, require: nil
+gem 'rspec_junit_formatter', group: :test
 gem 'simplecov', group: :test, require: false
