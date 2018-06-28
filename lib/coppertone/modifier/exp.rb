@@ -16,7 +16,7 @@ module Coppertone
         macro_string = lookup_macro_string(target_name, request_context)
         return nil unless macro_string
         expanded = macro_string.expand(macro_context, request_context)
-        return nil unless ASCII_REGEXP.match(expanded)
+        return nil unless ASCII_REGEXP.match?(expanded)
         expanded
       rescue DNSAdapter::Error
         nil

@@ -1,6 +1,4 @@
-# coding: utf-8
-
-lib = File.expand_path('../lib', __FILE__)
+lib = File.expand_path('lib', __dir__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'coppertone/version'
 
@@ -18,12 +16,12 @@ Gem::Specification.new do |spec|
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ['lib']
 
+  spec.add_runtime_dependency 'activesupport', '>= 3.0'
+  spec.add_runtime_dependency 'addressable'
   spec.add_runtime_dependency 'dns_adapter'
   spec.add_runtime_dependency 'i18n'
-  spec.add_runtime_dependency 'addressable'
-  spec.add_runtime_dependency 'activesupport', '>= 3.0'
   spec.add_development_dependency 'bundler'
+  spec.add_development_dependency 'flay'
   spec.add_development_dependency 'rake', '~> 10.0'
   spec.add_development_dependency 'rspec', '>= 3.0'
-  spec.add_development_dependency 'rubocop'
 end

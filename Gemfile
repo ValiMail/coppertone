@@ -3,6 +3,13 @@ source 'https://rubygems.org'
 # Specify your gem's dependencies in coppertone.gemspec
 gemspec
 
-gem 'codeclimate-test-reporter', group: :test, require: nil
-gem 'rspec_junit_formatter', group: :test
-gem 'simplecov', group: :test, require: false
+group :development, :test do
+  gem 'brakeman', require: false
+  gem 'rubocop', require: false
+end
+
+group :test do
+  gem 'codecov', require: false
+  gem 'rspec_junit_formatter'
+  gem 'simplecov'
+end

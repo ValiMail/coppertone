@@ -33,7 +33,7 @@ module Coppertone
     end
 
     def self.normalize_ip(parsed_ip)
-      return parsed_ip unless parsed_ip && parsed_ip.ipv6?
+      return parsed_ip unless parsed_ip&.ipv6?
       parsed_ip.ipv4_mapped? ? parsed_ip.native : parsed_ip
     end
 

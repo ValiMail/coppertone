@@ -116,7 +116,7 @@ def write_spec(f, spec, indent = 1)
 end
 
 def write_doc(doc, output_path)
-  open(spec_file_name(doc, output_path), 'w') do |f|
+  File.open(spec_file_name(doc, output_path), 'w') do |f|
     puts_prefixed_string(f, "require 'spec_helper'")
     empty_line(f)
     description = doc['description']
