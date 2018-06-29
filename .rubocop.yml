@@ -1,5 +1,5 @@
 AllCops:
-  TargetRubyVersion: 2.2
+  TargetRubyVersion: 2.5
 
 Metrics/AbcSize:
   Exclude:
@@ -18,7 +18,7 @@ Rails/HttpPositionalArguments:
   Enabled: false
 Style/FrozenStringLiteralComment:
   Enabled: false
-Style/FileName:
+Naming/FileName:
   Exclude:
     - 'spec/open_spf/**/*'
 Style/FormatStringToken:
@@ -26,3 +26,7 @@ Style/FormatStringToken:
 Style/SymbolArray:
   Exclude:
     - 'spec/open_spf/**/*'
+Naming/UncommunicativeMethodParamName:
+  Enabled: false
+Lint/UriEscapeUnescape:
+  Enabled: false

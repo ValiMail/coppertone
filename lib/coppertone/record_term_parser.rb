@@ -7,13 +7,13 @@ module Coppertone
 
     def self.record?(text)
       return false if text.blank?
-      RECORD_REGEXP.match(text.strip) ? true : false
+      RECORD_REGEXP.match?(text.strip) ? true : false
     end
 
     attr_reader :text, :terms
     def initialize(text)
       raise RecordParsingError unless self.class.record?(text)
-      raise RecordParsingError unless ALLOWED_CHARACTERS.match(text)
+      raise RecordParsingError unless ALLOWED_CHARACTERS.match?(text)
       @text = text
       @terms = Coppertone::TermsParser.new(terms_segment).terms
     end

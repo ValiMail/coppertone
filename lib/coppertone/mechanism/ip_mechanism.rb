@@ -18,7 +18,7 @@ module Coppertone
 
       LEADING_ZEROES_IN_CIDR_REGEXP = %r{\/0\d}
       def validate_no_leading_zeroes_in_cidr(ip_as_s)
-        return unless LEADING_ZEROES_IN_CIDR_REGEXP.match(ip_as_s)
+        return unless LEADING_ZEROES_IN_CIDR_REGEXP.match?(ip_as_s)
         raise Coppertone::InvalidMechanismError
       end
 

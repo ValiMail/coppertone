@@ -74,7 +74,7 @@ module Coppertone
 
     def context_dependent_evaluation?
       return true if directives.any?(&:context_dependent?)
-      redirect && redirect.context_dependent?
+      redirect&.context_dependent?
     end
 
     def exp
@@ -82,7 +82,7 @@ module Coppertone
     end
 
     def context_dependent_explanation?
-      exp && exp.context_dependent?
+      exp&.context_dependent?
     end
 
     KNOWN_MODS =

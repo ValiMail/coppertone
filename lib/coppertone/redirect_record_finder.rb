@@ -9,7 +9,7 @@ module Coppertone
     end
 
     def target
-      @redirect_target ||= redirect.evaluate(macro_context, request_context)
+      @target ||= redirect.evaluate(macro_context, request_context)
     end
 
     def record

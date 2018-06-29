@@ -16,13 +16,13 @@ module Coppertone
 
     def process_helo
       check_spf_for_helo
-      return nil if helo_result && helo_result.none?
+      return nil if helo_result&.none?
       helo_result
     end
 
     def process_mailfrom
       check_spf_for_mailfrom
-      return nil if mailfrom_result && mailfrom_result.none?
+      return nil if mailfrom_result&.none?
       mailfrom_result
     end
 
@@ -32,25 +32,6 @@ module Coppertone
 
     def no_matching_record?
       helo_result.nil? && mailfrom_result.nil?
-    end
-
-    def check_spf_for_helo
-      @helo_result ||= check_spf_for_context(helo_context, 'helo')
-    end
-
-    def check_spf_for_mailfrom
-      @mailfrom_result ||= check_spf_for_context(mailfrom_context, 'mailfrom')
-    end
-
-    def check_spf_for_context(macro_context, identity)
-      record = spf_record(macro_context)
-      @result = spf_request(macro_context, record, identity) if record
-    rescue DNSAdapter::Error => e
-      Result.temperror(e.message)
-    rescue Coppertone::TemperrorError => e
-      Result.temperror(e.message)
-    rescue Coppertone::PermerrorError => e
-      Result.permerror(e.message)
     end
 
     def request_context
@@ -75,6 +56,27 @@ module Coppertone
       r = RecordEvaluator.new(record).evaluate(macro_context, request_context)
       r.identity = identity
       r
+    end
+
+    private
+
+    def check_spf_for_helo
+      @helo_result = check_spf_for_context(helo_context, 'helo')
+    end
+
+    def check_spf_for_mailfrom
+      @mailfrom_result = check_spf_for_context(mailfrom_context, 'mailfrom')
+    end
+
+    def check_spf_for_context(macro_context, identity)
+      record = spf_record(macro_context)
+      @result = spf_request(macro_context, record, identity) if record
+    rescue DNSAdapter::Error => e
+      Result.temperror(e.message)
+    rescue Coppertone::TemperrorError => e
+      Result.temperror(e.message)
+    rescue Coppertone::PermerrorError => e
+      Result.permerror(e.message)
     end
   end
 end
