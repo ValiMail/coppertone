@@ -7,11 +7,13 @@ module Coppertone
     class DomainUtils
       def self.valid?(domain)
         return false if domain.blank?
+
         labels = to_ascii_labels(domain)
         return false if labels.length <= 1
         return false if domain.length > 253
         return false if labels.any? { |l| !valid_label?(l) }
         return false unless valid_tld?(labels.last)
+
         true
       end
 
@@ -22,6 +24,7 @@ module Coppertone
       def self.parent_domain(domain)
         labels = to_labels(domain)
         return '.' if labels.size == 1
+
         labels.shift
         labels.join('.')
       end
@@ -34,24 +37,28 @@ module Coppertone
         to_ascii_labels(domain).join('.')
       end
 
-      NO_DASH_NONNUMERIC_REGEXP = /\A[a-zA-Z0-9]*[a-zA-Z]+[a-zA-Z0-9]*\z/
-      NO_DASH_REGEXP = /\A[a-zA-Z0-9]+\z/
-      DASH_REGEXP = /\A[a-zA-Z0-9]+\-[a-zA-Z0-9\-]*[a-zA-Z0-9]+\z/
+      NO_DASH_NONNUMERIC_REGEXP = /\A[a-zA-Z0-9]*[a-zA-Z]+[a-zA-Z0-9]*\z/.freeze
+      NO_DASH_REGEXP = /\A[a-zA-Z0-9]+\z/.freeze
+      DASH_REGEXP = /\A[a-zA-Z0-9]+\-[a-zA-Z0-9\-]*[a-zA-Z0-9]+\z/.freeze
 
       def self.valid_hostname_label?(l)
         return false unless valid_label?(l)
+
         NO_DASH_REGEXP.match(l) || DASH_REGEXP.match(l)
       end
 
       def self.valid_tld?(l)
         return false unless valid_label?(l)
+
         NO_DASH_NONNUMERIC_REGEXP.match(l) || DASH_REGEXP.match(l)
       end
 
       def self.valid_ldh_domain?(domain)
         return false unless valid?(domain)
+
         labels = to_ascii_labels(domain)
         return false unless valid_tld?(labels.last)
+
         labels.all? { |l| valid_hostname_label?(l) }
       end
 
@@ -61,6 +68,7 @@ module Coppertone
 
       def self.macro_expanded_domain(domain)
         return nil if domain.blank?
+
         labels = to_ascii_labels(domain)
         domain = labels.join('.')
         while domain.length > 253
@@ -75,12 +83,14 @@ module Coppertone
         domain_labels = to_ascii_labels(domain)
         num_labels_in_domain = domain_labels.length
         return false if subdomain_labels.length <= domain_labels.length
+
         subdomain_labels.last(num_labels_in_domain) == domain_labels
       end
 
       def self.subdomain_or_same?(candidate, domain)
         return false unless valid?(domain) && valid?(candidate)
         return true if normalized_domain(domain) == normalized_domain(candidate)
+
         subdomain_of?(candidate, domain)
       end
     end

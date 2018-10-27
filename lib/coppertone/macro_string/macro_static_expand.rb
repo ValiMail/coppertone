@@ -31,11 +31,13 @@ module Coppertone
       SIMPLE_INTERPOLATED_MACRO_LETTERS = %w[% _ -].freeze
       def self.exists_for?(x)
         return false unless x && (x.length == 2) && (x[0] == '%')
+
         SIMPLE_INTERPOLATED_MACRO_LETTERS.include?(x[1])
       end
 
       def self.macro_for(x)
         raise Coppertone::MacroStringParsingError unless exists_for?(x)
+
         case x[1]
         when '%'
           PERCENT_MACRO

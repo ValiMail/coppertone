@@ -7,6 +7,7 @@ module Coppertone
   class Term
     def self.build_from_token(token)
       return nil unless token
+
       Directive.matching_term(token) || Modifier.matching_term(token)
     end
   end

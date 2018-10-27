@@ -15,6 +15,7 @@ module Coppertone
 
     def validate_domain_spec_restrictions
       return if only_allowed_macros? && ends_in_allowed_term?
+
       raise Coppertone::DomainSpecParsingError
     end
 
@@ -29,6 +30,7 @@ module Coppertone
       return true unless lm
       return false if lm.is_a?(Coppertone::MacroString::MacroStaticExpand)
       return true if lm.is_a?(Coppertone::MacroString::MacroExpand)
+
       ends_with_top_label?
     end
 
@@ -37,8 +39,10 @@ module Coppertone
       ends_with = ends_with[0..-2] if ends_with[-1] == '.'
       _, match, tail = ends_with.rpartition('.')
       return false if match.blank?
+
       hostname = Coppertone::Utils::DomainUtils.valid_tld?(tail)
       return false unless hostname
+
       true
     end
   end

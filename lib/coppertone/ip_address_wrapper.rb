@@ -13,6 +13,7 @@ module Coppertone
     def initialize(s)
       @ip = self.class.parse(s)
       raise ArgumentError unless @ip
+
       @string_representation = s
     end
 
@@ -26,6 +27,7 @@ module Coppertone
     def self.parse(s)
       return nil unless s
       return nil if s.index('/')
+
       ip_addr = IPAddr.new(s)
       normalize_ip(ip_addr)
     rescue IP_PARSE_ERROR
@@ -34,6 +36,7 @@ module Coppertone
 
     def self.normalize_ip(parsed_ip)
       return parsed_ip unless parsed_ip&.ipv6?
+
       parsed_ip.ipv4_mapped? ? parsed_ip.native : parsed_ip
     end
 

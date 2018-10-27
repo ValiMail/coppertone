@@ -5,6 +5,7 @@ module Coppertone
     class All < Mechanism
       def self.create(attributes)
         raise InvalidMechanismError unless attributes.blank?
+
         SINGLETON
       end
 

@@ -26,6 +26,7 @@ module Coppertone
 
     def exceeded?
       return false unless limited?
+
       count > limit
     end
 

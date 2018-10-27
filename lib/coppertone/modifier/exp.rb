@@ -8,15 +8,18 @@ module Coppertone
         new(attributes)
       end
 
-      ASCII_REGEXP = /\A[[:ascii:]]*\z/
+      ASCII_REGEXP = /\A[[:ascii:]]*\z/.freeze
       def evaluate(macro_context, request_context)
         target_name =
           target_name_from_domain_spec(macro_context, request_context)
         return nil unless target_name
+
         macro_string = lookup_macro_string(target_name, request_context)
         return nil unless macro_string
+
         expanded = macro_string.expand(macro_context, request_context)
         return nil unless ASCII_REGEXP.match?(expanded)
+
         expanded
       rescue DNSAdapter::Error
         nil
@@ -27,6 +30,7 @@ module Coppertone
           request_context.dns_client.fetch_txt_records(target_name)
         return nil if records.empty?
         return nil if records.size > 1
+
         MacroString.new(records.first[:text])
       end
 

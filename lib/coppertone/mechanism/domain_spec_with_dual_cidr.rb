@@ -14,6 +14,7 @@ module Coppertone
       def initialize(attributes)
         super(attributes)
         return if attributes.blank?
+
         parse_argument(attributes)
       rescue Coppertone::MacroStringParsingError
         raise Coppertone::InvalidMechanismError
@@ -37,11 +38,13 @@ module Coppertone
         end
       end
 
-      CIDR_REGEXP = %r{(/(\d*))?(//(\d*))?\z}
+      CIDR_REGEXP = %r{(/(\d*))?(//(\d*))?\z}.freeze
       def parse_argument(attributes)
         raise InvalidMechanismError if attributes.blank?
+
         cidr_matches = CIDR_REGEXP.match(attributes)
         raise InvalidMechanismError unless cidr_matches
+
         macro_string, raw_ip_v4_cidr_length, raw_ip_v6_cidr_length =
           clean_matches(attributes, cidr_matches)
         process_matches(macro_string, raw_ip_v4_cidr_length,
@@ -50,12 +53,15 @@ module Coppertone
 
       def parse_domain_spec(attributes, domain_spec_end)
         return nil if attributes.blank?
+
         cand = attributes[0..domain_spec_end]
         return nil if cand.blank?
+
         cand = trim_domain_spec(cand)
         # At this point we've ascertained that there is
         # a body to the domain spec
         raise InvalidMechanismError if cand.blank?
+
         cand
       end
 
@@ -97,6 +103,7 @@ module Coppertone
 
       def ==(other)
         return false unless other.instance_of? self.class
+
         domain_spec == other.domain_spec &&
           ip_v4_cidr_length == other.ip_v4_cidr_length &&
           ip_v6_cidr_length == other.ip_v6_cidr_length

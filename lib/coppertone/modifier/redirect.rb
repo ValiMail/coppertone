@@ -19,6 +19,7 @@ module Coppertone
 
       def target_domain
         raise NeedsContextError if context_dependent?
+
         arguments
       end
 

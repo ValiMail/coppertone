@@ -17,6 +17,7 @@ module Coppertone
     def parse_token(token)
       term = Term.build_from_token(token)
       raise RecordParsingError unless term
+
       term
     end
   end

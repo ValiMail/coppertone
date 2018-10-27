@@ -60,6 +60,7 @@ module Coppertone
 
     def config_value(k)
       return @options[k] if @options.key?(k)
+
       Coppertone.config.send(k)
     end
   end

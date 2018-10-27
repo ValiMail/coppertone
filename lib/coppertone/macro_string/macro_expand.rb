@@ -12,7 +12,7 @@ module Coppertone
       PTR_MACRO_CHAR_SET = %w[p P].freeze
       DELIMITER_CHAR_SET = '[\.\-\+\,\/\_\=]'.freeze
       VALID_BODY_REGEXP =
-        /\A(#{MACRO_LETTER_CHAR_SET})(\d*)(r?)(#{DELIMITER_CHAR_SET}*)\z/
+        /\A(#{MACRO_LETTER_CHAR_SET})(\d*)(r?)(#{DELIMITER_CHAR_SET}*)\z/.freeze
 
       attr_reader :macro_letter, :digit_transformers, :reverse,
                   :delimiter_regexp
@@ -20,6 +20,7 @@ module Coppertone
       def initialize(s)
         matches = VALID_BODY_REGEXP.match(s)
         raise Coppertone::MacroStringParsingError if matches.nil?
+
         @macro_letter = matches[1]
         initialize_digit_transformers(matches[2])
         @reverse = (matches[3] == 'r')
@@ -29,6 +30,7 @@ module Coppertone
 
       def initialize_digit_transformers(raw_value)
         return unless raw_value
+
         @digit_transformers = raw_value.to_i unless raw_value.empty?
         return unless @digit_transformers
         raise Coppertone::MacroStringParsingError if @digit_transformers.zero?
@@ -44,6 +46,7 @@ module Coppertone
           Coppertone::Utils::ValidatedDomainFinder
           .new(context, request, false).find(context.d)
         return 'unknown' unless ptr
+
         @macro_letter == 'P' ? ::Addressable::URI.encode_component(ptr) : ptr
       end
 
@@ -64,6 +67,7 @@ module Coppertone
 
       def ==(other)
         return false unless other.instance_of? self.class
+
         to_s == other.to_s
       end
 

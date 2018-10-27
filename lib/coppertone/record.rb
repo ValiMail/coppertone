@@ -67,6 +67,7 @@ module Coppertone
 
     def netblocks_only?
       return false if redirect
+
       directives.reject(&:all?).reject do |d|
         d.mechanism.is_a?(Coppertone::Mechanism::IPMechanism)
       end.empty?
@@ -74,6 +75,7 @@ module Coppertone
 
     def context_dependent_evaluation?
       return true if directives.any?(&:context_dependent?)
+
       redirect&.context_dependent?
     end
 
@@ -95,6 +97,7 @@ module Coppertone
     def find_modifier(klass)
       arr = modifiers.select { |m| m.is_a?(klass) }
       raise DuplicateModifierError if arr.size > 1
+
       arr.first
     end
 

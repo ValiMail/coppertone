@@ -10,6 +10,7 @@ module Coppertone
         super(attributes)
         raw_domain_spec = trim_domain_spec(attributes)
         raise InvalidMechanismError if raw_domain_spec.blank?
+
         @domain_spec = Coppertone::DomainSpec.new(raw_domain_spec)
       rescue Coppertone::MacroStringParsingError
         raise Coppertone::InvalidMechanismError

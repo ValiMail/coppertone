@@ -11,6 +11,7 @@ module Coppertone
       def initialize(attributes)
         super(attributes)
         return if attributes.blank?
+
         raw_domain_spec = trim_domain_spec(attributes)
         @domain_spec = Coppertone::DomainSpec.new(raw_domain_spec)
       rescue Coppertone::MacroStringParsingError
