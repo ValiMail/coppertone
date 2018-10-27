@@ -13,6 +13,7 @@ module Coppertone
         def evaluate_none_result(result, m, r)
           new_result = super
           return new_result unless new_result.none?
+
           raise Coppertone::NoneIncludeResultError
         end
       end
@@ -24,6 +25,7 @@ module Coppertone
 
       def match?(macro_context, request_context)
         raise Coppertone::NoneIncludeResultError if record.nil?
+
         record_result =
           IncludeRecordEvaluator.new(record)
                                 .evaluate(macro_context, request_context)

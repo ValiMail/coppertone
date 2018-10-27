@@ -14,6 +14,7 @@ module Coppertone
 
     def record
       return unless target
+
       @record ||= RecordFinder.new(request_context.dns_client, target).record
     end
   end

@@ -57,21 +57,25 @@ end
 
 def escape_quote(val)
   return unless val
+
   val.gsub(/'/) { |_s| "\\'" }
 end
 
 def clean_description(description)
   return unless description
+
   description.tr("\n", ' ').delete("'")
 end
 
 def as_array(val)
   return [] unless val
+
   val.is_a?(Array) ? val : [val]
 end
 
 def write_comment(f, comment, indent)
   return unless comment
+
   comment.lines do |comment_line|
     puts_prefixed_string(f, "# #{comment_line}", indent)
   end
@@ -89,6 +93,7 @@ def write_expects(f, results, explanation, indent)
   code_expect = "expect(#{results_array}).to include(result.code)"
   puts_prefixed_string(f, code_expect, indent)
   return unless explanation
+
   exp_expect = "expect(result.explanation).to eq('#{explanation}')"
   puts_prefixed_string(f, exp_expect, indent)
 end

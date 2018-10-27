@@ -9,6 +9,7 @@ module Coppertone
     def evaluate(macro_context, request_context)
       result = directive_result(macro_context, request_context)
       return result unless result.none? || result.fail?
+
       if result.fail?
         evaluate_fail_result(result, macro_context, request_context)
       else
@@ -30,6 +31,7 @@ module Coppertone
     def add_exp_to_result(result, macro_context, request_context)
       result = add_default_exp(result)
       return result unless record.exp
+
       computed_exp = record.exp.evaluate(macro_context, request_context)
       result.explanation = computed_exp if computed_exp
       result
@@ -50,10 +52,12 @@ module Coppertone
 
     def evaluate_none_result(result, macro_context, request_context)
       return result unless follow_redirect?
+
       finder =
         Coppertone::RedirectRecordFinder.new(record.redirect, macro_context,
                                              request_context)
       raise InvalidRedirectError unless finder.target && finder.record
+
       rc = macro_context.with_domain(finder.target)
       RecordEvaluator.new(finder.record).evaluate(rc, request_context)
     end

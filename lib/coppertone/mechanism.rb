@@ -18,6 +18,7 @@ module Coppertone
 
     def self.register(klass)
       raise ArgumentError unless klass < self
+
       class_builder.register(klass.label, klass)
     end
 

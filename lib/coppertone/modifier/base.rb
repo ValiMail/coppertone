@@ -6,6 +6,7 @@ module Coppertone
       def initialize(attributes)
         super(attributes)
         raise InvalidModifierError if attributes.blank?
+
         @domain_spec = Coppertone::DomainSpec.new(attributes)
       rescue Coppertone::MacroStringParsingError
         raise Coppertone::InvalidModifierError
@@ -29,6 +30,7 @@ module Coppertone
 
       def ==(other)
         return false unless other.instance_of? self.class
+
         domain_spec == other.domain_spec
       end
     end

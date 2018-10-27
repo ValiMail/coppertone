@@ -32,6 +32,7 @@ module Coppertone
       def check_a_record_limit(request_context, count)
         limit = request_context.dns_lookups_per_mx_mechanism_limit
         return unless limit && count > limit
+
         raise Coppertone::MXLimitExceededError
       end
 

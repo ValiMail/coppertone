@@ -16,9 +16,10 @@ module Coppertone
         raise Coppertone::InvalidMechanismError if @netblock.nil?
       end
 
-      LEADING_ZEROES_IN_CIDR_REGEXP = %r{\/0\d}
+      LEADING_ZEROES_IN_CIDR_REGEXP = %r{\/0\d}.freeze
       def validate_no_leading_zeroes_in_cidr(ip_as_s)
         return unless LEADING_ZEROES_IN_CIDR_REGEXP.match?(ip_as_s)
+
         raise Coppertone::InvalidMechanismError
       end
 
@@ -33,6 +34,7 @@ module Coppertone
         validate_no_leading_zeroes_in_cidr(ip_as_s)
         addr, cidr_length_as_s, dual = ip_as_s.split('/')
         return [nil, nil] if dual
+
         network = IPAddr.new(addr)
         network = network.mask(cidr_length_as_s.to_i) unless cidr_length_as_s.blank?
         cidr_length = cidr_length_as_s.blank? ? default_cidr(network) : cidr_length_as_s.to_i
@@ -49,11 +51,13 @@ module Coppertone
         ip = ip_for_match(macro_context)
         return false unless ip
         return false unless ip.ipv4? == @netblock.ipv4?
+
         @netblock.include?(ip)
       end
 
       def ==(other)
         return false unless other.instance_of? self.class
+
         netblock == other.netblock
       end
     end

@@ -39,6 +39,7 @@ module Coppertone
 
     def ==(other)
       return false unless other.instance_of? self.class
+
       macro_text == other.macro_text
     end
     alias eql? ==

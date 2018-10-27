@@ -17,12 +17,14 @@ module Coppertone
     def process_helo
       check_spf_for_helo
       return nil if helo_result&.none?
+
       helo_result
     end
 
     def process_mailfrom
       check_spf_for_mailfrom
       return nil if mailfrom_result&.none?
+
       mailfrom_result
     end
 
@@ -53,6 +55,7 @@ module Coppertone
 
     def spf_request(macro_context, record, identity)
       return Result.new(:none) if record.nil?
+
       r = RecordEvaluator.new(record).evaluate(macro_context, request_context)
       r.identity = identity
       r

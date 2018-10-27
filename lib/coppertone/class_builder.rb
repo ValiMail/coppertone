@@ -12,8 +12,10 @@ module Coppertone
 
     def build(type, attributes)
       return nil unless type
+
       klass = map[type]
       return nil unless klass
+
       klass.create(attributes)
     end
   end

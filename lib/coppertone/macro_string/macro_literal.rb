@@ -17,6 +17,7 @@ module Coppertone
 
       def ==(other)
         return false unless other.instance_of? self.class
+
         to_s == other.to_s
       end
     end

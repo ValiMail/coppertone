@@ -25,6 +25,7 @@ module Coppertone
 
     def target_domain
       raise NeedsContextError unless dns_lookup_term?
+
       mechanism.target_domain
     end
 
@@ -37,17 +38,20 @@ module Coppertone
       qualifier.default? ? mechanism_s : "#{qualifier}#{mechanism_s}"
     end
 
-    DIRECTIVE_REGEXP = /\A([\+\-\~\?]?)([a-zA-Z0-9]*)((:?)\S*)\z/
+    DIRECTIVE_REGEXP = /\A([\+\-\~\?]?)([a-zA-Z0-9]*)((:?)\S*)\z/.freeze
     def self.matching_term(text)
       return nil if text.include?('=')
+
       matches = DIRECTIVE_REGEXP.match(text)
       return nil unless matches
+
       qualifier_txt = matches[1]
       mechanism_type = matches[2].downcase
       attributes = matches[3]
       qualifier = Qualifier.find_by_text(qualifier_txt)
       mechanism = Mechanism.build(mechanism_type, attributes)
       return nil unless qualifier && mechanism
+
       new(qualifier, mechanism)
     end
   end
