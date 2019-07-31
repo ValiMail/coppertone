@@ -7,14 +7,17 @@ module Coppertone
     class DomainUtils
       def self.valid?(domain)
         return false if domain.blank?
-
-        labels = to_ascii_labels(domain)
-        return false if labels.length <= 1
         return false if domain.length > 253
-        return false if labels.any? { |l| !valid_label?(l) }
+
+        labels_valid?(to_ascii_labels(domain))
+      end
+
+      def self.labels_valid?(labels)
+        return false if labels.length <= 1
+        return false if labels.first == '*'
         return false unless valid_tld?(labels.last)
 
-        true
+        labels.all? { |l| valid_label?(l) }
       end
 
       def self.to_labels(domain)
