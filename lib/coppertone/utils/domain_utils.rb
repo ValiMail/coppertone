@@ -13,6 +13,7 @@ module Coppertone
         return false if domain.length > 253
         return false if labels.any? { |l| !valid_label?(l) }
         return false unless valid_tld?(labels.last)
+        return false if labels.first == '*'
 
         true
       end

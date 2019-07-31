@@ -44,6 +44,11 @@ describe Coppertone::Utils::DomainUtils do
       expect(subject.valid?('abcd._domainkey.gmail.com')).to eq(true)
     end
 
+    it 'should reject wildcard domains while allowing interstitial asterisks' do
+      expect(subject.valid?('*.axb.longshot.com')).to eq(false)
+      expect(subject.valid?('rst.*.example.com')).to eq(true)
+    end
+
     it 'should reject IP addresses' do
       expect(subject.valid?('192.38.7.14')).to eq(false)
     end
