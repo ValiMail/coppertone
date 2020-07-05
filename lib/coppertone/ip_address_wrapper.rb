@@ -10,6 +10,7 @@ module Coppertone
   # will fail if passed an address with a non-trivial network prefix
   class IPAddressWrapper
     attr_reader :string_representation, :ip
+
     def initialize(s)
       @ip = self.class.parse(s)
       raise ArgumentError unless @ip

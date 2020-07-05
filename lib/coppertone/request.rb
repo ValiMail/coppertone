@@ -3,6 +3,7 @@ module Coppertone
   class Request
     attr_reader :ip_as_s, :sender, :helo_domain, :options, :result
     attr_reader :helo_result, :mailfrom_result
+
     def initialize(ip_as_s, sender, helo_domain, options = {})
       @ip_as_s = ip_as_s
       @sender = sender

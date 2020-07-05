@@ -12,6 +12,7 @@ module Coppertone
     end
 
     attr_reader :text, :terms
+
     def initialize(text)
       raise RecordParsingError unless self.class.record?(text)
       raise RecordParsingError unless ALLOWED_CHARACTERS.match?(text)
@@ -21,7 +22,7 @@ module Coppertone
     end
 
     def terms_segment
-      text[VERSION_STR.length..-1].strip
+      text[VERSION_STR.length..].strip
     end
   end
 end

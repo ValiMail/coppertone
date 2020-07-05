@@ -3,6 +3,7 @@ module Coppertone
     # Base class including logic common to modifiers
     class Base < Modifier
       attr_reader :domain_spec
+
       def initialize(attributes)
         super(attributes)
         raise InvalidModifierError if attributes.blank?

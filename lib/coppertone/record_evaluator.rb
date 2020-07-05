@@ -2,6 +2,7 @@ module Coppertone
   # A helper class for finding SPF records for a domain.
   class RecordEvaluator
     attr_reader :record
+
     def initialize(record)
       @record = record
     end

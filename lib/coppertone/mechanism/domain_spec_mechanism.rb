@@ -15,7 +15,7 @@ module Coppertone
       def trim_domain_spec(raw_domain_spec)
         return nil if raw_domain_spec.blank?
 
-        raw_domain_spec[1..-1]
+        raw_domain_spec[1..]
       end
 
       def self.dns_lookup_term?

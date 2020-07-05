@@ -2,6 +2,7 @@ module Coppertone
   # Parses a un-prefixed string into terms
   class TermsParser
     attr_reader :text
+
     def initialize(text)
       @text = text
     end

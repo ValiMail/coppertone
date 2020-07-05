@@ -3,6 +3,7 @@ module Coppertone
   # record from a text string.
   class Record
     attr_reader :text
+
     def initialize(raw_text)
       @terms = Coppertone::RecordTermParser.new(raw_text).terms
       normalize_terms
