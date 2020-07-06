@@ -3,6 +3,7 @@ module Coppertone
   # used to track and limit the number of DNS queries of various types.
   class RequestCountLimiter
     attr_accessor :count, :limit, :counter_description
+
     def initialize(limit = nil, counter_description = nil)
       self.limit = limit
       self.counter_description = counter_description

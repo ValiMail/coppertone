@@ -9,6 +9,7 @@ module Coppertone
     # in the context of a particular SPF check.
     class MacroParser
       attr_reader :macros
+
       def initialize(s)
         @s = s.dup
         @macros = []
@@ -37,7 +38,7 @@ module Coppertone
 
         interpolated_body = @s[2, closing_index - 2]
         @macros << MacroExpand.new(interpolated_body)
-        @s = @s[(closing_index + 1)..-1]
+        @s = @s[(closing_index + 1)..]
       end
 
       SIMPLE_MACRO_LETTERS = %w[% _ -].freeze
@@ -47,7 +48,7 @@ module Coppertone
         macro_code = @s[0, 2]
         if MacroStaticExpand.exists_for?(macro_code)
           @macros << MacroStaticExpand.macro_for(macro_code)
-          @s = @s[2..-1]
+          @s = @s[2..]
         else
           parse_contextual_interpolated_macro
         end
@@ -57,7 +58,7 @@ module Coppertone
         new_idx = @s.index('%')
         new_idx ||= @s.length
         @macros << MacroLiteral.new(@s[0, new_idx])
-        @s = @s[new_idx..-1]
+        @s = @s[new_idx..]
         new_idx
       end
     end

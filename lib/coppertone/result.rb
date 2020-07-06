@@ -16,6 +16,7 @@ module Coppertone
 
     attr_reader :code, :mechanism
     attr_accessor :explanation, :problem, :identity
+
     def initialize(code, mechanism = nil)
       @code = code
       @mechanism = mechanism

@@ -17,6 +17,7 @@ module Coppertone
     alias h helo_domain
 
     attr_reader :hostname
+
     def initialize(domain, ip_as_s, sender, helo_domain = 'unknown',
                    options = {})
       @ip_address_wrapper = IPAddressWrapper.new(ip_as_s)

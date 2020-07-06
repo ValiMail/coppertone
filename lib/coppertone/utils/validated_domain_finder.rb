@@ -4,6 +4,7 @@ module Coppertone
     # section 5.5 of the RFC.
     class ValidatedDomainFinder
       attr_reader :subdomain_only
+
       def initialize(macro_context, request_context, subdomain_only = true)
         @mc = macro_context
         @request_context = request_context

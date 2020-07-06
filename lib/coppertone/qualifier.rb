@@ -22,6 +22,7 @@ module Coppertone
     end
 
     attr_reader :text, :result_code
+
     def initialize(text, result_code)
       @text = text
       @result_code = result_code

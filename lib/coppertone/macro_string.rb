@@ -9,6 +9,7 @@ module Coppertone
   # context for interpolation.
   class MacroString
     attr_reader :macro_text
+
     def initialize(macro_text)
       @macro_text = macro_text
       macros

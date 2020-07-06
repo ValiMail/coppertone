@@ -3,6 +3,7 @@ module Coppertone
     # Implements the ip4 mechanism.
     class IPMechanism < Mechanism
       attr_reader :netblock, :cidr_length
+
       def self.create(attributes)
         new(attributes)
       end
@@ -10,13 +11,13 @@ module Coppertone
       def initialize(attributes)
         super(attributes)
         unless attributes.blank?
-          attributes = attributes[1..-1] if attributes[0] == ':'
+          attributes = attributes[1..] if attributes[0] == ':'
           @netblock, @cidr_length = parse_netblock(attributes)
         end
         raise Coppertone::InvalidMechanismError if @netblock.nil?
       end
 
-      LEADING_ZEROES_IN_CIDR_REGEXP = %r{\/0\d}.freeze
+      LEADING_ZEROES_IN_CIDR_REGEXP = %r{/0\d}.freeze
       def validate_no_leading_zeroes_in_cidr(ip_as_s)
         return unless LEADING_ZEROES_IN_CIDR_REGEXP.match?(ip_as_s)
 

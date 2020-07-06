@@ -1,10 +1,10 @@
 version: 2
 aliases:
   - &current_ruby_image
-    circleci/ruby:2.5.1
+    circleci/ruby:2.7.1
 
   - &previous_ruby_image
-    circleci/ruby:2.4.4
+    circleci/ruby:2.6.6
 
   - &defaults
     working_directory: ~/repo

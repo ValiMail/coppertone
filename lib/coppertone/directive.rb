@@ -7,6 +7,7 @@ module Coppertone
   # SPF specification (see section 4.6.1).
   class Directive
     attr_reader :qualifier, :mechanism
+
     delegate :context_dependent?, :dns_lookup_term?,
              :includes_ptr?, to: :mechanism
 
@@ -38,7 +39,7 @@ module Coppertone
       qualifier.default? ? mechanism_s : "#{qualifier}#{mechanism_s}"
     end
 
-    DIRECTIVE_REGEXP = /\A([\+\-\~\?]?)([a-zA-Z0-9]*)((:?)\S*)\z/.freeze
+    DIRECTIVE_REGEXP = /\A([+\-~?]?)([a-zA-Z0-9]*)((:?)\S*)\z/.freeze
     def self.matching_term(text)
       return nil if text.include?('=')
 

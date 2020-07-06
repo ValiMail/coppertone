@@ -7,6 +7,7 @@ module Coppertone
     EMAIL_ADDRESS_SPLIT_REGEXP = /^(.*)@(.*?)$/.freeze
 
     attr_reader :sender, :localpart, :domain
+
     def initialize(sender)
       @sender = sender
       initialize_localpart_and_domain

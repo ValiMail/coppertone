@@ -27,6 +27,7 @@ module Coppertone
     end
 
     attr_reader :arguments
+
     def initialize(arguments)
       @arguments = arguments
     end

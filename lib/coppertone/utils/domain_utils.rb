@@ -42,7 +42,7 @@ module Coppertone
 
       NO_DASH_NONNUMERIC_REGEXP = /\A[a-zA-Z0-9]*[a-zA-Z]+[a-zA-Z0-9]*\z/.freeze
       NO_DASH_REGEXP = /\A[a-zA-Z0-9]+\z/.freeze
-      DASH_REGEXP = /\A[a-zA-Z0-9]+\-[a-zA-Z0-9\-]*[a-zA-Z0-9]+\z/.freeze
+      DASH_REGEXP = /\A[a-zA-Z0-9]+-[a-zA-Z0-9\-]*[a-zA-Z0-9]+\z/.freeze
 
       def self.valid_hostname_label?(l)
         return false unless valid_label?(l)

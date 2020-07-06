@@ -4,6 +4,7 @@ module Coppertone
     # defined by the SPF spec
     class Unknown < Modifier
       attr_reader :label
+
       def initialize(label, attributes)
         super(attributes)
         @label = label

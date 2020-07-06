@@ -2,6 +2,7 @@ module Coppertone
   # A helper class for finding SPF records for a domain.
   class RecordFinder
     attr_reader :dns_client, :domain
+
     def initialize(dns_client, domain)
       @dns_client = dns_client
       @domain = domain
