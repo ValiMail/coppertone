@@ -7,7 +7,7 @@ module Coppertone
   # A context used to evaluate MacroStrings.  Responds to all of the
   # macro letter directives except 'p'.
   class MacroContext
-    attr_reader :domain, :ip_address_wrapper, :sender_identity, :helo_domain
+    attr_reader :domain, :ip_address_wrapper, :sender_identity, :helo_domain, :hostname
 
     delegate :s, :l, :o, to: :sender_identity
     alias d domain
@@ -15,8 +15,6 @@ module Coppertone
     delegate :ip_v4, :ip_v6, :original_ipv4?, :original_ipv6?,
              to: :ip_address_wrapper
     alias h helo_domain
-
-    attr_reader :hostname
 
     def initialize(domain, ip_as_s, sender, helo_domain = 'unknown',
                    options = {})

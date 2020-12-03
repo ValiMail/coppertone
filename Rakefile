@@ -23,15 +23,16 @@ desc 'Parse OpenSPF tests'
 
 def spec_file_name(doc, output_path)
   description = doc['description']
-  file_name = description.gsub(/[^\w\s_-]+/, '')
-                         .gsub(/(^|\b\s)\s+($|\s?\b)/, '\\1\\2')
-                         .gsub(/\s+/, '_') + '_spec.rb'
+  file_prefix = description.gsub(/[^\w\s_-]+/, '')
+                           .gsub(/(^|\b\s)\s+($|\s?\b)/, '\\1\\2')
+                           .gsub(/\s+/, '_')
+  file_name = "#{file_prefix}_spec.rb"
   File.join(output_path, file_name)
 end
 
 INDENT_STRING = '  '.freeze
 def indented_string(num_indents = 1)
-  Array.new(num_indents) { INDENT_STRING }.join('')
+  Array.new(num_indents) { INDENT_STRING }.join
 end
 
 def puts_prefixed_string(f, s, indent = 0)
@@ -89,7 +90,7 @@ def write_result(f, host, mailfrom, helo, indent)
 end
 
 def write_expects(f, results, explanation, indent)
-  results_array = "[#{results.map { |r| ':' + r }.join(',')}]"
+  results_array = "[#{results.map { |r| ":#{r}" }.join(',')}]"
   code_expect = "expect(#{results_array}).to include(result.code)"
   puts_prefixed_string(f, code_expect, indent)
   return unless explanation

@@ -4,11 +4,13 @@ module Coppertone
 
   # Error classes mapping to the SPF result codes
   class TemperrorError < Coppertone::Error; end
+
   class PermerrorError < Coppertone::Error; end
 
   # Errors occurring when the string representation of a MacroString
   # or DomainSpec does not obey the syntax requirements.
   class MacroStringParsingError < Coppertone::PermerrorError; end
+
   class DomainSpecParsingError < MacroStringParsingError; end
 
   # Occurs when an SPF record cannot be parsed.
@@ -42,8 +44,11 @@ module Coppertone
 
   # Errors generated when certain spec-defined limits are exceeded.
   class LimitExceededError < Coppertone::PermerrorError; end
+
   class TermLimitExceededError < PermerrorError; end
+
   class VoidLimitExceededError < PermerrorError; end
+
   class MXLimitExceededError < PermerrorError; end
 
   # Raised when context is required to evaluate a value, but

@@ -13,9 +13,7 @@ module Coppertone
         begin
           validate_txt_records
           spf_dns_record = txt_records.first
-          return nil unless spf_dns_record
-
-          Record.new(spf_dns_record)
+          spf_dns_record ? Record.new(spf_dns_record) : nil
         end
     end
 

@@ -1,10 +1,7 @@
 version: 2
 aliases:
   - &current_ruby_image
-    circleci/ruby:2.7.1
-
-  - &previous_ruby_image
-    circleci/ruby:2.6.6
+    circleci/ruby:2.7.2
 
   - &defaults
     working_directory: ~/repo
@@ -72,12 +69,6 @@ jobs:
       - *step_store_test_artifacts
       - *step_store_coverage_artifacts
 
-  previous_ruby-job:
-    working_directory: ~/repo
-    docker:
-      - image: *previous_ruby_image
-    steps: *test_run_steps
-
 workflows:
     version: 2
     build-test_current-ruby:
@@ -86,6 +77,3 @@ workflows:
         - code-quality-job:
             requires:
               - current_ruby-job # let primary job fetch all dependencies first
-    build-test_previous-ruby:
-      jobs:
-        - previous_ruby-job
