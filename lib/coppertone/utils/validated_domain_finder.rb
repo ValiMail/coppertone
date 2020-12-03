@@ -5,7 +5,7 @@ module Coppertone
     class ValidatedDomainFinder
       attr_reader :subdomain_only
 
-      def initialize(macro_context, request_context, subdomain_only = true)
+      def initialize(macro_context, request_context, subdomain_only = true) # rubocop:disable Style/OptionalBooleanParameter
         @mc = macro_context
         @request_context = request_context
         @subdomain_only = subdomain_only

@@ -1,8 +1,7 @@
 module Coppertone
   # Represents an SPF request.
   class Request
-    attr_reader :ip_as_s, :sender, :helo_domain, :options, :result
-    attr_reader :helo_result, :mailfrom_result
+    attr_reader :ip_as_s, :sender, :helo_domain, :options, :result, :helo_result, :mailfrom_result
 
     def initialize(ip_as_s, sender, helo_domain, options = {})
       @ip_as_s = ip_as_s
@@ -75,9 +74,7 @@ module Coppertone
     def check_spf_for_context(macro_context, identity)
       record = spf_record(macro_context)
       @result = spf_request(macro_context, record, identity) if record
-    rescue DNSAdapter::Error => e
-      Result.temperror(e.message)
-    rescue Coppertone::TemperrorError => e
+    rescue DNSAdapter::Error, Coppertone::TemperrorError => e
       Result.temperror(e.message)
     rescue Coppertone::PermerrorError => e
       Result.permerror(e.message)

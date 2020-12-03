@@ -20,11 +20,11 @@ module Coppertone
     end
 
     def expand(context, request = nil)
-      macros.map { |m| m.expand(context, request) }.join('')
+      macros.map { |m| m.expand(context, request) }.join
     end
 
     def to_s
-      macros.map(&:to_s).join('')
+      macros.map(&:to_s).join
     end
 
     def context_dependent?

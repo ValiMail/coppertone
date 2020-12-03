@@ -1,4 +1,5 @@
 AllCops:
+  NewCops: enable
   TargetRubyVersion: 2.7
 
 Layout/EmptyLinesAroundAttributeAccessor:
@@ -9,6 +10,8 @@ Layout/SpaceAroundMethodCallOperator:
   Enabled: true
 Lint/DeprecatedOpenSSLConstant:
   Enabled: true
+Lint/EmptyBlock:
+  Enabled: false
 Lint/MixedRegexpCaptureTypes:
   Enabled: true
 Lint/RaiseException:
