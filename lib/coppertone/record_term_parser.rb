@@ -7,8 +7,9 @@ module Coppertone
 
     def self.record?(text)
       return false if text.blank?
+      return true if RECORD_REGEXP.match?(text.strip)
 
-      RECORD_REGEXP.match?(text.strip) ? true : false
+      false
     end
 
     attr_reader :text, :terms

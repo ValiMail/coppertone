@@ -36,10 +36,18 @@ module Coppertone
     end
 
     RESERVED_REGEXP = Regexp.new("[^#{URI::PATTERN::UNRESERVED}]")
+
+    def escape(string)
+      encoding = string.encoding
+      string.b.gsub(RESERVED_REGEXP) do |m|
+        "%#{m.unpack('H2' * m.bytesize).join('%').upcase}"
+      end.force_encoding(encoding)
+    end
+
     %w[s l o d i v h c r t].each do |m|
       define_method(m.upcase) do
         unencoded = send(m)
-        unencoded ? ::URI.escape(unencoded, RESERVED_REGEXP) : nil
+        unencoded ? escape(unencoded) : nil
       end
     end
 
