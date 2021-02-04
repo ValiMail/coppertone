@@ -1,79 +1,130 @@
-version: 2
-aliases:
-  - &current_ruby_image
-    circleci/ruby:2.7.2
+# CircleCI 2.1: https://circleci.com/docs/2.0/configuration-reference/
+version: 2.1
 
-  - &defaults
-    working_directory: ~/repo
+# To avoid DockerHub rate limiting we need to auth with our Valimail DockerHub
+# user's API access token. If you add a new shared context, make sure
+# these environment variables are added to it with the credentials from 1Password.
+# https://app.circleci.com/settings/organization/github/ValiMail/contexts
+docker-auth: &docker-auth
+  auth:
+    username: $DOCKERHUB_USERNAME
+    password: $DOCKERHUB_PASSWORD
+
+# Orbs are packages of config that you can import by name or configure inline.
+orbs:
+  # Our orb for managing dependencies
+  # Reference: https://circleci.com/orbs/registry/orb/valimail/dependency-manager
+  # Source: https://github.com/ValiMail/dependency-manager-orb
+  dependency-manager: valimail/dependency-manager@0.4.7
+
+
+# Commands are reusable sets of steps invokable with parameters inside a job.
+commands:
+  test:
+    steps:
+      - run:
+          name: Run test suite
+          command: bundle exec rspec --format progress --format RspecJunitFormatter --out /tmp/test-results/rspec/results.xml
+
+  build-gem:
+    steps:
+      - run:
+          name: Build gem
+          command: bundle exec rake build
+
+  report_coverage:
+    steps:
+      - run:
+          name: Report code coverage to Coveralls, in parallel
+          command: wget -cq https://coveralls.io/coveralls-linux.tar.gz -O - | tar -xz && ./coveralls --parallel
+
+  finish_coverage:
+    steps:
+      - run:
+          name: Inform Coveralls that parallel jobs are all done
+          command: wget -cq https://coveralls.io/coveralls-linux.tar.gz -O - | tar -xz && ./coveralls --done
+
+# Executors define the environment in which the steps of a job will be run.
+executors:
+  ruby-system:
+
+    parameters:
+      ruby-version:
+        description: Ruby version to use, passed in as a string
+        type: string
+        default: "2.7"
+
     docker:
-      - image: *current_ruby_image
+      - image: cimg/ruby:<< parameters.ruby-version >>
+        <<: *docker-auth
+        environment:
+          BUNDLE_PATH: vendor/bundle
 
-  - &step_install_root_dependencies
-    run:
-      name: install root dependencies
-      command: |
-        gem install bundler && bundle install --jobs=4 --retry=3 --path vendor/bundle
 
-  - &step_make_test_output_directory
-    run:
-      name: create test metadata directory
-      command: mkdir /tmp/test-results
-
-  - &step_run_rspec_tests
-    run:
-      name: run rspec with simplecov
-      command: |
-        TEST_FILES="$(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)"
-
-        COVERAGE=true bundle exec rspec \
-                          --format progress \
-                          --format RspecJunitFormatter \
-                          --out /tmp/test-results/rspec.xml \
-                          ${TEST_FILES}
-
-  - &step_store_test_results
-    store_test_results:
-      path: /tmp/test-results
-
-  - &step_store_test_artifacts
-    store_artifacts:
-      path: /tmp/test-results
-      destination: test-results
-
-  - &step_store_coverage_artifacts
-    store_artifacts:
-      path: coverage
-      destination: coverage
-
+# Jobs have two parts: the execution environment and a set of steps.
 jobs:
-  code-quality-job:
-    <<: *defaults
+  ruby-3_0:
+    executor:
+      name: ruby-system
+      ruby-version: "3.0"
     steps:
       - checkout
-      - *step_install_root_dependencies
-      - run:
-          name: Run Rubocop
-          command: |
-            bundle exec rubocop
+      - dependency-manager/install-gems:
+          cache-version: v2
+      - test
+      - report_coverage
+      - build-gem
 
-  current_ruby-job:
-    working_directory: ~/repo
-    docker:
-      - image: *current_ruby_image
-    steps: &test_run_steps
+  ruby-2_7:
+    executor:
+      name: ruby-system
+      ruby-version: "2.7"
+    steps:
       - checkout
-      - *step_install_root_dependencies
-      - *step_make_test_output_directory
-      - *step_run_rspec_tests
-      - *step_store_test_results
-      - *step_store_test_artifacts
-      - *step_store_coverage_artifacts
+      - dependency-manager/install-gems:
+          cache-version: v2
+      - test
+      - report_coverage
+      - build-gem
 
+  lint-job:
+    executor: ruby-system
+    steps:
+      - checkout
+      - dependency-manager/install-gems:
+          cache-version: v2
+      - run:
+          name: Lint Ruby
+          command: bundle exec rubocop
+      - run:
+          name: Scan for Ruby gem vulnerabilties
+          command: |
+            gem install bundler-audit
+            bundle audit check --update
+      - run:
+          name: Scan for Ruby and RubyGems vulnerabilties
+          command: |
+            bundle add ruby_audit --group "test"
+            bundle exec ruby-audit check
+
+  finish-coverage:
+    resource_class: small
+    executor: ruby-system
+    steps:
+      - finish_coverage
+
+# Workflows are sequences of jobs.
 workflows:
-    version: 2
-    build-test_current-ruby:
-      jobs:
-        - current_ruby-job
-        - code-quality-job:
-            requires:
-              - current_ruby-job # let primary job fetch all dependencies first
+  build:
+    jobs:
+      - ruby-2_7:
+          context: valimail-saas-tokens
+      - ruby-3_0:
+          context: valimail-saas-tokens
+      - finish-coverage:
+          context: valimail-saas-tokens
+          requires:
+            - ruby-2_7
+            - ruby-3_0
+      - lint-job:
+          context: valimail-saas-tokens
