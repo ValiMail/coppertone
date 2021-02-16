@@ -15,7 +15,7 @@ orbs:
   # Our orb for managing dependencies
   # Reference: https://circleci.com/orbs/registry/orb/valimail/dependency-manager
   # Source: https://github.com/ValiMail/dependency-manager-orb
-  dependency-manager: valimail/dependency-manager@0.4.7
+  dependency-manager: valimail/dependency-manager@0.4.8
 
 
 # Commands are reusable sets of steps invokable with parameters inside a job.
@@ -71,6 +71,7 @@ jobs:
       - checkout
       - dependency-manager/install-gems:
           cache-version: v2
+          rubygems-version: 3.2.9
       - test
       - report_coverage
       - build-gem
