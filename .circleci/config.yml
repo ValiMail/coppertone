@@ -71,7 +71,6 @@ jobs:
       - checkout
       - dependency-manager/install-gems:
           cache-version: v2
-          rubygems-version: 3.2.9
       - test
       - report_coverage
       - build-gem
