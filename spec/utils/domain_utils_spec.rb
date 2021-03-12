@@ -49,6 +49,12 @@ describe Coppertone::Utils::DomainUtils do
       expect(subject.valid?('rst.*.example.com')).to eq(true)
     end
 
+    it 'should reject domains with ampersands' do
+      expect(subject.valid?('@dmarc.126.com')).to eq(false)
+      expect(subject.valid?('abcd@domainkey.gmail.com')).to eq(false)
+      expect(subject.valid?('abcd.x@domainkey.gmail.com')).to eq(false)
+    end
+
     it 'should reject IP addresses' do
       expect(subject.valid?('192.38.7.14')).to eq(false)
     end
