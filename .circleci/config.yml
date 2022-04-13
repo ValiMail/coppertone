@@ -15,7 +15,7 @@ orbs:
   # Our orb for managing dependencies
   # Reference: https://circleci.com/orbs/registry/orb/valimail/dependency-manager
   # Source: https://github.com/ValiMail/dependency-manager-orb
-  dependency-manager: valimail/dependency-manager@0.4.8
+  dependency-manager: valimail/dependency-manager@0.5.0
 
 
 # Commands are reusable sets of steps invokable with parameters inside a job.
