@@ -1,8 +1,7 @@
 # Coppertone
 
-[![Build Status](https://travis-ci.org/ValiMail/coppertone.svg?branch=master)](https://travis-ci.org/ValiMail/coppertone)
-[![Test Coverage](https://codeclimate.com/github/ValiMail/coppertone/badges/coverage.svg)](https://codeclimate.com/github/ValiMail/coppertone)
-[![Code Climate](https://codeclimate.com/github/ValiMail/coppertone/badges/gpa.svg)](https://codeclimate.com/github/ValiMail/coppertone)
+[![CircleCI](https://circleci.com/gh/ValiMail/coppertone/tree/master.svg?style=svg)](https://circleci.com/gh/ValiMail/coppertone/tree/master)
+[![Coverage Status](https://coveralls.io/repos/github/ValiMail/coppertone/badge.svg?branch=master)](https://coveralls.io/github/ValiMail/coppertone?branch=master)
 
 A Sender Policy Framework (SPF) toolkit for Ruby.
 
