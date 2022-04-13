@@ -5,6 +5,7 @@ module Coppertone
     # A utility class that includes methods for working with
     # data about the host.
     class HostUtils
+      # rubocop:disable Lint/DeprecatedClassMethods
       def self.hostname
         @hostname ||=
           begin
@@ -13,6 +14,7 @@ module Coppertone
             Socket.gethostname
           end
       end
+      # rubocop:enable Lint/DeprecatedClassMethods
 
       def self.clear_hostname
         @hostname = nil

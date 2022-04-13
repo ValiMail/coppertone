@@ -53,9 +53,7 @@ module Coppertone
 
     def raw_hostname
       @raw_hostname ||=
-        begin
-          hostname || Coppertone.config.hostname || Coppertone::Utils::HostUtils.hostname
-        end
+        hostname || Coppertone.config.hostname || Coppertone::Utils::HostUtils.hostname
     end
 
     # Generates a new MacroContext with all the same info, but a new

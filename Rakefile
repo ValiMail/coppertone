@@ -141,6 +141,6 @@ task :build_open_spf_test_suite do
   yml_file_path = File.join(File.dirname(__FILE__), 'spec', yml_file_name)
   output_path = File.join(File.dirname(__FILE__), 'spec', 'open_spf')
   FileUtils.mkdir_p(output_path)
-  documents = YAML.load_stream(File.open(yml_file_path).read)
+  documents = YAML.load_stream(File.read(yml_file_path))
   documents.each { |doc| write_doc(doc, output_path) }
 end
