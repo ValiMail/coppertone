@@ -59,3 +59,8 @@ Style/SlicingWithRange:
 Style/SymbolArray:
   Exclude:
     - 'spec/open_spf/**/*'
+Style/OpenStructUse:
+  Enabled: false
+
+Gemspec/RequireMFA:
+  Enabled: false

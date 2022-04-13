@@ -43,7 +43,7 @@ module Coppertone
 
     def to_dotted_notation
       if original_ipv6?
-        format('%.32x', @ip.to_i).split(//).join('.').upcase
+        format('%.32x', @ip.to_i).chars.join('.').upcase
       elsif original_ipv4?
         @ip.to_s
       end

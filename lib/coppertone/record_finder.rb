@@ -19,13 +19,11 @@ module Coppertone
 
     def txt_records
       @txt_records ||=
-        begin
-          if Coppertone::Utils::DomainUtils.valid?(domain)
-            dns_client.fetch_txt_records(domain).map { |r| r[:text] }
-                      .select { |r| Record.record?(r) }
-          else
-            []
-          end
+        if Coppertone::Utils::DomainUtils.valid?(domain)
+          dns_client.fetch_txt_records(domain).map { |r| r[:text] }
+                    .select { |r| Record.record?(r) }
+        else
+          []
         end
     end
 

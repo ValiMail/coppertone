@@ -49,7 +49,7 @@ module Coppertone
         ips = recs.map do |r|
           IPAddr.new(r[:address]).mask(cidr_length.to_i)
         end
-        ips.reject(&:nil?)
+        ips.compact
       end
     end
   end

@@ -40,10 +40,8 @@ module Coppertone
 
     def includes
       @includes ||=
-        begin
-          directives.select do |d|
-            d.mechanism.is_a?(Coppertone::Mechanism::Include)
-          end
+        directives.select do |d|
+          d.mechanism.is_a?(Coppertone::Mechanism::Include)
         end
     end
 
