@@ -94,6 +94,12 @@ describe Coppertone::Record do
       end.to raise_error(Coppertone::RecordParsingError)
     end
 
+    it 'should fail when it contains a typo that was probably intended to be an include mechanism' do
+      expect do
+        Coppertone::Record.new('v=spf1 include.spf.protection.outlook.com')
+      end.to raise_error(Coppertone::RecordParsingError)
+    end
+
     it 'should fail when it contains spurious terms' do
       expect do
         Coppertone::Record.new('v=spf1 ip4:1.2.3.4 -all moo')

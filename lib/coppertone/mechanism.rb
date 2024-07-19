@@ -26,6 +26,14 @@ module Coppertone
       false
     end
 
+    def self.missing_required_initial_colon?(attributes)
+      requires_initial_colon? && attributes.to_s !~ /\A\:/
+    end
+
+    def self.requires_initial_colon?
+      false
+    end
+
     attr_reader :arguments
 
     def initialize(arguments)

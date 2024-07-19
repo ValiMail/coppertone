@@ -9,6 +9,8 @@ module Coppertone
       end
 
       def initialize(attributes)
+        raise InvalidMechanismError if self.class.missing_required_initial_colon?(attributes)
+
         super(attributes)
         unless attributes.blank?
           attributes = attributes[1..] if attributes[0] == ':'

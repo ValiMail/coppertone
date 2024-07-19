@@ -24,6 +24,10 @@ module Coppertone
       def self.label
         'include'
       end
+
+      def self.requires_initial_colon?
+        true
+      end
     end
     register(Coppertone::Mechanism::Include)
   end

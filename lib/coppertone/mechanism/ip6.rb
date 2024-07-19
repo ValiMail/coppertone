@@ -11,6 +11,10 @@ module Coppertone
       def self.label
         'ip6'
       end
+
+      def self.requires_initial_colon?
+        true
+      end
     end
     register(Coppertone::Mechanism::IP6)
   end

@@ -12,6 +12,10 @@ module Coppertone
       def self.label
         'exists'
       end
+
+      def self.requires_initial_colon?
+        true
+      end
     end
     register(Coppertone::Mechanism::Exists)
   end
