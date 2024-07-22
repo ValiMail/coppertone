@@ -59,7 +59,7 @@ end
 def escape_quote(val)
   return unless val
 
-  val.gsub(/'/) { |_s| "\\'" }
+  val.gsub("'") { |_s| "\\'" }
 end
 
 def clean_description(description)
@@ -84,8 +84,8 @@ end
 
 def write_result(f, host, mailfrom, helo, indent)
   spf_result =
-    "Coppertone::SpfService.authenticate_email('#{host}', '#{mailfrom}'," \
-    " '#{helo}', options)"
+    "Coppertone::SpfService.authenticate_email('#{host}', '#{mailfrom}', " \
+    "'#{helo}', options)"
   puts_prefixed_string(f, "result = #{spf_result}", indent)
 end
 

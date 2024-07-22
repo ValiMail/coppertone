@@ -12,7 +12,7 @@ module Coppertone
       end
 
       def initialize(attributes)
-        super(attributes)
+        super
         return if attributes.blank?
 
         parse_argument(attributes)

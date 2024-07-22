@@ -9,7 +9,7 @@ module Coppertone
       end
 
       def initialize(attributes)
-        super(attributes)
+        super
         return if attributes.blank?
 
         raw_domain_spec = trim_domain_spec(attributes)

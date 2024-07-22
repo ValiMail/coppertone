@@ -5,7 +5,7 @@ module Coppertone
       attr_reader :domain_spec
 
       def initialize(attributes)
-        super(attributes)
+        super
         raise InvalidModifierError if attributes.blank?
 
         @domain_spec = Coppertone::DomainSpec.new(attributes)
