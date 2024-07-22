@@ -90,7 +90,7 @@ module Coppertone
       [Coppertone::Modifier::Exp, Coppertone::Modifier::Redirect].freeze
     def unknown_modifiers
       @unknown_modifiers ||=
-        modifiers.select { |m| KNOWN_MODS.select { |k| m.is_a?(k) }.empty? }
+        modifiers.select { |m| KNOWN_MODS.none? { |k| m.is_a?(k) } }
     end
 
     def find_modifier(klass)
