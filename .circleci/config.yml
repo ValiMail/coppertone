@@ -52,7 +52,7 @@ executors:
       ruby-version:
         description: Ruby version to use, passed in as a string
         type: string
-        default: "2.7"
+        default: "3.0"
 
     docker:
       - image: cimg/ruby:<< parameters.ruby-version >>
