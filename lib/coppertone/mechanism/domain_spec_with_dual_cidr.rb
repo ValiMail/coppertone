@@ -12,7 +12,7 @@ module Coppertone
       end
 
       def initialize(attributes)
-        super(attributes)
+        super
         return if attributes.blank?
 
         parse_argument(attributes)
@@ -111,7 +111,7 @@ module Coppertone
       alias eql? ==
 
       def hash
-        domain_spec.hash ^ ip_v4_cidr_length.hash ^ ip_v6_cidr_length.hash
+        [domain_spec, ip_v4_cidr_length, ip_v6_cidr_length].hash
       end
     end
   end

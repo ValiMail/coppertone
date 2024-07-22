@@ -7,7 +7,9 @@ module Coppertone
       end
 
       def initialize(attributes)
-        super(attributes)
+        raise InvalidMechanismError if self.class.missing_required_initial_colon?(attributes)
+
+        super
         raw_domain_spec = trim_domain_spec(attributes)
         raise InvalidMechanismError if raw_domain_spec.blank?
 

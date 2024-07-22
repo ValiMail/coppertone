@@ -20,6 +20,12 @@ describe Coppertone::Mechanism::IP4 do
       end.to raise_error(Coppertone::InvalidMechanismError)
     end
 
+    it 'should fail if called with a valid IP v4 but no leading colon' do
+      expect do
+        Coppertone::Mechanism::IP4.new('1.2.3.4')
+      end.to raise_error(Coppertone::InvalidMechanismError)
+    end
+
     it 'should not fail if called with an IP v6' do
       mech = Coppertone::Mechanism::IP4.new(':fe80::202:b3ff:fe1e:8329')
       expect(mech.netblock).to eq(IPAddr.new('fe80::202:b3ff:fe1e:8329'))
@@ -28,6 +34,12 @@ describe Coppertone::Mechanism::IP4 do
       expect(mech).not_to be_includes_ptr
       expect(mech).not_to be_context_dependent
       expect(mech).not_to be_dns_lookup_term
+    end
+
+    it 'should fail if called with a valid IP v6 but no leading colon' do
+      expect do
+        Coppertone::Mechanism::IP4.new('fe80::202:b3ff:fe1e:8329')
+      end.to raise_error(Coppertone::InvalidMechanismError)
     end
 
     it 'should work if called with an IP4' do

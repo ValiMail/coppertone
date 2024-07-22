@@ -38,7 +38,7 @@ describe Coppertone::SenderIdentity do
 
   it 'should not raise an error if the sender has a too-long domain' do
     localpart = 'lymeeater'
-    domain = 'A123456789012345678901234567890123456789'\
+    domain = 'A123456789012345678901234567890123456789' \
              '012345678901234567890123.example.com'
     sender = "#{localpart}@#{domain}"
     si = Coppertone::SenderIdentity.new(sender)

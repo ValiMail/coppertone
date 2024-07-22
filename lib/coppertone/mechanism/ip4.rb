@@ -11,6 +11,10 @@ module Coppertone
       def self.label
         'ip4'
       end
+
+      def self.requires_initial_colon?
+        true
+      end
     end
     register(Coppertone::Mechanism::IP4)
   end

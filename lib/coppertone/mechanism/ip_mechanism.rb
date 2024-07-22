@@ -9,7 +9,9 @@ module Coppertone
       end
 
       def initialize(attributes)
-        super(attributes)
+        raise InvalidMechanismError if self.class.missing_required_initial_colon?(attributes)
+
+        super
         unless attributes.blank?
           attributes = attributes[1..] if attributes[0] == ':'
           @netblock, @cidr_length = parse_netblock(attributes)

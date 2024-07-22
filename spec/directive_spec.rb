@@ -24,7 +24,7 @@ describe Coppertone::Directive do
       expect(directive.qualifier).to eq(Coppertone::Qualifier::FAIL)
       mechanism = directive.mechanism
       expect(mechanism).not_to be_nil
-      expect(mechanism).to eq(Coppertone::Mechanism::IP4.new('192.1.1.1'))
+      expect(mechanism).to eq(Coppertone::Mechanism::IP4.new(':192.1.1.1'))
     end
   end
 

@@ -14,6 +14,12 @@ describe Coppertone::Mechanism::Exists do
       end.to raise_error(Coppertone::InvalidMechanismError)
     end
 
+    it 'should fail if called with an argument that is missing a leading colon' do
+      expect do
+        Coppertone::Mechanism::Exists.new('_spf.example.com')
+      end.to raise_error(Coppertone::InvalidMechanismError)
+    end
+
     it 'should fail if called with an invalid macrostring' do
       expect do
         Coppertone::Mechanism::Exists.new(':abc%:def')
