@@ -23,8 +23,6 @@ jobs:
 
     env:
       BUNDLE_PATH: vendor/bundle
-      COVERALLS_PARALLEL: true
-      COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     steps:
@@ -39,9 +37,6 @@ jobs:
 
       - name: Run test suite
         run: bundle exec rspec --format progress --format RspecJunitFormatter --out /tmp/test-results/rspec/results.xml
-
-      - name: Report code coverage to Coveralls
-        run: wget -cq https://coveralls.io/coveralls-linux.tar.gz -O - | tar -xz && ./coveralls --parallel
 
       - name: Build gem
         run: bundle exec rake build
@@ -91,9 +86,4 @@ jobs:
       - test
 
     env:
-      COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-    steps:
-      - name: Inform Coveralls that parallel jobs are all done
-        run: wget -cq https://coveralls.io/coveralls-linux.tar.gz -O - | tar -xz && ./coveralls --done
