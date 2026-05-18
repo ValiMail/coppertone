@@ -78,12 +78,3 @@ jobs:
         run: |
           bundle add ruby_audit --group "test"
           bundle exec ruby-audit check
-
-  finish-coverage:
-    name: Finish coverage
-    runs-on: ubuntu-latest
-    needs:
-      - test
-
-    env:
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
