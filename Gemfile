@@ -13,7 +13,6 @@ end
 
 group :test do
   gem 'bundler'
-  gem 'codecov', require: false
   gem 'flay'
   gem 'rake', '~> 13.0'
   gem 'rspec_junit_formatter'
