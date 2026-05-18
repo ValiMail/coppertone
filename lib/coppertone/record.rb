@@ -19,7 +19,7 @@ module Coppertone
     end
 
     def directives
-      @directives ||= @terms.select { |t| t.is_a?(Coppertone::Directive) }
+      @directives ||= @terms.grep(Coppertone::Directive)
     end
 
     def all_directive
@@ -46,7 +46,7 @@ module Coppertone
     end
 
     def modifiers
-      @modifiers ||= @terms.select { |t| t.is_a?(Coppertone::Modifier) }
+      @modifiers ||= @terms.grep(Coppertone::Modifier)
     end
 
     def redirect
@@ -94,7 +94,7 @@ module Coppertone
     end
 
     def find_modifier(klass)
-      arr = modifiers.select { |m| m.is_a?(klass) }
+      arr = modifiers.grep(klass)
       raise DuplicateModifierError if arr.size > 1
 
       arr.first
@@ -109,7 +109,7 @@ module Coppertone
     end
 
     def to_s
-      "#{self.class.version_str} #{@terms.map(&:to_s).join(' ')}"
+      "#{self.class.version_str} #{@terms.join(' ')}"
     end
   end
 end

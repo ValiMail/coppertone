@@ -34,6 +34,8 @@ Naming/FileName:
     - 'spec/open_spf/**/*'
 Naming/MethodParameterName:
   Enabled: false
+Naming/PredicateMethod:
+  Enabled: false
 Style/Documentation:
   Enabled: false
 Style/ExponentialNotation:
