@@ -4,7 +4,7 @@ module Coppertone
   # for the macro letters.
   class SenderIdentity
     DEFAULT_LOCALPART = 'postmaster'.freeze
-    EMAIL_ADDRESS_SPLIT_REGEXP = /^(.*)@(.*?)$/.freeze
+    EMAIL_ADDRESS_SPLIT_REGEXP = /^(.*)@(.*?)$/
 
     attr_reader :sender, :localpart, :domain
 

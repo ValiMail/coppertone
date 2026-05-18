@@ -12,7 +12,7 @@ module Coppertone
       PTR_MACRO_CHAR_SET = %w[p P].freeze
       DELIMITER_CHAR_SET = '[\.\-\+\,\/\_\=]'.freeze
       VALID_BODY_REGEXP =
-        /\A(#{MACRO_LETTER_CHAR_SET})(\d*)(r?)(#{DELIMITER_CHAR_SET}*)\z/.freeze
+        /\A(#{MACRO_LETTER_CHAR_SET})(\d*)(r?)(#{DELIMITER_CHAR_SET}*)\z/
       DEFAULT_DELIMITER = '.'.freeze
 
       attr_reader :macro_letter, :digit_transformers, :reverse,

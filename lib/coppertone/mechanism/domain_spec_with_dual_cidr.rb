@@ -38,7 +38,7 @@ module Coppertone
         end
       end
 
-      CIDR_REGEXP = %r{(/(\d*))?(//(\d*))?\z}.freeze
+      CIDR_REGEXP = %r{(/(\d*))?(//(\d*))?\z}
       def parse_argument(attributes)
         raise InvalidMechanismError if attributes.blank?
 

@@ -2,8 +2,8 @@ module Coppertone
   # Parses a record into terms
   class RecordTermParser
     VERSION_STR = 'v=spf1'.freeze
-    RECORD_REGEXP = /\A#{VERSION_STR}(\s|\z)/i.freeze
-    ALLOWED_CHARACTERS = /\A([\x21-\x7e ]+)\z/.freeze
+    RECORD_REGEXP = /\A#{VERSION_STR}(\s|\z)/i
+    ALLOWED_CHARACTERS = /\A([\x21-\x7e ]+)\z/
 
     def self.record?(text)
       return false if text.blank?

@@ -14,7 +14,7 @@ module Coppertone
       class_builder.register(klass.label, klass)
     end
 
-    MODIFIER_REGEXP = /\A([a-zA-Z]+[a-zA-Z0-9\-_.]*)=(\S*)\z/.freeze
+    MODIFIER_REGEXP = /\A([a-zA-Z]+[a-zA-Z0-9\-_.]*)=(\S*)\z/
     def self.matching_term(text)
       matches = MODIFIER_REGEXP.match(text)
       return nil unless matches
