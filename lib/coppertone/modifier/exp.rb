@@ -8,7 +8,7 @@ module Coppertone
         new(attributes)
       end
 
-      ASCII_REGEXP = /\A[[:ascii:]]*\z/.freeze
+      ASCII_REGEXP = /\A[[:ascii:]]*\z/
       def evaluate(macro_context, request_context)
         target_name =
           target_name_from_domain_spec(macro_context, request_context)

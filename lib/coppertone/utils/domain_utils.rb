@@ -40,9 +40,9 @@ module Coppertone
         to_ascii_labels(domain).join('.')
       end
 
-      NO_DASH_NONNUMERIC_REGEXP = /\A[a-zA-Z0-9]*[a-zA-Z]+[a-zA-Z0-9]*\z/.freeze
-      NO_DASH_REGEXP = /\A[a-zA-Z0-9]+\z/.freeze
-      DASH_REGEXP = /\A[a-zA-Z0-9]+-[a-zA-Z0-9\-]*[a-zA-Z0-9]+\z/.freeze
+      NO_DASH_NONNUMERIC_REGEXP = /\A[a-zA-Z0-9]*[a-zA-Z]+[a-zA-Z0-9]*\z/
+      NO_DASH_REGEXP = /\A[a-zA-Z0-9]+\z/
+      DASH_REGEXP = /\A[a-zA-Z0-9]+-[a-zA-Z0-9-]*[a-zA-Z0-9]+\z/
 
       def self.valid_hostname_label?(l)
         return false unless valid_label?(l)

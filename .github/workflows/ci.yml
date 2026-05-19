@@ -1,0 +1,80 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: Ruby ${{ matrix.ruby }}
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        ruby:
+          - "3.2"
+          - "3.3"
+          - "3.4"
+    env:
+      BUNDLE_PATH: vendor/bundle
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby }}
+          bundler-cache: true
+
+      - name: Run test suite
+        run: bundle exec rspec --format progress --format RspecJunitFormatter --out /tmp/test-results/rspec/results.xml
+
+      - name: Build gem
+        run: bundle exec rake build
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: rspec-results-ruby-${{ matrix.ruby }}
+          path: /tmp/test-results/rspec/results.xml
+          if-no-files-found: ignore
+
+  lint:
+    name: Lint and security scans
+    runs-on: ubuntu-latest
+
+    env:
+      BUNDLE_PATH: vendor/bundle
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.4"
+          bundler-cache: true
+
+      - name: Lint Ruby
+        run: bundle exec rubocop
+
+      - name: Scan for Ruby gem vulnerabilities
+        run: |
+          gem install bundler-audit
+          bundle audit check --update
+
+      - name: Scan for Ruby and RubyGems vulnerabilities
+        run: |
+          bundle add ruby_audit --group "test"
+          bundle exec ruby-audit check

@@ -1,6 +1,6 @@
 AllCops:
   NewCops: enable
-  TargetRubyVersion: 2.7
+  TargetRubyVersion: 3.2
 
 Layout/EmptyLinesAroundAttributeAccessor:
   Enabled: true
@@ -33,6 +33,8 @@ Naming/FileName:
   Exclude:
     - 'spec/open_spf/**/*'
 Naming/MethodParameterName:
+  Enabled: false
+Naming/PredicateMethod:
   Enabled: false
 Style/Documentation:
   Enabled: false

@@ -24,17 +24,15 @@ module Coppertone
     end
 
     def to_s
-      macros.map(&:to_s).join
+      macros.join
     end
 
     def context_dependent?
-      macros.any? { |m| m.is_a?(Coppertone::MacroString::MacroExpand) }
+      macros.any?(Coppertone::MacroString::MacroExpand)
     end
 
     def includes_ptr?
-      expanded_macros = macros.select do |m|
-        m.is_a?(Coppertone::MacroString::MacroExpand)
-      end
+      expanded_macros = macros.grep(Coppertone::MacroString::MacroExpand)
       expanded_macros.any?(&:ptr_macro?)
     end
 

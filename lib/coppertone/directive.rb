@@ -39,7 +39,7 @@ module Coppertone
       qualifier.default? ? mechanism_s : "#{qualifier}#{mechanism_s}"
     end
 
-    DIRECTIVE_REGEXP = /\A([+\-~?]?)([a-zA-Z0-9]*)((:?)\S*)\z/.freeze
+    DIRECTIVE_REGEXP = /\A([+\-~?]?)([a-zA-Z0-9]*)((:?)\S*)\z/
     def self.matching_term(text)
       return nil if text.include?('=')
 
