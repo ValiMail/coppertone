@@ -20,4 +20,5 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'addressable'
   spec.add_dependency 'dns_adapter'
   spec.add_dependency 'i18n'
+  spec.add_dependency 'ostruct'
 end
