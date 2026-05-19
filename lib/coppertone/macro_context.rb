@@ -1,6 +1,5 @@
 require 'active_support/core_ext/module/delegation'
 require 'addressable/uri'
-require 'ostruct'
 require 'uri'
 
 module Coppertone

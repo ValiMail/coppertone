@@ -18,9 +18,9 @@ jobs:
       fail-fast: false
       matrix:
         ruby:
-          - "3.2"
           - "3.3"
           - "3.4"
+          - "4.0"
     env:
       BUNDLE_PATH: vendor/bundle
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -63,7 +63,7 @@ jobs:
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: "3.4"
+          ruby-version: "4.0"
           bundler-cache: true
 
       - name: Lint Ruby
