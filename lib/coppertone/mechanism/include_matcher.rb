@@ -10,12 +10,13 @@ module Coppertone
           result
         end
 
-        def evaluate_none_result(result, m, r)
-          new_result = super
-          return new_result unless new_result.none?
+        # RFC 7208: 5.2, none result should be returned as "no match"
+        # def evaluate_none_result(result, m, r)
+        #   new_result = super
+        #   return new_result unless new_result.none?
 
-          raise Coppertone::NoneIncludeResultError
-        end
+        #   raise Coppertone::NoneIncludeResultError
+        # end
       end
 
       attr_reader :record
